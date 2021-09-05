@@ -11,7 +11,7 @@ Stub. Tracking notes for a game idea. AI controller for a simulated rocket
 * basic physics
 
 ## Neural/AI of some kind, train AI to efficciently navigate the system
-* ???
+* learn to navigate a system efficiently
 
 ## System
 * Zoom in/out
@@ -20,6 +20,7 @@ Stub. Tracking notes for a game idea. AI controller for a simulated rocket
 * Realistic scale/sizes
 * 1-2 Stars (or maybe 0-N objects of random mass?)
 * Sol system map vs generated systems, maybe levels like in Mini Motorways with increasing complexity
+* objects come together to create a fluid map of gravitational pull
 
 ## Base Object class
 * Mass/Gravitational pull
@@ -52,3 +53,4 @@ Stub. Tracking notes for a game idea. AI controller for a simulated rocket
 * Or player is ordering journeys between certain ports and the AI has to fulfil those journeys
 * maybe player is managing a fleet
 * maybe player is fighting a war between two factions and AIs are controlling ships??
+* balance between simple game & capable AI development
