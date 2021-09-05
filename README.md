@@ -2,7 +2,7 @@
 
 Stub. Tracking notes for a game idea. AI controller for a simulated rocket
 
-## Neural/AI of some kind, train AI to efficciently navigate the system
+## Neural/AI of some kind, train AI to efficiently navigate the system
 * learn to navigate a system efficiently
 
 ### AI Goals/Metrics
