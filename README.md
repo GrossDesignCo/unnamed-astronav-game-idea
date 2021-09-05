@@ -1,4 +1,4 @@
-# sim-ai-rocket-controller
+# Orbital Navigation AI Sim Game Ideas
 
 Stub. Tracking notes for a game idea. AI controller for a simulated rocket
 
@@ -65,3 +65,9 @@ Stub. Tracking notes for a game idea. AI controller for a simulated rocket
   * at the mercy of little AI controlled ships that bring shipments from one port to another
   * can start/name/grow new colonies
   * maybe some economics based on colony metrics, like supply/demand of food/water/metal/fuel, hunger levels?
+* Teach players to manage logistics in orbit, like a Space-UPS sim
+  * receive requests from ports for shipments from other ports
+  * Assign ships to waiting stacks of shipments
+* Maybe automated civilian transports, but a player-controlled set of military ships, guarding from space-pirates or a rival faction?
+  * would teach AI to have to respond to erratic human commands & destinations
+  * player would get to watch their fly around via physics & learn orbital mechanics for themselves
