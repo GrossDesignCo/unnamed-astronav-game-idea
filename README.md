@@ -6,7 +6,7 @@ Stub. Tracking notes for a game idea. AI controller for a simulated rocket
 * learn to navigate a system efficiently
 
 ### AI Goals/Metrics
-* get from one point to another
+* Take off from and land (gently) at ports
 * Conserve fuel
 * Conserve time
 * Conserve ship integrity / maintenance cost
