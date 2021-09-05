@@ -54,3 +54,4 @@ Stub. Tracking notes for a game idea. AI controller for a simulated rocket
 * maybe player is managing a fleet
 * maybe player is fighting a war between two factions and AIs are controlling ships??
 * balance between simple game & capable AI development
+* maybe player is managing colonies & trading food for minerals, keeping their station's people alive, but at the mercy of little AI controlled ships that bring shipments from one port to another
