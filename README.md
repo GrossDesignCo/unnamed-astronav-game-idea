@@ -19,12 +19,14 @@ Stub. Tracking notes for a game idea. AI controller for a simulated rocket
 * 2D to start, maybe 3D later
 * Realistic scale/sizes
 * 1-2 Stars (or maybe 0-N objects of random mass?)
+* Sol system map vs generated systems, maybe levels like in Mini Motorways with increasing complexity
 
 ## Base Object class
 * Mass/Gravitational pull
 * velocity
 * direction
 * volume/size
+* spin
 
 ## Planets
 * Basic physics
