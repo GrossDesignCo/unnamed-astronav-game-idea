@@ -43,4 +43,10 @@ Stub. Tracking notes for a game idea. AI controller for a simulated rocket
 * Conserve time
 * Conserve strain on the ship / maintenance cost
 * Don't crash
-* Keep ship from losing integgrity
+* Keep ship from losing integrity
+
+## Game Ideas
+* maybe long term the player owns a spaceport and is trying to mine asteroids, like a space-based mini-motorways
+* Or player is ordering journeys between certain ports and the AI has to fulfil those journeys
+* maybe player is managing a fleet
+* maybe player is fighting a war between two factions and AIs are controlling ships??
