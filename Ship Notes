@@ -51,3 +51,8 @@ Take off
 - port position, planet spin, planet velocity determine ship starting position, velocity
 - start applying thrust
 - position now defined relative to system (x, y)
+
+Destroyed
+- stop applying thrust
+- maybe set a flag & allow it to keep drifting 
+- maybe just delete it
