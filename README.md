@@ -71,3 +71,12 @@ Stub. Tracking notes for a game idea. AI controller for a simulated rocket
 * Maybe automated civilian transports, but a player-controlled set of military ships, guarding from space-pirates or a rival faction?
   * would teach AI to have to respond to erratic human commands & destinations
   * player would get to watch their fly around via physics & learn orbital mechanics for themselves
+* Waves of alien attacks that get faster and bigger until the player is overwhelmed!
+  * increasingly complex systems 
+  * increasingly aggressive aliens
+  * ability to build more-better ships to fight the aliens with
+* Conpetitive mode
+  * two players start on different planets
+  * have to expand/out-mine each other
+  * maybe survive aliens attacks longer than the other 
+  * destroy all each other's ships/ports
