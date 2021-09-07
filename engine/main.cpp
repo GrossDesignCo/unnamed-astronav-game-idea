@@ -1,8 +1,8 @@
 #include <iostream>
+#include "object.cpp"
 
 int main()
 {
-  std::cout << "Hello, World!" << std::endl;
-
+  Object test;
   return 0;
 }
