@@ -1,0 +1,30 @@
+# UI Notes
+
+Controls:
+
+Pan (x, y)
+
+Zoom (z)
+
+Rotate (?)
+- seems kinda weird, but maybe?
+- might give people vertigo
+
+Scale objects (0-N)
+- 1 would be actual size
+- realistic solar system scale would be kind of boring to look at / hard to see
+- warp distances somehow so that the view gets more zoomed in the closer it gets to an object
+- similar to Homeworld Remastered setting (?)
+
+Pause
+
+Speed (0-N days/s)
+- default to 0.25 maybe?
+
+Show paths of each object for the next N days
+
+Save
+- objects
+  - all data
+- date/time
+- settings (speed, zoom, etc)
