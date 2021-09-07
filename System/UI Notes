@@ -1,6 +1,6 @@
 # UI Notes
 
-Controls:
+## Controls:
 
 Pan (x, y)
 
@@ -21,10 +21,16 @@ Pause
 Speed (0-N days/s)
 - default to 0.25 maybe?
 
-Show paths of each object for the next N days
-
 Save
 - objects
   - all data
 - date/time
 - settings (speed, zoom, etc)
+
+## View:
+
+Tracks the center of mass of the system (all objects)
+
+As the user moves around, view is constantly adjusted to keep the system in view, even if the whole system is gradually moving away from (0,0)
+
+Show paths of each object for the next N days
