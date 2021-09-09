@@ -2,12 +2,12 @@
 
 ## Math
 
-Force = m*a
+Force = m\*a
 Acceleration = f/m
 Mass = f/a
 
-Force = G((mass1 (kg) * mass2 (kg))/(distance (m)^2))
-Force = 6.674*10^11 (kg/m)^2 * mass1 (kg) * mass2 (kg) / distance (m) * distance (m)
+Force = G((mass1 (kg) x mass2 (kg))/(distance (m)^2))
+Force = 6.674*10^11 (kg/m)^2 x mass1 (kg) x mass2 (kg) / distance (m) x distance (m)
 G = 6.674*10^11 (kg/m)^2
 
 Eventually need to figure out the more complete math that depends on mass distribution within object
@@ -46,10 +46,10 @@ Need to figure out what the most efficient scale for computation is at the syste
 
 Example Masses:
 
-* Earth: 5.972*10^24 (kg)
-* Sun: 1.989*10^30 (kg)
-* Moon: 7.348*10^22 (kg)
-* Typical rocket?: 5.5*10^5 (kg)
+- Earth: 5.972\*10^24 (kg)
+- Sun: 1.989\*10^30 (kg)
+- Moon: 7.348\*10^22 (kg)
+- Typical rocket?: 5.5\*10^5 (kg)
 
 ## Behaviors
 
