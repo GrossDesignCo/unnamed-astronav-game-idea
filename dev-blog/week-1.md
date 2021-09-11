@@ -132,3 +132,5 @@ I haven't made a final decision, but I think Unreal is going to win out, thanks 
 ## Wrapup
 
 We'll see. Hopefull this repo continues to get used and we don't get totally baked into the engine, but next week will tell :)
+
+Overall not bad for a few hours work in the evenings. Have to make certain this doesn't interfere with work & life already happening.
