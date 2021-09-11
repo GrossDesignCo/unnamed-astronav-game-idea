@@ -10,7 +10,7 @@ Goals for this week:
 
 Open question for now, maybe the best approach, if I'm going to be stuck with an overkill game engine anyway, is to start with 3D and use an isomorphic camera to fake a 2D game.
 
-1. It probably wouldn't be that much more expensive in terms of performance
+1. It probably wouldn't be _that_ much more expensive in terms of performance
 2. Closer to real-world physics
 3. Creating 3d views or aspects would be a lot simpler long-term
 
