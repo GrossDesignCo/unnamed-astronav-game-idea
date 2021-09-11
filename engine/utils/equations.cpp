@@ -45,7 +45,7 @@
 Force getGForce(double m1 = 0, double m2 = 0, Distance d = Distance(0, 0))
 {
   const double G = 6.674e-11;
-  double total = (G * m1 * m2) / pow(d.hyp, 2);
+  double total = (G * m1 * m2) / (d.hyp * d.hyp);
 
   // Take the abs of the proportion,
   // otherwise negative x values could cancel out positive y values & vicce=versa

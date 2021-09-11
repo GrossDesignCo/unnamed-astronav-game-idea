@@ -2,6 +2,8 @@
 #include <iostream>
 #include <iomanip>
 
+using namespace std;
+
 struct Point
 {
   // x, y position
@@ -21,9 +23,9 @@ struct Point
   }
 
   // Overload << operator
-  friend std::ostream &operator<<(std::ostream &os, const Point p)
+  friend ostream &operator<<(ostream &os, const Point p)
   {
-    os << std::setw(10) << p.x << "," << std::setw(10) << p.y;
+    os << setw(10) << p.x << "," << setw(10) << p.y;
     return os;
   }
 };

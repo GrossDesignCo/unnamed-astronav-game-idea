@@ -2,6 +2,8 @@
 #include <iostream>
 #include <iomanip>
 
+using namespace std;
+
 struct Velocity
 {
   // x, y magnitude (m/s?)
@@ -21,9 +23,9 @@ struct Velocity
   }
 
   // Overload << operator
-  friend std::ostream &operator<<(std::ostream &os, const Velocity v)
+  friend ostream &operator<<(ostream &os, const Velocity v)
   {
-    os << std::setw(10) << v.x << "," << std::setw(10) << v.y;
+    os << setw(10) << v.x << "," << setw(10) << v.y;
     return os;
   }
 };

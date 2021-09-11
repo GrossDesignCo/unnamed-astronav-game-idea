@@ -2,6 +2,8 @@
 #include <iostream>
 #include <iomanip>
 
+using namespace std;
+
 struct Force
 {
   // x, y Force in kg/s
@@ -21,9 +23,9 @@ struct Force
   }
 
   // Overload << operator
-  friend std::ostream &operator<<(std::ostream &os, const Force f)
+  friend ostream &operator<<(ostream &os, const Force f)
   {
-    os << std::setw(10) << f.x << "," << std::setw(10) << f.y;
+    os << setw(10) << f.x << "," << setw(10) << f.y;
     return os;
   }
 

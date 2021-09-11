@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cmath>
 
+using namespace std;
+
 struct Distance
 {
   // x, y distance
@@ -24,7 +26,7 @@ struct Distance
   }
 
   // Overload << operator
-  friend std::ostream &operator<<(std::ostream &os, const Distance d)
+  friend ostream &operator<<(ostream &os, const Distance d)
   {
     os << d.hyp << "(x: " << d.x << ", y: " << d.y << ")";
     return os;

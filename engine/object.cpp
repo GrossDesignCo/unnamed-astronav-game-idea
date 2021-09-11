@@ -10,7 +10,7 @@
 class Object
 {
 public:
-  std::string name;
+  string name;
   double radius;
   // x, y position (m?)
   Point pos;
@@ -19,7 +19,7 @@ public:
   // x, y magnitude (m/s)
   Velocity velocity;
 
-  Object(std::string n, double r, Point p, double m, Velocity v)
+  Object(string n, double r, Point p, double m, Velocity v)
   {
     name = n;
     radius = r;
@@ -27,7 +27,7 @@ public:
     mass = m;
     setVelocity(v);
 
-    std::cout << "Object constructed at (" << pos << ")" << std::endl;
+    cout << "Object constructed at (" << pos << ")" << endl;
   };
 
   Velocity getVelocity()
