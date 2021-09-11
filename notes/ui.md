@@ -55,6 +55,8 @@ White/light grey line indicating future path
 
 Some kind of topography maybe to help visualize spin
 
+Some way to visualize the gravity wells and directions of pull across the system
+
 ### Ships
 
 Player color

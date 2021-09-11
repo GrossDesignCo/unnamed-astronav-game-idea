@@ -33,3 +33,6 @@ Maybe:
 
 - Terrestrial
 - Jovian?
+
+Idea for a game mode: two planets are on a collision course, trying to evacuate people before they hit
+Might need collision physics?
