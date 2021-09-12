@@ -66,3 +66,8 @@ Destroyed
 - stop applying thrust
 - maybe set a flag & allow it to keep drifting
 - maybe just delete it
+
+Combat
+
+- projectiles might be cool
+- would need to make them really fast, like rail-gun fast
