@@ -39,3 +39,19 @@ Idea: Start simple & zoom out, slowly getting more and more chaotic
 2-3 weeks to system/orbital bodies
 1-2 weeks art style stuff
 2-3 months for AI dev
+
+## Game Ideas
+
+Player is a Space Pirate
+
+- one player ship, flying around the system
+- lots of AI ships, civilian and military
+- player has to capture/loot/destroy as many AI ships as possible
+- AI is getting wise to the player as time goes on, sending more military ships to catch/kill them
+- player gets into sticky situations where they suddenly stumble on danger and have to run for their lives!!
+
+Player escaped from prison and stole a ship
+
+- have to get from one planet to another
+- AI police are chasing them
+- simple, but really fast levels of difficulty
