@@ -15,3 +15,17 @@ Open question for now, maybe the best approach, if I'm going to be stuck with an
 3. Creating 3d views or aspects would be a lot simpler long-term
 
 Idea: Use a shader to draw a thick white line around the edge of planets, leaving them black, so that in 3D you could pan around, but the planet always looks like a 2D circle on the screen, Asteroids-style.
+
+## Game Ideas
+
+Player is a Space Pirate
+- one player ship, flying around the system
+- lots of AI ships, civilian and military
+- player has to capture/loot/destroy as many AI ships as possible
+- AI is getting wise to the player as time goes on, sending more military ships to catch/kill them
+- player gets into sticky situations where they suddenly stumble on danger and have to run for their lives!!
+
+Player escaped from prison and stole a ship
+- have to get from one planet to another
+- AI police are chasing them
+- simple, but really fast levels of difficulty
