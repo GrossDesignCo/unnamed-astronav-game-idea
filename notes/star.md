@@ -2,6 +2,12 @@
 
 Object (base class, covers core physics)
 
+Big white filled circle instead of circle that's outlined like planets
+
+Soft white glow coming off
+
+Thin red dashed line around it that marks wherever ships should avoid to keep from getting too close
+
 Radiation Hazard
 
 - reduces ship integrity by some amount / second
