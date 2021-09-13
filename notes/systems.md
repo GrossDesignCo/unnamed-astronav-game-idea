@@ -3,6 +3,9 @@
 Earth and Moon
 
 - super basic, two bodies and a ship maybe, get the player used to the mechanics
+- earth is spinning constantly
+- moon is tidally locked to earth though, so station always facing inward?
+- or maybe a station at the earth-moon Lagrange?
 
 Sum, Mercury, Venus, Earth and Moon
 
