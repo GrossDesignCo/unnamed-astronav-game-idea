@@ -20,6 +20,8 @@ Idea: Use a shader to draw a thick white line around the edge of planets, leavin
 
 ## Notes
 
+Maybe use systemuicons in the menu system?
+
 Found a good solar system scale reference: https://joshworth.com/dev/pixelspace/pixelspace_solarsystem.html
 
 Idea: Start simple & zoom out, slowly getting more and more chaotic
