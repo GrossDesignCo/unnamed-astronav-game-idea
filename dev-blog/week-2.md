@@ -1,5 +1,7 @@
 # Dev Blog #2
 
+9/11 - 9/18 (2021)
+
 Goals for this week:
 
 1. Learn the basics of Unreal Engine (levels, objects) & how to get some realistic physics working at a planetary system scale
@@ -43,6 +45,10 @@ Adding collisions to objects and keeping them from starting too far away helps w
 Learning up on UI dev tools, menus, game modes, a lot ofthe logistical basics of the engine. (eg. pause/settings/exit/pick level/mode)
 
 Idea for the main menu of the game: have the intro scenario (earth and moon, and maybe like 1 ship) running in the background, then have a blurred panel on one side with some basic menu options (no idea what those would be yet)
+
+Also figured out the basics of creating game modes, player spectator cameras, and a tiny bit about post-processing
+
+I'm just barely kinda-sorta understanding them. At least enough to follow along youtube tutorials on things like RTS camera movement.
 
 ## Timeline
 

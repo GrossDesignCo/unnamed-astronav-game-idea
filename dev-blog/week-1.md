@@ -1,5 +1,7 @@
 # Dev Blog #1
 
+9/4 - 9/11 (2021)
+
 This week I logged a bunch of ideas for ways to convert an AI-based space-navigation simulator into an indie game :)
 
 And got started on a basic cartesian physics engine.
