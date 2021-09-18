@@ -16,7 +16,7 @@ Open question for now, maybe the best approach, if I'm going to be stuck with an
 2. Closer to real-world physics
 3. Creating 3d views or aspects would be a lot simpler long-term
 
-Idea: Use a shader to draw a thick white line around the edge of planets, leaving them black, so that in 3D you could pan around, but the planet always looks like a 2D circle on the screen, Asteroids-style.
+Idea: Use a shader to draw a thick white line around the edge of planets, leaving them black, so that in 3D you could pan around, but the planet always looks like a 2D circle on the screen, Asteroids-style?
 
 ## Notes
 
@@ -32,9 +32,17 @@ Idea: Start simple & zoom out, slowly getting more and more chaotic
 
 ## Engine Learning
 
-- Unreal 4's Blueprints only support float precision, not doubles
-- Can't use 6.674e-11 notation in blueprints (might be a float issue, but probably need to just go back to the code editor)
-- There's a humorous spike that happens when bodies are heading towards eachother and get nearly infnitely close, which dials up the gravitational force to near infinite, and hurls them crazy fast in opposite directions (just need to implement object radii to prevent that, UE handles collisions remarkably well)
+Unreal 4's Blueprints only support float precision, not doubles. We can't use 6.674e-11 notation in blueprints (might be a float issue, but probably need to just go back to the code editor).
+
+Apparently there's issues with floats & doubles in generall in computer science with very large or very small numbers. In the case of this sim, we want to use both, which may present a problem.
+
+Also There's a humorous spike that happens when bodies are heading towards eachother and get nearly infnitely close, which dials up the gravitational force to near infinite, and hurls them crazy fast in opposite directions (just need to implement object radii to prevent that, UE handles collisions remarkably well)
+
+Adding collisions to objects and keeping them from starting too far away helps with this, as they collide before hitting the sub-1 point where force approaches to infinity.
+
+Learning up on UI dev tools, menus, game modes, a lot ofthe logistical basics of the engine. (eg. pause/settings/exit/pick level/mode)
+
+Idea for the main menu of the game: have the intro scenario (earth and moon, and maybe like 1 ship) running in the background, then have a blurred panel on one side with some basic menu options (no idea what those would be yet)
 
 ## Timeline
 
