@@ -27,3 +27,23 @@ Learned about general relativity's effects on orbiting bodies
 
 https://en.m.wikipedia.org/wiki/Two-body_problem_in_general_relativity#Precession_of_elliptical_orbits
 
+## Possible solutions to the scale problem
+
+Double precision might help with the math, but still the distances between planets makes for a pretty sparse screen.
+
+Options:
+
+scale up G to force per day instead of force per second?
+
+It would be a boring game if the moon took a literal month to orbit the earth, so about 1 day / second makes sense for the game's time-scale
+
+That would get G into the 4-decimal range that Unreal likes
+
+Maybe scale down masses and distances as well?
+
+M*M and D*D means we should be able to just chop off the same number of decimal places and get the math to still work, keeping the proportions
+
+Problem: the rocket's mass need to use used to figure out how fast it would fall, so we'd have to scale that mass too
+Maybe it's some small fraction, like 0.000031 megagrams?
+
+Figure out a scaled version of the same formulas to use?
