@@ -20,3 +20,10 @@ Need to keep all planets on screen
 - Average the position of all planets
 - get the distance between the center point and the farthest planet (+ some extra buffer space)
 - set the camera to capture that space (?)
+
+## Relativity and Orbits
+
+Learned about general relativity's effects on orbiting bodies
+
+https://en.m.wikipedia.org/wiki/Two-body_problem_in_general_relativity#Precession_of_elliptical_orbits
+
