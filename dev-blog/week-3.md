@@ -47,3 +47,14 @@ Problem: the rocket's mass need to use used to figure out how fast it would fall
 Maybe it's some small fraction, like 0.000031 megagrams?
 
 Figure out a scaled version of the same formulas to use?
+
+## Art style notes
+
+Option A:
+- white outlines for each planet
+- white outlines for asteroids
+
+Option B:
+- simple graphical meshes for each planet
+- orange disc with little white in the middle for Mars
+- low-poly blue and green with little white in the middle for Earth
