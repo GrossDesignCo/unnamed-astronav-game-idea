@@ -13,3 +13,10 @@ If we get ambitious, maybe:
 
 1. Do up some simple 3d asteroids
 2. Start on a basic ship class that can do some basic actions
+
+## Camera Work
+
+Need to keep all planets on screen
+- Average the position of all planets
+- get the distance between the center point and the farthest planet (+ some extra buffer space)
+- set the camera to capture that space (?)
