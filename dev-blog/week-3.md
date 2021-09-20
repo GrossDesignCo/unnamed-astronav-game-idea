@@ -58,3 +58,4 @@ Option B:
 - simple graphical meshes for each planet
 - orange disc with little white in the middle for Mars
 - low-poly blue and green with little white in the middle for Earth
+- benefit to having some kind of illustration for planets is that it would be easier to visualize them spinning, especially if it's spinning once per second
