@@ -19,3 +19,21 @@ Math:
 Damage (integrity/s) = star mass (kg) / sqrt(distance from ship (km))
 
 Need to figure out how "integrity" is computed /modified
+
+## Types of Stars
+
+Sol (basic star)
+
+- Medium mass
+- radiation
+
+Black Hole
+
+- REALLY big mass
+- radiation
+- time dilation/relativity
+
+Red Giant?
+
+- Medium mass
+- Large radius

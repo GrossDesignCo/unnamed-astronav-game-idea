@@ -1,6 +1,6 @@
 # Dev Blog #3
 
-9/18 - (2021)
+9/18 - 9/ (2021)
 
 Last week was a lot of engine learning & not much else. Goals for this week:
 
@@ -17,6 +17,7 @@ If we get ambitious, maybe:
 ## Camera Work
 
 Need to keep all planets on screen
+
 - Average the position of all planets
 - get the distance between the center point and the farthest planet (+ some extra buffer space)
 - set the camera to capture that space (?)
@@ -51,11 +52,19 @@ Figure out a scaled version of the same formulas to use?
 ## Art style notes
 
 Option A:
+
 - white outlines for each planet
 - white outlines for asteroids
 
 Option B:
+
 - simple graphical meshes for each planet
 - orange disc with little white in the middle for Mars
 - low-poly blue and green with little white in the middle for Earth
 - benefit to having some kind of illustration for planets is that it would be easier to visualize them spinning, especially if it's spinning once per second
+
+## Engine Facepalms
+
+Seriously, why doesn't UE support scientific notation again?
+
+Also, object scale and distance don't use the same units. An there's no clear conversion scale between one and the other
