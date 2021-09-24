@@ -13,6 +13,10 @@
 
 int main()
 {
+  double test = 3.123e+33;
+  double test2 = 6.6e-22;
+
+  std::cout << test * test2 << std::endl;
   // Load Earth & Moon
   intro();
 
