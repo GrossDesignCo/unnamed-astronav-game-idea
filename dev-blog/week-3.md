@@ -1,6 +1,6 @@
 # Dev Blog #3
 
-9/18 - 9/ (2021)
+9/18 - 9/25 (2021)
 
 Last week was a lot of engine learning & not much else. Goals for this week:
 
@@ -43,7 +43,7 @@ That would get G into the 4-decimal range that Unreal likes
 
 Maybe scale down masses and distances as well?
 
-M*M and D*D means we should be able to just chop off the same number of decimal places and get the math to still work, keeping the proportions
+MxM and DxD means we should be able to just chop off the same number of decimal places and get the math to still work, keeping the proportions
 
 Problem: the rocket's mass need to use used to figure out how fast it would fall, so we'd have to scale that mass too
 Maybe it's some small fraction, like 0.000031 megagrams?

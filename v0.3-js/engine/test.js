@@ -1,46 +1,74 @@
 import { Canvas } from './Canvas';
-import { Planet } from '../objects/planet';
+import { Planet } from '../objects/Planet';
+import { Stats } from '../objects/Stats';
 
 export const playGame = (canvas) => {
+  console.log('Init!');
+  // 1 Day: 368000
   const space = new Canvas({ canvas });
   const ctx = space.getCtx();
 
-  const planets = [
+  const objects = [
+    new Stats(),
+    // https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
     new Planet({
       name: 'Terra',
-      pos: { x: 0, y: 0 },
-      mass: 5.97237e24,
-      radius: 20,
+      pos: { x: 0, y: 0 }, // m
+      mass: 5.97237e24, // kg
+      velocity: { x: 0, y: 0 }, // m/s
+      radius: 6378137, // m
+      isFocalPoint: true,
     }),
+    // https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html
     new Planet({
       name: 'Luna',
-      pos: { x: 100, y: 0 },
+      pos: { x: 0, y: 378000000 },
       mass: 7.348e22,
-      radius: 10,
+      velocity: { x: 970, y: 0 },
+      // velocity: { x: 0, y: 1022 * space.timeScale },
+      radius: 1738100,
     }),
+
+    // Test Bodies
+    // new Planet({
+    //   name: 'Big',
+    //   pos: { x: 0, y: 0 },
+    //   mass: 100000,
+    //   velocity: { x: 0, y: 0 },
+    //   radius: 100,
+    //   isFocalPoint: true,
+    // }),
+    // new Planet({
+    //   name: 'Small',
+    //   pos: { x: 300, y: 400 },
+    //   mass: 1000,
+    //   velocity: { x: 0, y: 0 },
+    //   radius: 10,
+    // }),
   ];
 
-  let frameRate = 0;
+  console.log('Start:', { dist: space.maxDist, objects });
 
   const update = (dt) => {
-    frameRate = `${(1 / dt).toPrecision(2)} fps`;
+    console.log('Update', { objects });
+    objects.forEach((obj) => {
+      if (obj.computeNetGForceFrom) {
+        obj.computeNetGForceFrom(objects);
+      }
+
+      obj.update(dt, space);
+    });
+
+    space.update(objects);
+    console.log('Done Updating', { objects });
   };
 
   const render = () => {
-    ctx.clearRect(0, 0, space.width, space.height);
-
+    ctx.clearRect(0, 0, space.getWidth(), space.getHeight());
     ctx.save();
-    ctx.font = '12px sans-serif';
-    ctx.fillStyle = '#fff';
-    ctx.translate(10, 20);
-    ctx.fillText(frameRate, 0, 0);
 
-    planets.forEach((planet) => {
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.translate(space.width / 2, space.height / 2);
-
-      ctx.translate(planet.pos.x, planet.pos.y);
-      planet.draw(ctx);
+    objects.forEach((object) => {
+      object.draw(space);
     });
 
     ctx.restore();
@@ -49,9 +77,31 @@ export const playGame = (canvas) => {
   /**
    * Core Loop
    */
+  let totalTime = 0;
+  let logTime = 0;
+  let logs = 0;
   const loop = (newTime) => {
-    // Time in seconds?
-    const deltaTime = (newTime - time) / 1000;
+    // Elapsed time between renders (seconds)
+    const deltaTime = Math.max(newTime - time, 1) / 1000;
+    totalTime += deltaTime;
+    logTime -= deltaTime;
+
+    if (logTime <= 0) {
+      console.log('Loop:', {
+        deltaTime,
+        totalTime,
+        dist: space.maxDist,
+        objects,
+      });
+
+      logTime = 1;
+      logs += 1;
+    }
+
+    if (space.maxDist > 1e10 || logs > 3) {
+      console.log('Stopping Sim');
+      return;
+    }
 
     update(deltaTime);
     render();
