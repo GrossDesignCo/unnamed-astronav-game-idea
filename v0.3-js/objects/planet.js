@@ -55,7 +55,7 @@ export class Planet {
   draw(space) {
     const ctx = space.getCtx();
     const visRadius = this.radius * space.scale;
-    const outline = 2 + visRadius / 8;
+    const outline = 1.2 + visRadius / 8;
     // reset
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     // start from center

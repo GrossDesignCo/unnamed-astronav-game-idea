@@ -1,11 +1,11 @@
-import { Canvas } from './Canvas';
+import { update } from './update';
+import { render } from './render';
+import { Canvas } from '../objects/Canvas';
 import { Planet } from '../objects/Planet';
 import { Stats } from '../objects/Stats';
 
 export const playIntro = (canvas) => {
-  console.log('Init!');
   const space = new Canvas({ canvas });
-  const ctx = space.getCtx();
 
   /**
    * Data in km/day:
@@ -33,33 +33,6 @@ export const playIntro = (canvas) => {
       radius: 1738.0,
     }),
   ];
-
-  console.log('Start:', { dist: space.maxDist, objects });
-
-  const update = (dt) => {
-    console.log('Update', { objects });
-    objects.forEach((obj) => {
-      if (obj.computeAccel) {
-        obj.computeAccel(dt, objects);
-      }
-
-      obj.update(dt, space);
-    });
-
-    space.update(objects);
-    console.log('Done Updating', { objects });
-  };
-
-  const render = () => {
-    ctx.clearRect(0, 0, space.getWidth(), space.getHeight());
-    ctx.save();
-
-    objects.forEach((object) => {
-      object.draw(space);
-    });
-
-    ctx.restore();
-  };
 
   /**
    * Core Loop
@@ -92,8 +65,8 @@ export const playIntro = (canvas) => {
       return;
     }
 
-    update(deltaTime);
-    render();
+    update(deltaTime, space, objects);
+    render(space, objects);
 
     time = newTime;
     if (playing) {

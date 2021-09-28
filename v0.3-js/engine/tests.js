@@ -1,11 +1,11 @@
-import { Canvas } from './Canvas';
+import { update } from './update';
+import { render } from './render';
+import { Canvas } from '../objects/Canvas';
 import { Planet } from '../objects/Planet';
 import { Stats } from '../objects/Stats';
 
 export const basicGravity = (canvas) => {
-  console.log('Init!');
   const space = new Canvas({ canvas });
-  const ctx = space.getCtx();
 
   const objects = [
     new Stats(),
@@ -25,29 +25,6 @@ export const basicGravity = (canvas) => {
       radius: 1738.0,
     }),
   ];
-
-  const update = (dt) => {
-    objects.forEach((obj) => {
-      if (obj.computeAccel) {
-        obj.computeAccel(dt, objects);
-      }
-
-      obj.update(dt, space);
-    });
-
-    space.update(objects);
-  };
-
-  const render = () => {
-    ctx.clearRect(0, 0, space.getWidth(), space.getHeight());
-    ctx.save();
-
-    objects.forEach((object) => {
-      object.draw(space);
-    });
-
-    ctx.restore();
-  };
 
   /**
    * Core Loop
@@ -79,8 +56,8 @@ export const basicGravity = (canvas) => {
       return;
     }
 
-    update(deltaTime);
-    render();
+    update(deltaTime, space, objects);
+    render(space, objects);
 
     time = newTime;
     window.requestAnimationFrame(loop);
@@ -93,17 +70,25 @@ export const basicGravity = (canvas) => {
 export const renderAllAssets = (canvas) => {
   const space = new Canvas({ canvas });
 
-  const earth = new Planet({
-    name: 'Terra',
-    pos: { x: 0, y: 0 }, // km
-    radius: 50, // km
-  });
-  earth.draw(space);
+  const objects = [
+    new Planet({
+      name: 'Terra',
+      pos: { x: 0, y: 0 }, // km
+      radius: 50, // km
+    }),
+    new Planet({
+      name: 'Luna',
+      pos: { x: 200, y: 0 },
+      radius: 10,
+    }),
+    new Planet({
+      name: 'TinyPlanet',
+      pos: { x: 300, y: 0 },
+      radius: 1,
+    }),
+  ];
 
-  const moon = new Planet({
-    name: 'Luna',
-    pos: { x: 200, y: 0 },
-    radius: 10,
+  objects.forEach((obj) => {
+    obj.draw(space);
   });
-  moon.draw(space);
 };
