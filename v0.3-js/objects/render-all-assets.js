@@ -1,24 +1,27 @@
 import { Canvas } from '../engine/Canvas';
-import { planet } from '../objects/planet';
-import { ship } from './ship';
-import { star } from './star';
+import { Planet } from '../objects/Planet';
 
 export const renderAllAssets = (canvas) => {
   const space = new Canvas({ canvas });
-  const ctx = space.getCtx();
 
-  ctx.translate(100, 100);
-  planet(ctx, 30);
+  const earth = new Planet({
+    name: 'Terra',
+    pos: { x: 0, y: 0 }, // km
+    radius: 50, // km
+  });
+  earth.draw(space);
 
-  ctx.translate(200, 0);
-  planet(ctx, 60);
+  const moon = new Planet({
+    name: 'Luna',
+    pos: { x: 200, y: 0 },
+    radius: 10,
+  });
+  moon.draw(space);
 
-  ctx.translate(200, 0);
-  ship(ctx);
-
-  ctx.translate(200, 0);
-  ship(ctx, 2);
-
-  ctx.translate(0, 200);
-  star(ctx, 60);
+  const tiny = new Planet({
+    name: 'TinyPlanet',
+    pos: { x: 300, y: 0 },
+    radius: 1,
+  });
+  tiny.draw(space);
 };

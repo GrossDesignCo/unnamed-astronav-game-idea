@@ -2,49 +2,36 @@ import { Canvas } from './Canvas';
 import { Planet } from '../objects/Planet';
 import { Stats } from '../objects/Stats';
 
-export const playGame = (canvas) => {
+export const playIntro = (canvas) => {
   console.log('Init!');
-  // 1 Day: 368000
   const space = new Canvas({ canvas });
   const ctx = space.getCtx();
+
+  /**
+   * Data in km/day:
+   * 1 day = 86400.0 seconds
+   */
 
   const objects = [
     new Stats(),
     // https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
     new Planet({
       name: 'Terra',
-      pos: { x: 0, y: 0 }, // m
+      pos: { x: 0, y: 0 }, // km
       mass: 5.97237e24, // kg
-      velocity: { x: 0, y: 0 }, // m/s
-      radius: 6378137, // m
+      velocity: { x: 0, y: 0 }, // km/d
+      radius: 6378.137, // km
       isFocalPoint: true,
     }),
     // https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html
     new Planet({
       name: 'Luna',
-      pos: { x: 0, y: 378000000 },
-      mass: 7.348e22,
-      velocity: { x: 970, y: 0 },
-      // velocity: { x: 0, y: 1022 * space.timeScale },
-      radius: 1738100,
+      pos: { x: 378000, y: 0 },
+      mass: 7.349e22,
+      // velocity: { x: 0, y: 0 }, // km/d
+      velocity: { x: 0, y: -0.97 * 86400 }, // km/d
+      radius: 1738.0,
     }),
-
-    // Test Bodies
-    // new Planet({
-    //   name: 'Big',
-    //   pos: { x: 0, y: 0 },
-    //   mass: 100000,
-    //   velocity: { x: 0, y: 0 },
-    //   radius: 100,
-    //   isFocalPoint: true,
-    // }),
-    // new Planet({
-    //   name: 'Small',
-    //   pos: { x: 300, y: 400 },
-    //   mass: 1000,
-    //   velocity: { x: 0, y: 0 },
-    //   radius: 10,
-    // }),
   ];
 
   console.log('Start:', { dist: space.maxDist, objects });
@@ -52,8 +39,8 @@ export const playGame = (canvas) => {
   const update = (dt) => {
     console.log('Update', { objects });
     objects.forEach((obj) => {
-      if (obj.computeNetGForceFrom) {
-        obj.computeNetGForceFrom(objects);
+      if (obj.computeAccel) {
+        obj.computeAccel(dt, objects);
       }
 
       obj.update(dt, space);
@@ -80,6 +67,8 @@ export const playGame = (canvas) => {
   let totalTime = 0;
   let logTime = 0;
   let logs = 0;
+  let playing = true;
+
   const loop = (newTime) => {
     // Elapsed time between renders (seconds)
     const deltaTime = Math.max(newTime - time, 1) / 1000;
@@ -98,7 +87,7 @@ export const playGame = (canvas) => {
       logs += 1;
     }
 
-    if (space.maxDist > 1e10 || logs > 3) {
+    if (space.maxDist > 1e8) {
       console.log('Stopping Sim');
       return;
     }
@@ -107,7 +96,9 @@ export const playGame = (canvas) => {
     render();
 
     time = newTime;
-    window.requestAnimationFrame(loop);
+    if (playing) {
+      window.requestAnimationFrame(loop);
+    }
   };
 
   let time = 0;
@@ -133,4 +124,20 @@ export const playGame = (canvas) => {
 
   // window.addEventListener('keydown', keydown, false);
   // window.addEventListener('keyup', keyup, false);
+
+  window.addEventListener('keyup', (e) => {
+    if (e.key === ' ') {
+      if (playing) {
+        playing = false;
+      } else {
+        playing = true;
+        window.requestAnimationFrame(loop);
+      }
+    }
+
+    if (e.key === 'RightArrow') {
+      // Step forward one second
+      loop(1000);
+    }
+  });
 };

@@ -2,7 +2,7 @@ export class Canvas {
   constructor({ canvas, timeScale }) {
     this.canvas = canvas;
     this.ctx = canvas.current.getContext('2d');
-    this.scale = 0;
+    this.scale = 1;
     this.offset = {
       x: 0,
       y: 0,
@@ -38,7 +38,7 @@ export class Canvas {
         const dist = Math.hypot(dx, dy);
 
         // Scale the canvas to the largest distance
-        if (dist > this.maxDist) this.maxDist = dist.toExponential(5);
+        this.maxDist = dist.toExponential(5);
       });
 
       if (obj.isFocalPoint) {
@@ -47,7 +47,12 @@ export class Canvas {
       }
     });
 
-    this.scale = this.canvas.current.height / 2 / this.maxDist / 1.25;
+    const smallerAxis =
+      this.canvas.current.height < this.canvas.current.width
+        ? this.canvas.current.height
+        : this.canvas.current.width;
+
+    this.scale = smallerAxis / 2 / this.maxDist / 1.25;
   }
 
   getCtx() {
