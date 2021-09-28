@@ -1,12 +1,8 @@
 export class Canvas {
   constructor({ canvas, timeScale }) {
     this.canvas = canvas;
-    this.ctx = canvas.current.getContext('2d');
     this.scale = 1;
-    this.offset = {
-      x: 0,
-      y: 0,
-    };
+    this.offset = [0, 0];
     this.timeScale = timeScale;
     this.maxDist = 0;
 
@@ -24,17 +20,11 @@ export class Canvas {
   update(objects) {
     objects.forEach((obj) => {
       objects.forEach((target) => {
-        if (
-          !obj.pos ||
-          !target.pos ||
-          !obj.mass ||
-          !target.mass ||
-          obj === target
-        )
+        if (!obj.p || !target.p || !obj.mass || !target.mass || obj === target)
           return;
 
-        const dx = obj.pos.x - target.pos.x;
-        const dy = obj.pos.y - target.pos.y;
+        const dx = obj.p[0] - target.p[0];
+        const dy = obj.p[1] - target.p[1];
         const dist = Math.hypot(dx, dy);
 
         // Scale the canvas to the largest distance
@@ -42,8 +32,8 @@ export class Canvas {
       });
 
       if (obj.isFocalPoint) {
-        this.offset.x = this.getWidth() / 2 - obj.pos.x;
-        this.offset.y = this.getHeight() / 2 - obj.pos.y;
+        this.offset[0] = this.width / 2 - obj.p[0];
+        this.offset[1] = this.height / 2 - obj.p[1];
       }
     });
 
@@ -55,15 +45,15 @@ export class Canvas {
     this.scale = smallerAxis / 2 / this.maxDist / 1.25;
   }
 
-  getCtx() {
-    return this.ctx;
+  get ctx() {
+    return this.canvas.current.getContext('2d');
   }
 
-  getWidth() {
+  get width() {
     return this.canvas.current.width;
   }
 
-  getHeight() {
+  get height() {
     return this.canvas.current.height;
   }
 }

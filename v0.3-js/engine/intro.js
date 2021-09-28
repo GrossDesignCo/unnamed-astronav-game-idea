@@ -17,19 +17,18 @@ export const playIntro = (canvas) => {
     // https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
     new Planet({
       name: 'Terra',
-      pos: { x: 0, y: 0 }, // km
+      pos: [0, 0], // km
       mass: 5.97237e24, // kg
-      velocity: { x: 0, y: 0 }, // km/d
+      velocity: [0, 0], // km/d
       radius: 6378.137, // km
       isFocalPoint: true,
     }),
     // https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html
     new Planet({
       name: 'Luna',
-      pos: { x: 378000, y: 0 },
+      pos: [378000, 0],
       mass: 7.349e22,
-      // velocity: { x: 0, y: 0 }, // km/d
-      velocity: { x: 0, y: -0.97 * 86400 }, // km/d
+      velocity: [0, -0.97 * 86400], // km/d
       radius: 1738.0,
     }),
   ];
@@ -98,19 +97,19 @@ export const playIntro = (canvas) => {
   // window.addEventListener('keydown', keydown, false);
   // window.addEventListener('keyup', keyup, false);
 
-  window.addEventListener('keyup', (e) => {
-    if (e.key === ' ') {
-      if (playing) {
-        playing = false;
-      } else {
-        playing = true;
-        window.requestAnimationFrame(loop);
-      }
-    }
+  // window.addEventListener('keyup', (e) => {
+  //   if (e.key === ' ') {
+  //     if (playing) {
+  //       playing = false;
+  //     } else {
+  //       playing = true;
+  //       window.requestAnimationFrame(loop);
+  //     }
+  //   }
 
-    if (e.key === 'RightArrow') {
-      // Step forward one second
-      loop(1000);
-    }
-  });
+  //   if (e.key === 'RightArrow') {
+  //     // Step forward one second
+  //     loop(1000);
+  //   }
+  // });
 };

@@ -22,7 +22,7 @@ export class Stats {
   }
 
   draw(space) {
-    const ctx = space.getCtx();
+    const ctx = space.ctx;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.translate(10, 20);
 

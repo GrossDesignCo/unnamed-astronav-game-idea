@@ -81,3 +81,11 @@ After passing threshold:
 ```
 
 For frames 5 and 6 of the sim, the acceleration applied by gravity is calculated dramatically wrong
+
+Also just for fun, here's an early attempt at path-prediction for each object.
+
+![Path prediction take 1](./week-4/path-prediction-take-1.gif)
+
+Interestingly, there's also a distinct difference in performance if the logic to update postions based on gravity exists within a planet's code, or whether that logic lives in the space and is performed on the planets, instead of the planets being the ones to perform it.
+
+Essentially, it makes more sense that planets are just inert objects with properties, while space is what is acting on them by applying forces.

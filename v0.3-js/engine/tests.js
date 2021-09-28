@@ -11,17 +11,17 @@ export const basicGravity = (canvas) => {
     new Stats(),
     new Planet({
       name: 'Terra',
-      pos: { x: 0, y: 0 },
+      pos: [0, 0],
       mass: 5.97237e24,
-      velocity: { x: 0, y: 0 },
+      velocity: [0, 0],
       radius: 6378.137,
       isFocalPoint: true,
     }),
     new Planet({
       name: 'Luna',
-      pos: { x: 378000, y: 0 },
+      pos: [378000, 0],
       mass: 7.349e22,
-      velocity: { x: 0, y: 0 },
+      velocity: [0, 0],
       radius: 1738.0,
     }),
   ];
@@ -73,17 +73,17 @@ export const renderAllAssets = (canvas) => {
   const objects = [
     new Planet({
       name: 'Terra',
-      pos: { x: 0, y: 0 }, // km
+      pos: [0, 0], // km
       radius: 50, // km
     }),
     new Planet({
       name: 'Luna',
-      pos: { x: 200, y: 0 },
+      pos: [200, 0],
       radius: 10,
     }),
     new Planet({
       name: 'TinyPlanet',
-      pos: { x: 300, y: 0 },
+      pos: [300, 0],
       radius: 1,
     }),
   ];
