@@ -21,8 +21,8 @@ export class Stats {
     this.lastMaxDist = space.maxDist;
   }
 
-  draw(space) {
-    const ctx = space.ctx;
+  draw(view) {
+    const ctx = view.ctx;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.translate(10, 20);
 
@@ -35,6 +35,6 @@ export class Stats {
     ctx.fillText(`Elapsed ${this.timeElapsed.toFixed(2)} Days`, 0, 0);
 
     ctx.translate(0, 20);
-    ctx.fillText(`Size: ${space.maxDist} (${this.expanding})`, 0, 0);
+    ctx.fillText(`Size: ${view.maxDist} (${this.expanding})`, 0, 0);
   }
 }

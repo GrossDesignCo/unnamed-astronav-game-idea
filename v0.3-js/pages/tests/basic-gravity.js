@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useEffect, useRef } from 'react';
-import { basicGravity } from '../engine/tests';
+import { basicGravity } from '../../engine/tests';
 
 export default function Home() {
   const canvas = useRef();

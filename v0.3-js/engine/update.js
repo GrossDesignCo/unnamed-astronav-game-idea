@@ -7,7 +7,7 @@ export const update = (dt, space, objects) => {
     obj.update(dt, space);
 
     if (obj.predictPath) {
-      obj.predictPath(objects);
+      obj.predictPath(dt, objects);
     }
   });
 

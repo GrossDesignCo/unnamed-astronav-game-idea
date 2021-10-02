@@ -17,32 +17,42 @@ export class Canvas {
     }
   }
 
-  update(objects) {
+  update(objects, space) {
+    this.setOffset(objects);
+    this.setScale(space);
+  }
+
+  setOffset(objects) {
     objects.forEach((obj) => {
-      objects.forEach((target) => {
-        if (!obj.p || !target.p || !obj.mass || !target.mass || obj === target)
-          return;
-
-        const dx = obj.p[0] - target.p[0];
-        const dy = obj.p[1] - target.p[1];
-        const dist = Math.hypot(dx, dy);
-
-        // Scale the canvas to the largest distance
-        this.maxDist = dist.toExponential(5);
-      });
-
       if (obj.isFocalPoint) {
         this.offset[0] = this.width / 2 - obj.p[0];
         this.offset[1] = this.height / 2 - obj.p[1];
       }
     });
+  }
 
+  setScale(space) {
     const smallerAxis =
       this.canvas.current.height < this.canvas.current.width
         ? this.canvas.current.height
         : this.canvas.current.width;
 
-    this.scale = smallerAxis / 2 / this.maxDist / 1.25;
+    this.scale = smallerAxis / 2 / space.maxDist / 1.25;
+    console.log('scale:', this.scale, smallerAxis, space.maxDist);
+  }
+
+  render(objects, stats) {
+    const ctx = this.ctx;
+
+    ctx.clearRect(0, 0, this.width, this.height);
+    ctx.save();
+
+    objects.forEach((obj) => {
+      obj.draw(this);
+    });
+    stats.draw(this);
+
+    ctx.restore();
   }
 
   get ctx() {

@@ -48,7 +48,7 @@ Componentize space to create multiple levels
 
 Learn the math to be able to generate stable orbits
 
-## Gravity Notes
+## Notes on (accurately) simulating gravity
 
 With two large spherical bodies, gravity is slightly different from Newtonian point-masses. This was the problem I ran into early on in Unreal, where point masses can get infinitely close to eachother, which causes the force to approach infinity, taking acceleration, velocity, and position along with it, and in a single frame the smaller mass can accelerate too far away from the larger for the simulation to recover.
 
@@ -82,10 +82,32 @@ After passing threshold:
 
 For frames 5 and 6 of the sim, the acceleration applied by gravity is calculated dramatically wrong
 
+In real gravity, if these point masses were to get close enough together, the force would approach infinity, but instead of flying past eachother the two masses would begin to curve spacetime enough that they would fall deeper into eachother & eventually form a singularity.
+
+If we wanted to model this truly accurately, we'd need to do a lot more calculus. I'm kind of hoping I can get there with this project, but it'll take a lot more math than I'm equipped for at the moment.
+
+## Path Prediction
+
 Also just for fun, here's an early attempt at path-prediction for each object.
 
-![Path prediction take 1](./week-4/path-prediction-take-1.gif)
+![Early Path prediction](./week-4/path-prediction-early-take.gif)
 
-Interestingly, there's also a distinct difference in performance if the logic to update postions based on gravity exists within a planet's code, or whether that logic lives in the space and is performed on the planets, instead of the planets being the ones to perform it.
+Interestingly, there's also a distinct conceptual difference if the logic to update postions based on gravity exists within a planet's code, or whether that logic lives in the space and is performed on the planets, instead of the planets being the ones to perform it.
 
 Essentially, it makes more sense that planets are just inert objects with properties, while space is what is acting on them by applying forces.
+
+From later in the week, here's a slighly more refined (but still very wrong) stab at path prediction, trying to get the starting conditions right.
+
+![Path prediction take 37](./week-4/path-prediction-take-37.png)
+
+## Weird Breakthrough
+
+After tinkering on the gravity nearly every chance I got this week, it turns out that if we set delta-time to a fixed 0.1, we get this!
+
+![First stable orbit](./week-4/first-stable-orbit.gif)
+
+The orbit slowly decays and becomes more chaotic until the moon approaches the edges of that near-infinite gravity issue where the velocity vector crosses the source of gravity and flings it into the abyss, but it's something.
+
+Interestingly, Setting ddt to 0.01 causes the moon to just fly off, and to 0.3 creates a very tight eliptical orbit that decays within a couple periods (and then flys off)
+
+The key difference between the predicted path and the actual orbit appears to be caused by the difference in delta-time.

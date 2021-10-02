@@ -1,14 +1,19 @@
-import { update } from './update';
-import { render } from './render';
-import { Canvas } from '../objects/Canvas';
-import { Planet } from '../objects/Planet';
-import { Stats } from '../objects/Stats';
+import { Canvas } from '../classes/Canvas';
+import { Space } from '../classes/Space';
+import { Planet } from '../classes/Planet';
+import { Stats } from '../classes/Stats';
 
 export const basicGravity = (canvas) => {
-  const space = new Canvas({ canvas });
+  const view = new Canvas({ canvas });
+  const space = new Space({ timeScale: 1 });
+  const stats = new Stats();
+
+  /**
+   * TEST: If the moon were stationary, it should
+   * take about 4.5 days to fall to earth
+   */
 
   const objects = [
-    new Stats(),
     new Planet({
       name: 'Terra',
       pos: [0, 0],
@@ -35,13 +40,13 @@ export const basicGravity = (canvas) => {
 
   const loop = (newTime) => {
     // Elapsed time between renders (seconds)
-    const deltaTime = Math.max(newTime - time, 1) / 1000;
-    totalTime += deltaTime;
-    logTime -= deltaTime;
+    const dt = Math.max(newTime - time, 1) / 1000;
+    totalTime += dt;
+    logTime -= dt;
 
     if (logTime <= 0) {
       console.log('Loop:', {
-        deltaTime,
+        dt,
         totalTime,
         dist: space.maxDist,
         objects,
@@ -56,8 +61,10 @@ export const basicGravity = (canvas) => {
       return;
     }
 
-    update(deltaTime, space, objects);
-    render(space, objects);
+    stats.update(dt, space);
+    space.update(dt, objects);
+    view.update(objects, space);
+    view.render(objects);
 
     time = newTime;
     window.requestAnimationFrame(loop);
@@ -67,19 +74,63 @@ export const basicGravity = (canvas) => {
   window.requestAnimationFrame(loop);
 };
 
+export const initialPathing = (canvas) => {
+  const space = new Space({ timeScale: 1 });
+  const view = new Canvas({ canvas });
+
+  /**
+   * Real planet starting data
+   * 1. Load planets
+   * 2. Scale should be right
+   * 3. Projected path of Luna should be a rough circle around Terra
+   * 4. V and A vectors should be drawn nicely
+   */
+  const objects = [
+    new Planet({
+      name: 'Earth',
+      pos: [0, 0],
+      mass: 5.97237e24,
+      velocity: [0, 0],
+      radius: 6378.137,
+      isFocalPoint: true,
+    }),
+    new Planet({
+      name: 'Moon',
+      pos: [378000, 0],
+      mass: 7.349e22,
+      velocity: [0, -1.02 * 86400],
+      radius: 1738.0,
+    }),
+  ];
+
+  const dt = 0.1;
+
+  space.update(dt, objects);
+  view.update(objects, space);
+  view.render(objects);
+
+  window.addEventListener('keyup', (e) => {
+    if (e.key === ' ') {
+      space.update(dt, objects);
+      view.update(objects, space);
+      view.render(objects);
+    }
+  });
+};
+
 export const renderAllAssets = (canvas) => {
-  const space = new Canvas({ canvas });
+  const view = new Canvas({ canvas });
 
   const objects = [
     new Planet({
-      name: 'Terra',
+      name: 'Earth',
       pos: [0, 0], // km
-      radius: 50, // km
+      radius: 63, // km
     }),
     new Planet({
-      name: 'Luna',
+      name: 'Moon',
       pos: [200, 0],
-      radius: 10,
+      radius: 17,
     }),
     new Planet({
       name: 'TinyPlanet',
@@ -89,6 +140,6 @@ export const renderAllAssets = (canvas) => {
   ];
 
   objects.forEach((obj) => {
-    obj.draw(space);
+    obj.draw(view);
   });
 };
