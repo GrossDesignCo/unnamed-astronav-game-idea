@@ -40,3 +40,15 @@ If a softening constant is needed, or some other kind of rough error correction,
 
 It would also be neat to figure out a solution to the catapaulting problem, like maybe look for instances where a vector crosses perpendicular to a planet and scale that one vector by the distance that it would pass the planet by. That might provide the braking force that would help correct for error in the highly elliptical orbits or very tight orbits, since that seems to be one of the main sources of error in the code version of Newton's math.
 
+## Differential Equations
+
+I've been digging into the YouTube series on Differential Equations by Three Blue One Brown and learning a lot more about how and why these kinds of approximations run into such dramatic error. The tighter the steps, the closer to accurate, and in my case, I'm probably under-setting the value of acceleration caused by force, because we would expect the moon's orbit to be much tighter and close to accurate at very small values of delta time.
+
+A couple alternate approaches to gravity could be:
+
+- use a tiny tiny value for dt, then run multiple steps per frame, which would be (maybe) close enough to accurate to create a stable orbit
+- use a softening constant, either a constant one with a fixed dt, or one that scales inversely to dt. It would do a bad job when multiple planets got close, but might work for basic orbits 
+- pre-compute the paths at a very small dt, then simply play back the fixed progression, assuming the system is determinate enough (Eg. Ships don't have the ability to move planets or anything). JPL already has the orbital positions of all the planets in three dimensions calculated for the next 8k years, so there's no need to even do the computations myself. 
+- use one of the derivatives methods to get more accurate values when simulating in real time, which would be more computationally expensive but more accurate.
+
+It seems like a trade off between real time performance and storage space.
