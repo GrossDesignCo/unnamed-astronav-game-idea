@@ -52,3 +52,11 @@ A couple alternate approaches to gravity could be:
 - use one of the derivatives methods to get more accurate values when simulating in real time, which would be more computationally expensive but more accurate.
 
 It seems like a trade off between real time performance and storage space.
+
+The next test to put together is one that predicts paths for an arbitrary number of steps at an arbitrary dt, and then run that with a bunch of values of dt a bunch of times, and see the different paths drawn on the screen. Maybe there's something we can do here.
+
+Also, a benefit to using the pre-baked data from JPL (or baking my own data), is that we could then scroll forwards & backwards in time, which would allow us to dial the speed faster or slower by looking at every other step, or every third step, or so on.
+
+The benefit to pre-baking data myself is that I could keep it to 2D, where the JPL data is all in 3D. Also, it means I could pre-bake all kinds of systems myself that JPL doesn't have data for, including theoretical systems like one with very elliptical orbits, or binary stars, or time-dilating black holes :)
+
+
