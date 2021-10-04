@@ -63,3 +63,9 @@ As a sidebar, it might be kind of cool to explore a vector field visualization.
 
 - could be used to visualize the pull of gravity over the whole space
 - could be used to play with waves of force pushing and pulling, where each vector propagates force to the vectors immediately around it (like that big chaotic ocean sim my sister mentioned last week)
+
+## Object type idea
+
+Wormholes!
+
+A circle that transports a ship from one point to another on the map, which itself is moving around and orbiting other stuff
