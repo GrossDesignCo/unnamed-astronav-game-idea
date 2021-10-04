@@ -59,4 +59,7 @@ Also, a benefit to using the pre-baked data from JPL (or baking my own data), is
 
 The benefit to pre-baking data myself is that I could keep it to 2D, where the JPL data is all in 3D. Also, it means I could pre-bake all kinds of systems myself that JPL doesn't have data for, including theoretical systems like one with very elliptical orbits, or binary stars, or time-dilating black holes :)
 
+As a sidebar, it might be kind of cool to explore a vector field visualization.
 
+- could be used to visualize the pull of gravity over the whole space
+- could be used to play with waves of force pushing and pulling, where each vector propagates force to the vectors immediately around it (like that big chaotic ocean sim my sister mentioned last week)
