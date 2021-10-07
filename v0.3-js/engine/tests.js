@@ -1,10 +1,10 @@
-import { Canvas } from '../classes/Canvas';
+import { View } from '../classes/View';
 import { Space } from '../classes/Space';
 import { Planet } from '../classes/Planet';
 import { Stats } from '../classes/Stats';
 
 export const basicGravity = (canvas) => {
-  const view = new Canvas({ canvas });
+  const view = new View({ canvas });
   const space = new Space({ timeScale: 1 });
   const stats = new Stats();
 
@@ -76,7 +76,7 @@ export const basicGravity = (canvas) => {
 
 export const initialPathing = (canvas) => {
   const space = new Space({ timeScale: 1 });
-  const view = new Canvas({ canvas });
+  const view = new View({ canvas });
 
   /**
    * Real planet starting data
@@ -85,27 +85,33 @@ export const initialPathing = (canvas) => {
    * 3. Projected path of Luna should be a rough circle around Terra
    * 4. V and A vectors should be drawn nicely
    */
+  const lunarV = -1.02 * 86400;
+
   const objects = [
+    // https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
     new Planet({
       name: 'Earth',
-      pos: [0, 0],
-      mass: 5.97237e24,
-      velocity: [0, 0],
-      radius: 6378.137,
+      pos: [0, 0], // km
+      mass: 5.97237e24, // kg
+      // Set the earth's initial V to a counter-balance of the moon's
+      velocity: [0, lunarV * (7.349e22 / 5.97237e24) * -1], // km/d
+      radius: 6378.137, // km
       isFocalPoint: true,
     }),
+    // https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html
     new Planet({
       name: 'Moon',
       pos: [378000, 0],
       mass: 7.349e22,
-      velocity: [0, -1.02 * 86400],
+      velocity: [0, lunarV], // km/d
       radius: 1738.0,
     }),
   ];
 
-  const dt = 0.1;
+  const dt = 0.06;
 
   space.update(dt, objects);
+  space.predictPaths(dt, objects);
   view.update(objects, space);
   view.render(objects);
 
@@ -119,7 +125,7 @@ export const initialPathing = (canvas) => {
 };
 
 export const renderAllAssets = (canvas) => {
-  const view = new Canvas({ canvas });
+  const view = new View({ canvas });
 
   const objects = [
     new Planet({

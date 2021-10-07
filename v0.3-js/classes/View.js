@@ -1,4 +1,4 @@
-export class Canvas {
+export class View {
   constructor({ canvas, timeScale }) {
     this.canvas = canvas;
     this.scale = 1;
@@ -41,7 +41,7 @@ export class Canvas {
     console.log('scale:', this.scale, smallerAxis, space.maxDist);
   }
 
-  render(objects, stats) {
+  render(objects, space, stats) {
     const ctx = this.ctx;
 
     ctx.clearRect(0, 0, this.width, this.height);
@@ -50,7 +50,9 @@ export class Canvas {
     objects.forEach((obj) => {
       obj.draw(this);
     });
-    stats.draw(this);
+    if (stats) {
+      stats.draw(this, space);
+    }
 
     ctx.restore();
   }

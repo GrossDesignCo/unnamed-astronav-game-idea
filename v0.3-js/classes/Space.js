@@ -10,10 +10,7 @@ export class Space {
     this.maxDist = 0;
   }
 
-  // Look into offloading these calculations to a GPU (gpu.js?)
-  // Look into Runge-Kutaa Method for derivative calculations
-  // - https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods
-  computeUpdatedVectors(source, objects, dt) {
+  computeRawGForce(source, objects, dt) {
     let fx = 0;
     let fy = 0;
     let maxDist = 0;
@@ -21,6 +18,7 @@ export class Space {
     objects.forEach((target) => {
       if (!target.p || !target.mass || source.name === target.name) return;
 
+      // Inputs
       const dx = target.p[0] - source.p[0];
       const dy = target.p[1] - source.p[1];
       const dist = Math.hypot(dx, dy);
@@ -28,24 +26,74 @@ export class Space {
 
       // When dt is small, G is too low, increase G
       // When dt is large, G is too high, decrease G
-      const f = Gkmd * ((source.mass * target.mass) / distSq);
+      const f = (Gkmd * source.mass * target.mass) / distSq;
 
+      // Break force into x/y components
       fx += f * (dx / dist);
       fy += f * (dy / dist);
 
-      // Scale the canvas to the largest distance
+      // Save the largest distance for later rendering work
       if (dist > maxDist) {
-        maxDist = dist.toExponential(5);
+        maxDist = dist;
       }
     });
 
-    const a = [(fx / source.mass) * dt, (fy / source.mass) * dt];
-    const v = [source.v[0] + a[0] * dt, source.v[1] + a[1] * dt];
-    const p = [source.p[0] + v[0] * dt, source.p[1] + v[1] * dt];
+    const ax = (fx / source.mass) * dt;
+    const ay = (fy / source.mass) * dt;
 
     return {
-      f: [fx, fy],
-      a,
+      a: [ax, ay],
+      maxDist,
+    };
+  }
+
+  // Look into offloading these calculations to a GPU (gpu.js?)
+  // Runge-Kutta RK4 Method for derivative calculations
+  // - https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods
+  computeUpdatedVectors(source, objects, dt) {
+    // k1
+    const p1 = source.p;
+    const v1 = source.v;
+    const { a: a1, maxDist } = this.computeRawGForce(source, objects, dt);
+
+    // k2
+    const p2 = [p1[0] + v1[0] * 0.5 * dt, p1[1] + v1[1] * 0.5 * dt];
+    const v2 = [v1[0] + a1[0] * 0.5 * dt, v1[1] + a1[1] * 0.5 * dt];
+    const { a: a2 } = this.computeRawGForce(
+      { p: p2, mass: source.mass, name: source.name },
+      objects,
+      dt * 1.5
+    );
+
+    // k3
+    const p3 = [p1[0] + v2[0] * 0.5 * dt, p1[1] + v2[1] * 0.5 * dt];
+    const v3 = [v1[0] + a2[0] * 0.5 * dt, v1[1] + a2[1] * 0.5 * dt];
+    const { a: a3 } = this.computeRawGForce(
+      { p: p3, mass: source.mass, name: source.name },
+      objects,
+      dt * 1.5
+    );
+
+    // k4
+    const p4 = [p1[0] + v3[0] * dt, p1[1] + v3[1] * dt];
+    const v4 = [v1[0] + a3[0] * dt, v1[1] + a3[1] * dt];
+    const { a: a4 } = this.computeRawGForce(
+      { p: p4, mass: source.mass, name: source.name },
+      objects,
+      dt * 2
+    );
+
+    // weighted averate of k1-4 for both position & velocity
+    const p = [
+      p1[0] + (dt / 6) * (v1[0] + 2 * v2[0] + 2 * v3[0] + v4[0]),
+      p1[1] + (dt / 6) * (v1[1] + 2 * v2[1] + 2 * v3[1] + v4[1]),
+    ];
+    const v = [
+      v1[0] + (dt / 6) * (a1[0] + 2 * a2[0] + 2 * a3[0] + a4[0]),
+      v1[1] + (dt / 6) * (a1[1] + 2 * a2[1] + 2 * a3[1] + a4[1]),
+    ];
+
+    return {
       v,
       p,
       maxDist,
@@ -64,9 +112,11 @@ export class Space {
 
       this.maxDist = maxDist;
     });
+  }
 
+  predictPaths(dt, objects) {
     // Compute positions for the next 30 seconds/days
-    const steps = 30;
+    const steps = 3000;
 
     for (let i = 0; i < steps; i++) {
       objects.forEach((obj) => {
@@ -77,43 +127,11 @@ export class Space {
         const nextObjects = objects.map((obj) =>
           i === 0 ? obj : obj.predictedPath[i - 1]
         );
-        console.log({ nextSource, nextObjects });
         const { v, p } = this.computeUpdatedVectors(
           nextSource,
           nextObjects,
-          0.1
+          dt
         );
-
-        // Runge-Kutta, figure out the derivative of the gravity function
-        // Use 1s steps
-        // const k1 = this.computeUpdatedVectors(nextSource, nextObjects, 1);
-        // const pk1 = new Planet({
-        //   velocity: k1.v,
-        //   pos: k1.p,
-        //   mass: obj.mass,
-        // });
-        // const k2 = this.computeUpdatedVectors(nextSource, nextObjects, 1 * 0.5);
-        // const pk2 = new Planet({
-        //   velocity: k2.v,
-        //   pos: k2.p,
-        //   mass: obj.mass,
-        // });
-        // const k3 = this.computeUpdatedVectors(nextSource, nextObjects, 1 * 0.5);
-        // const pk3 = new Planet({
-        //   velocity: k3.v,
-        //   pos: k3.p,
-        //   mass: obj.mass,
-        // });
-        // const k4 = this.computeUpdatedVectors(nextSource, nextObjects, 2);
-
-        // const v = [
-        //   (1 / 6) * 0.1 * k1.v[0] + 2 * (k2.v[0] + k3.v[0]) + k4.v[0],
-        //   (1 / 6) * 0.1 * k1.v[1] + 2 * (k2.v[1] + k3.v[1]) + k4.v[1],
-        // ];
-        // const p = [
-        //   (1 / 6) * 0.1 * k1.p[0] + 2 * (k2.p[0] + k3.p[0]) + k4.p[0],
-        //   (1 / 6) * 0.1 * k1.p[1] + 2 * (k2.p[1] + k3.p[1]) + k4.p[1],
-        // ];
 
         obj.predictedPath[i] = new Planet({
           velocity: v,
@@ -121,13 +139,6 @@ export class Space {
           mass: obj.mass,
           name: `${obj.name}-${i}`,
         });
-        // console.log({
-        //   k1,
-        //   k2,
-        //   k3,
-        //   k4,
-        //   new: obj.predictedPath[i],
-        // });
       });
     }
   }

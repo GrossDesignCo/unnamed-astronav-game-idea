@@ -69,3 +69,23 @@ As a sidebar, it might be kind of cool to explore a vector field visualization.
 Wormholes!
 
 A circle that transports a ship from one point to another on the map, which itself is moving around and orbiting other stuff
+
+## Math is amazing
+
+I dug into Forier series today via 3 Blue 1 Brown & learnedd about the approximation of complex functions by addingthe results of simpler ones (in Forier's case, Adding sin/cosine functions together to approximate any arbitrary function).
+
+I'm not certain that Forier has any application in predicting the orbits of planets, but a critical insight of his from 200 years ago is that a true solution to the problem does exist, and it's possible that solution is attainable by wisely combining simpler solutions. At it's essence, it's problem-solving 101, using what we know to get to what we don't yet know, but it illustrates an exceptional deep truth about creation.
+
+All the complexity in the universe originates from 180-something types of atoms, each with different properties, added together in infinite (or at least uncountable) quantity. Each of those atmoms is in turn made up of a few dozen fundamental particles. God saw fit to create an entire universe by adding together the simplest of things.
+
+Which is why Math works. Math is the simplest of things, being added together to describe creation. It's the approximation of a function via sin waves, then assuming infiinite detail. The more our minds are blown by creation, the more we come to appreciate the creator.
+
+## Another kind of kind of working
+
+After digging into the Runge-Kutta RK4 method this week, which is a 4th-order numerical integration solution for differential eequations, I got to here
+
+![Stable RK4](./week-5/stable-rk4-fixed-dt.gif)
+
+It still depends on a fixed delta-time, which is a mystery to me. Smaller dt's are supposed to be more accurate, but in our case, the smaller the dt, the more the orbiting objects fly off into nothingness.
+
+I'm starting to think that taking the big tables of data that JPL has on offere isn't such a crazy idea. After all, if part of the purpose of this sim/game is to teach an AI to navigate real-world astro-nav cases with only approximation tools on hand, what better way than to plot the planets' positions using the real data, then have the AI learn how to compensate for error in the received telemetries?

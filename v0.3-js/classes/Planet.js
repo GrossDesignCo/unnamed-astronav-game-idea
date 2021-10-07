@@ -193,7 +193,7 @@ export class Planet {
       const py = (obj.p[1] - this.p[1]) * view.scale;
 
       ctx.lineTo(px, py);
-      ctx.fillText(i, px, py);
+      // ctx.fillText(i, px, py);
     });
 
     ctx.stroke();
@@ -208,8 +208,25 @@ export class Planet {
     const y = view.height / 2 + this.p[1] * view.scale;
     ctx.translate(x, y);
 
-    this.drawAccel(view);
-    this.drawVelocity(view);
+    // Draw stable orbit (goal)
+    // ctx.strokeStyle = 'lightblue';
+    // ctx.lineWidth = 1;
+
+    // ctx.beginPath();
+    // ctx.arc(
+    //   Math.abs(this.p[0]) * view.scale * -1,
+    //   0,
+    //   Math.abs(this.p[0]) * view.scale,
+    //   0,
+    //   Math.PI * 2,
+    //   true
+    // );
+    // ctx.closePath();
+
+    // ctx.stroke();
+
+    // this.drawAccel(view);
+    // this.drawVelocity(view);
     this.drawPredictedPath(view);
     this.drawBody(view);
   }

@@ -1,11 +1,11 @@
-import { Canvas } from '../classes/Canvas';
+import { View } from '../classes/View';
 import { Space } from '../classes/Space';
 import { Planet } from '../classes/Planet';
 import { Stats } from '../classes/Stats';
 
 export const playIntro = (canvas) => {
   const space = new Space({ timeScale: 1 });
-  const view = new Canvas({ canvas });
+  const view = new View({ canvas });
   const stats = new Stats();
 
   /**
@@ -35,6 +35,8 @@ export const playIntro = (canvas) => {
     }),
   ];
 
+  // Max range here should be within 363,300km and 384,400km
+
   /**
    * Core Loop
    */
@@ -46,7 +48,7 @@ export const playIntro = (canvas) => {
   const loop = (newTime) => {
     // Elapsed time between renders (seconds)
     const dt = Math.max(newTime - time, 1) / 1000;
-    const fakeDT = 0.09;
+    const fakeDT = 0.06;
     totalTime += dt;
     logTime -= dt;
 
@@ -69,9 +71,9 @@ export const playIntro = (canvas) => {
 
     space.update(fakeDT, objects);
 
-    stats.update(dt, space);
+    stats.update(fakeDT, space);
     view.update(objects, space);
-    view.render(objects, stats);
+    view.render(objects, space, stats);
 
     time = newTime;
     if (playing) {
