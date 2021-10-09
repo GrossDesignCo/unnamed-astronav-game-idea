@@ -89,3 +89,11 @@ After digging into the Runge-Kutta RK4 method this week, which is a 4th-order nu
 It still depends on a fixed delta-time, which is a mystery to me. Smaller dt's are supposed to be more accurate, but in our case, the smaller the dt, the more the orbiting objects fly off into nothingness.
 
 I'm starting to think that taking the big tables of data that JPL has on offere isn't such a crazy idea. After all, if part of the purpose of this sim/game is to teach an AI to navigate real-world astro-nav cases with only approximation tools on hand, what better way than to plot the planets' positions using the real data, then have the AI learn how to compensate for error in the received telemetries?
+
+A couple new challenges, RK4 still doesn't handle extremely high velocities or extremely eliptical orbits very well. As say an asteroid approaches the earth it still has a decent change of getting sling-shotted off into oblivion, which isn't ideal. Some of the other orbit algorithms out there are supposed to conserve energy, which would help, that way any object should have a hard time getting further away in the sim than it started, so long as it didn't start already flying towards one of the larger objects.
+
+Also, just for kicks, I added a third body to our basic intro level, which has helped debugging issues with the view, like how to keep all the objects on-screen, and differentiate between objects that _should_ be focal points and those that we care less about the user seeing their positions.
+
+Here's where we're leaving off for this week:
+
+![Three body pathing](./week-5/three-body-pathing.png)

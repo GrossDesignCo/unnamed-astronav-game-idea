@@ -1,117 +1,46 @@
-const G = 6.674e-11; // kg/m/s
-const Gkmd = (G * 86400) / 1000; // kg/km/day
-
 export class Planet {
   constructor({
     name,
     pos = [0, 0],
-    mass,
+    mass = 1,
     velocity = [0, 0],
-    radius,
-    isFocalPoint,
+    radius = 1,
+    rotationPeriod = 0,
+    isFocalPoint = false,
   }) {
     this.name = name;
     this.mass = mass;
     this.radius = radius;
+    this.rotationPeriod = rotationPeriod;
     this.isFocalPoint = isFocalPoint;
 
     // Acceleration [x, y]
-    this.a = [0, 0];
+    // this.a = [0, 0];
     // Velocity [x, y]
     this.v = velocity;
     // Position [x, y]
     this.p = pos;
     this.predictedPath = [];
+    // Angle relative to x axis
+    this.angle = 0;
   }
 
-  // computeGForce(dt, objects, p = this.p) {
-  //   let fx = 0;
-  //   let fy = 0;
-
-  //   objects.forEach((obj) => {
-  //     if (!obj.mass || !obj.p || obj.name === this.name) return;
-
-  //     const dx = obj.p[0] - p[0]; // x pos
-  //     const dy = obj.p[1] - p[1]; // y pos
-
-  //     const dist = Math.hypot(dx, dy);
-  //     const distSq = dist * dist;
-  //     // const radii = this.radius + obj.radius;
-  //     // const radiiSq = radii * radii;
-
-  //     // TODO: Softening based on planet radius
-  //     const f = Gkmd * ((obj.mass * this.mass) / distSq);
-
-  //     fx += f * (dx / dist);
-  //     fy += f * (dy / dist);
-  //   });
-
-  //   const a = [(fx / this.mass) * dt, (fy / this.mass) * dt];
-
-  //   return a;
+  // setA(a) {
+  //   this.a = a;
   // }
 
-  // predictPath(dt, objects) {
-  //   const steps = 30;
-  //   // Clear the array
-  //   this.predictedPath = [];
-  //   // Copy current pos
-  //   let lastV = [...this.v];
-  //   let lastP = [...this.p];
-
-  //   // Get a list of future positions
-  //   for (let i = 0; i < steps; i++) {
-  //     // Use 1s steps
-  //     const a = this.computeGForce(dt, objects, lastP);
-  //     const v = [lastV[0] + a[0] * dt, lastV[1] + a[1] * dt];
-  //     const p = [lastP[0] + v[0] * dt, lastP[1] + v[1] * dt];
-
-  //     this.predictedPath.push(p);
-
-  //     if (i === 0) {
-  //       console.log('Predicted A', this.name, a);
-  //       console.log('Predicted V', this.name, v);
-  //       console.log('Predicted P', this.name, p);
-  //     }
-  //     lastV = v;
-  //     lastP = p;
-  //   }
+  // setV(v) {
+  //   this.v = v;
   // }
 
-  // setAccel(dt, objects) {
-  //   // Scale acceleration by deltaTime
-  //   this.a = this.computeGForce(dt, objects);
-  //   console.log('Computed A', this.name, this.a);
+  // setP(p) {
+  //   this.p = p;
   // }
 
-  setA(a) {
-    this.a = a;
+  update(dt) {
+    // Do one full rotation counter-clockwis based on the rotational period
+    this.angle = this.angle - (360 / this.rotationPeriod) * dt;
   }
-
-  setV(v) {
-    this.v = v;
-  }
-
-  setP(p) {
-    this.p = p;
-  }
-
-  // setVelocity(dt) {
-  //   // Update velocity with acceleration
-  //   this.v = [this.v[0] + this.a[0] * dt, this.v[1] + this.a[1] * dt];
-  //   console.log('Computed V', this.name, this.v);
-  // }
-
-  // setPos(dt) {
-  //   // Update position with velocity
-  //   this.p = [this.p[0] + this.v[0] * dt, this.p[1] + this.v[1] * dt];
-  //   console.log('Computed P', this.name, this.p);
-  // }
-
-  // update(dt) {
-  //   this.setVelocity(dt);
-  //   this.setPos(dt);
-  // }
 
   drawBody(view) {
     const { ctx } = view;
@@ -119,19 +48,27 @@ export class Planet {
     const outline = 1.2 + visRadius / 8;
     const labelX = visRadius + outline + 4;
 
-    console.log({ view, visRadius, outline, labelX });
-
     // Circle for planet body
     ctx.strokeStyle = '#fff';
     ctx.fillStyle = '#fff2';
     ctx.lineWidth = outline;
+    ctx.lineCap = 'round';
 
+    // ctx.save();
+    ctx.rotate((this.angle * Math.PI) / 180);
     ctx.beginPath();
     ctx.arc(0, 0, visRadius, 0, Math.PI * 2, true);
     ctx.closePath();
+    // ctx.restore();
 
     ctx.fill();
     ctx.stroke();
+
+    ctx.moveTo(visRadius * 0.75, 0);
+    ctx.lineTo(visRadius * 0.75, 0);
+    ctx.stroke();
+
+    ctx.rotate((-1 * this.angle * Math.PI) / 180);
 
     // Label
     ctx.font = '12px sans-serif';
@@ -140,43 +77,43 @@ export class Planet {
     ctx.fillText(this.name, labelX, 4);
   }
 
-  drawVelocity(view) {
-    const { ctx } = view;
-    const x = this.v[0] * view.scale;
-    const y = this.v[1] * view.scale;
+  // drawVelocity(view) {
+  //   const { ctx } = view;
+  //   const x = this.v[0] * view.scale;
+  //   const y = this.v[1] * view.scale;
 
-    ctx.strokeStyle = '#48b068';
-    ctx.lineWidth = 1;
-    ctx.fillStyle = '#48b068';
+  //   ctx.strokeStyle = '#48b068';
+  //   ctx.lineWidth = 1;
+  //   ctx.fillStyle = '#48b068';
 
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(x, y);
-    ctx.closePath();
+  //   ctx.beginPath();
+  //   ctx.moveTo(0, 0);
+  //   ctx.lineTo(x, y);
+  //   ctx.closePath();
 
-    ctx.stroke();
+  //   ctx.stroke();
 
-    ctx.fillText('V', x, y);
-  }
+  //   ctx.fillText('V', x, y);
+  // }
 
-  drawAccel(view) {
-    const { ctx } = view;
-    const x = this.a[0] * view.scale;
-    const y = this.a[1] * view.scale;
+  // drawAccel(view) {
+  //   const { ctx } = view;
+  //   const x = this.a[0] * view.scale;
+  //   const y = this.a[1] * view.scale;
 
-    ctx.strokeStyle = '#ae742d';
-    ctx.lineWidth = 1;
-    ctx.fillStyle = '#ae742d';
+  //   ctx.strokeStyle = '#ae742d';
+  //   ctx.lineWidth = 1;
+  //   ctx.fillStyle = '#ae742d';
 
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(x, y);
-    ctx.closePath();
+  //   ctx.beginPath();
+  //   ctx.moveTo(0, 0);
+  //   ctx.lineTo(x, y);
+  //   ctx.closePath();
 
-    ctx.stroke();
+  //   ctx.stroke();
 
-    ctx.fillText('A', x, y);
-  }
+  //   ctx.fillText('A', x, y);
+  // }
 
   drawPredictedPath(view) {
     const { ctx } = view;
@@ -204,8 +141,8 @@ export class Planet {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
 
     // Center + object position
-    const x = view.width / 2 + this.p[0] * view.scale;
-    const y = view.height / 2 + this.p[1] * view.scale;
+    const x = view.width / 2 + this.p[0] * view.scale + view.offset[0];
+    const y = view.height / 2 + this.p[1] * view.scale + view.offset[1];
     ctx.translate(x, y);
 
     // Draw stable orbit (goal)

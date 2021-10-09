@@ -7,13 +7,11 @@ export class Space {
   constructor({ timeScale }) {
     this.offset = [0, 0];
     this.timeScale = timeScale;
-    this.maxDist = 0;
   }
 
   computeRawGForce(source, objects, dt) {
     let fx = 0;
     let fy = 0;
-    let maxDist = 0;
 
     objects.forEach((target) => {
       if (!target.p || !target.mass || source.name === target.name) return;
@@ -26,25 +24,17 @@ export class Space {
 
       // When dt is small, G is too low, increase G
       // When dt is large, G is too high, decrease G
-      const f = (Gkmd * source.mass * target.mass) / distSq;
+      const f = (Gkmd * source.mass * target.mass * 0.06) / distSq;
 
       // Break force into x/y components
       fx += f * (dx / dist);
       fy += f * (dy / dist);
-
-      // Save the largest distance for later rendering work
-      if (dist > maxDist) {
-        maxDist = dist;
-      }
     });
 
-    const ax = (fx / source.mass) * dt;
-    const ay = (fy / source.mass) * dt;
+    const ax = fx / source.mass;
+    const ay = fy / source.mass;
 
-    return {
-      a: [ax, ay],
-      maxDist,
-    };
+    return [ax, ay];
   }
 
   // Look into offloading these calculations to a GPU (gpu.js?)
@@ -54,12 +44,12 @@ export class Space {
     // k1
     const p1 = source.p;
     const v1 = source.v;
-    const { a: a1, maxDist } = this.computeRawGForce(source, objects, dt);
+    const a1 = this.computeRawGForce(source, objects, dt);
 
     // k2
     const p2 = [p1[0] + v1[0] * 0.5 * dt, p1[1] + v1[1] * 0.5 * dt];
     const v2 = [v1[0] + a1[0] * 0.5 * dt, v1[1] + a1[1] * 0.5 * dt];
-    const { a: a2 } = this.computeRawGForce(
+    const a2 = this.computeRawGForce(
       { p: p2, mass: source.mass, name: source.name },
       objects,
       dt * 1.5
@@ -68,7 +58,7 @@ export class Space {
     // k3
     const p3 = [p1[0] + v2[0] * 0.5 * dt, p1[1] + v2[1] * 0.5 * dt];
     const v3 = [v1[0] + a2[0] * 0.5 * dt, v1[1] + a2[1] * 0.5 * dt];
-    const { a: a3 } = this.computeRawGForce(
+    const a3 = this.computeRawGForce(
       { p: p3, mass: source.mass, name: source.name },
       objects,
       dt * 1.5
@@ -77,7 +67,7 @@ export class Space {
     // k4
     const p4 = [p1[0] + v3[0] * dt, p1[1] + v3[1] * dt];
     const v4 = [v1[0] + a3[0] * dt, v1[1] + a3[1] * dt];
-    const { a: a4 } = this.computeRawGForce(
+    const a4 = this.computeRawGForce(
       { p: p4, mass: source.mass, name: source.name },
       objects,
       dt * 2
@@ -96,7 +86,6 @@ export class Space {
     return {
       v,
       p,
-      maxDist,
     };
   }
 
@@ -105,19 +94,14 @@ export class Space {
     objects.forEach((obj) => {
       if (!obj.p || !obj.mass || !obj.predictedPath) return;
 
-      const { v, p, maxDist } = this.computeUpdatedVectors(obj, objects, dt);
+      const { v, p } = this.computeUpdatedVectors(obj, objects, dt);
 
       obj.v = v;
       obj.p = p;
-
-      this.maxDist = maxDist;
     });
   }
 
-  predictPaths(dt, objects) {
-    // Compute positions for the next 30 seconds/days
-    const steps = 3000;
-
+  predictPaths(dt, objects, steps = 30) {
     for (let i = 0; i < steps; i++) {
       objects.forEach((obj) => {
         if (!obj.predictedPath) return;
