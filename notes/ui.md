@@ -62,3 +62,13 @@ Some way to visualize the gravity wells and directions of pull across the system
 Player color
 Little flame for thrust, changes size based on thrust value
 Little stat lines like fuel & integrity
+
+## Lines
+
+Predicted paths of planets can be white or very light grey
+Paths of asteroids should probably be a darker/middle grey
+Ship paths should be blue? Then maybe green when they connect gracefully with a planet, or red when they would crash
+
+Also it would be neat to visualize Lagrange points, basically a line through the large and small body, then two equilateral triangles drawn from their two centers
+
+Also for tests, draw two circles around Earth, one for the max distance of the moon and one for the min, to help make sure the moon's orbit is within that shape
