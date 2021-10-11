@@ -6,3 +6,8 @@ Basically be playing deep low tones constantly in the background, but then play 
 
 Maybe tone is tied to proximity
 Maybe acceleration?
+
+Each pair of bodies plays a note
+Therefore the changes in the notes depend on how many bodies there are
+Earth and moon would be a very simple pair
+Saturn and its moons would be much more complex
