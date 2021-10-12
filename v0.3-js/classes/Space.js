@@ -5,13 +5,12 @@ const Gkmd = (G * 86400) / 1000; // kg/km/day
 
 export class Space {
   constructor({ timeScale }) {
-    this.offset = [0, 0];
     this.timeScale = timeScale;
   }
 
   computeRawGForce(source, objects, dt) {
-    let fx = 0;
-    let fy = 0;
+    let ax = 0;
+    let ay = 0;
 
     objects.forEach((target) => {
       if (!target.p || !target.mass || source.name === target.name) return;
@@ -24,15 +23,12 @@ export class Space {
 
       // When dt is small, G is too low, increase G
       // When dt is large, G is too high, decrease G
-      const f = (Gkmd * source.mass * target.mass * 0.06) / distSq;
+      const f = (Gkmd * target.mass * 0.085) / distSq;
 
       // Break force into x/y components
-      fx += f * (dx / dist);
-      fy += f * (dy / dist);
+      ax += f * (dx / dist);
+      ay += f * (dy / dist);
     });
-
-    const ax = fx / source.mass;
-    const ay = fy / source.mass;
 
     return [ax, ay];
   }

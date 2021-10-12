@@ -3,11 +3,13 @@ export class View {
     this.canvas = canvas;
     this.scale = 1;
     this.offset = [0, 0];
+    this.centerOfMass = [0, 0];
     this.timeScale = timeScale;
-    this.maxDist = 0;
 
     this.resize();
     window.addEventListener('resize', this.resize);
+
+    window.addEventListener('keyup', this.fullscreen);
   }
 
   resize() {
@@ -17,53 +19,68 @@ export class View {
     }
   }
 
+  fullscreen(e) {
+    if (e.key === 'f' && (e.ctrlKey || e.metaKey)) {
+      this.canvas.requestFullscreen().catch((err) => {
+        console.log(
+          `Error attempting to enable full-screen mode: ${err.message} (${err.name})`
+        );
+      });
+    }
+  }
+
   update(objects) {
-    const smallerAxis =
-      this.canvas.current.height < this.canvas.current.width
-        ? this.canvas.current.height
-        : this.canvas.current.width;
-
-    let maxDist = 0;
-    let centerOfGravity = [0, 0];
-
+    // Figure out the focal points
     let focalPoints = objects.filter((obj) => obj.isFocalPoint);
     if (focalPoints.length === 0) {
       focalPoints = objects;
     }
 
+    // Find the center of mass of all the focal points
+    let massSum = 0;
+    let massPosSum = [0, 0];
+
     focalPoints.forEach((source) => {
-      focalPoints.forEach((target) => {
-        if (source.isFocalPoint && target.isFocalPoint) {
-          let dist = 0;
-          // use the object's size and position
-          // if there winds up being only one focal point
-          if (source.name === target.name) {
-            dist = source.radius * 2;
-            centerOfGravity = source.p;
-          } else {
-            const dx = target.p[0] - source.p[0];
-            const dy = target.p[1] - source.p[1];
-            dist = Math.hypot(dx, dy);
-
-            // TODO: center of gravity with multiple focal points
-            // Center of mass relative to the source point
-            const massRatio = source.mass / target.mass;
-          }
-
-          if (dist > maxDist) {
-            maxDist = dist;
-          }
-        }
-      });
+      massPosSum[0] += source.mass * source.p[0];
+      massPosSum[1] += source.mass * source.p[1];
+      massSum += source.mass;
     });
 
-    this.maxDist = maxDist;
+    // Center of mass equation:
+    // SUM position * mass (of each object) / SUM mass (of each object)
+    let centerOfMass = [massPosSum[0] / massSum, massPosSum[1] / massSum];
 
-    this.scale = smallerAxis / 2 / this.maxDist / 1.25;
-    // this.offset = [
-    //   centerOfGravity[0] * this.scale * -1,
-    //   centerOfGravity[1] * this.scale * -1,
-    // ];
+    // If one focal point, set an arbitrary scale around it for the view
+
+    // TODO: if one focal point, get it's distance from the center of mass of the whole system
+    let maxDist = 0;
+    if (focalPoints.length === 1) {
+      maxDist = focalPoints[0].radius * 5; // Arbitrary zoom level for single focus
+    }
+    // Otherwise, use the center of mass of the focal points
+    // and use the distance of the object furthest away
+    else {
+      focalPoints.forEach((target) => {
+        let dist = 0;
+        const dx = target.p[0] - centerOfMass[0];
+        const dy = target.p[1] - centerOfMass[1];
+        dist = Math.hypot(dx, dy);
+
+        if (dist > maxDist) {
+          maxDist = dist;
+        }
+      });
+    }
+
+    // Scale the view
+    const smallerAxis = this.height < this.width ? this.height : this.width;
+    this.scale = smallerAxis / 2 / maxDist / 1.25;
+
+    // Offset the camera to put the center of mass in the center of the view
+    this.offset = [
+      centerOfMass[0] * this.scale * -1,
+      centerOfMass[1] * this.scale * -1,
+    ];
   }
 
   render(objects, space, stats) {

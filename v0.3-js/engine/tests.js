@@ -1,7 +1,7 @@
 import { View } from '../classes/View';
 import { Space } from '../classes/Space';
 import { Planet } from '../classes/Planet';
-import { earthAndMoon } from '../data/planets-and-moons';
+import { earthAndMoon, saturnAndMoons } from '../data/planets-and-moons';
 
 export const initialPathing = (canvas) => {
   const space = new Space({ timeScale: 1 });
@@ -14,6 +14,7 @@ export const initialPathing = (canvas) => {
    * 3. Projected path of Luna should be a rough circle around Terra
    * 4. V and A vectors should be drawn nicely
    */
+  // const objects = saturnAndMoons;
   const objects = earthAndMoon;
 
   // 0.06 was roughly stable if we scaled G by dt
@@ -24,6 +25,7 @@ export const initialPathing = (canvas) => {
   space.predictPaths(dt, objects, steps);
   view.update(objects, space);
   view.render(objects);
+  console.log({ space, objects, view });
 
   window.addEventListener('keyup', (e) => {
     if (e.key === ' ') {
@@ -52,6 +54,15 @@ export const renderAllAssets = (canvas) => {
       name: 'TinyPlanet',
       pos: [300, 0],
       radius: 1,
+    }),
+    new Planet({
+      name: 'Saturn',
+      pos: [0, 300],
+      radius: 50,
+      rings: [
+        [58, 68],
+        [70, 85],
+      ],
     }),
   ];
 

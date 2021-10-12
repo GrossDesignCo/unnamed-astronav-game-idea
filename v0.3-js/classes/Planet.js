@@ -6,12 +6,14 @@ export class Planet {
     velocity = [0, 0],
     radius = 1,
     rotationPeriod = 0,
+    rings = [],
     isFocalPoint = false,
   }) {
     this.name = name;
     this.mass = mass;
     this.radius = radius;
     this.rotationPeriod = rotationPeriod;
+    this.rings = rings;
     this.isFocalPoint = isFocalPoint;
 
     // Acceleration [x, y]
@@ -53,22 +55,33 @@ export class Planet {
     ctx.fillStyle = '#fff2';
     ctx.lineWidth = outline;
     ctx.lineCap = 'round';
+    console.log({ visRadius, outline, labelX });
 
-    // ctx.save();
-    ctx.rotate((this.angle * Math.PI) / 180);
     ctx.beginPath();
     ctx.arc(0, 0, visRadius, 0, Math.PI * 2, true);
     ctx.closePath();
-    // ctx.restore();
 
     ctx.fill();
     ctx.stroke();
 
+    // Dot for rotation
+    ctx.rotate((this.angle * Math.PI) / 180);
     ctx.moveTo(visRadius * 0.75, 0);
     ctx.lineTo(visRadius * 0.75, 0);
     ctx.stroke();
-
     ctx.rotate((-1 * this.angle * Math.PI) / 180);
+
+    // Rings
+    this.rings.forEach((ring) => {
+      const width = (ring[1] - ring[0]) * view.scale;
+      const radius = ring[0] * view.scale;
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = (ring[1] - ring[0]) * view.scale;
+      ctx.beginPath();
+      ctx.arc(0, 0, radius + width / 2, 0, Math.PI * 2, true);
+      ctx.closePath();
+      ctx.stroke();
+    });
 
     // Label
     ctx.font = '12px sans-serif';
@@ -119,9 +132,8 @@ export class Planet {
     const { ctx } = view;
 
     ctx.beginPath();
-    ctx.strokeStyle = '#777';
+    ctx.strokeStyle = '#555';
     ctx.lineWidth = 1;
-    ctx.fillStyle = '#aaa';
 
     ctx.moveTo(0, 0);
     this.predictedPath.forEach((obj, i) => {
@@ -130,7 +142,6 @@ export class Planet {
       const py = (obj.p[1] - this.p[1]) * view.scale;
 
       ctx.lineTo(px, py);
-      // ctx.fillText(i, px, py);
     });
 
     ctx.stroke();
