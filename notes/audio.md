@@ -13,3 +13,7 @@ Earth and moon would be a very simple pair
 Saturn and its moons would be much more complex
 
 Maybe instead of playing a continuous tone that's a function of closeness, get a few scales together that are complimentary, then use a step function of some kind to switch between notes. That way instead of a continuous rise and fall overlapping for each planet, it's a series of individual notes that are rising and falling, more like windchimes than an aegean harp
+
+Maybe use different waveforms for different objects to create contrast
+- sine wave for planets, nice and smooth
+- sawtooth or square wave for ships, rougher, more like a rocket engine :)
