@@ -15,7 +15,7 @@ export default function Home() {
 
         <p>
           Welcome & feel free to mess around. <br />
-          This project is still pretty rough around the edges :)
+          This project is still _very_ rough around the edges :)
         </p>
 
         <ul>
