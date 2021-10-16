@@ -1,7 +1,7 @@
 import { View } from '../classes/View';
 import { Space } from '../classes/Space';
 import { Planet } from '../classes/Planet';
-import { earthAndMoon, saturnAndMoons } from '../data/planets-and-moons';
+import { earthAndMoon } from '../data/planets-and-moons';
 
 export const initialPathing = (canvas) => {
   const space = new Space({ timeScale: 1 });

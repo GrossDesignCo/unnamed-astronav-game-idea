@@ -16,7 +16,9 @@ Like a Saturn with a number of moons, maybe we can think about how to do rings.
 
 ### Maybe the start of an asteroid belt level 
 
-That'd be cool. Like where the main source of gravity is wayyyy off screen, and asteroids are floating around the player's ship. Gravity essentially becomes a 1-directional force at that point.
+That'd be cool. Like where the main source of gravity is wayyyy off screen, and asteroids are floating around the player's ship. Gravity essentially becomes a 1-directional force at that point, but that slowly changes direction as the map orbits the distant off-screen star.
+
+This might be a great doorway to do some procedural generation or something.
 
 ## Neat visualizations
 
@@ -75,3 +77,16 @@ Initial thoughts are that we could hook up an ON for each planet, then increase 
 
 This means that a map with stable orbits, like Earth+Moon, would basically have a nearly-constant tone playing in the background
 More likely we'd want to tie the gravity tones to ships as well, so that there's always a little auditory interest going on.
+
+As an added bonus, several planets and moons have [orbital resonances](https://en.wikipedia.org/wiki/Orbital_resonance) with eachother, or very close to it (eg. a 2:1 or 4:1 ratio, where one orbit takes the same time as a certain number of orbits of another). This means we could get some legit rhythm going on in some levels
+
+## Thoughts on Accessibility
+
+There are a couple features that might be useful for folks to be able to configure:
+
+- path contrast/colors
+- audio on/off
+- text size
+- game speed
+
+It might also be neat to be able to configure the background, or other aspects of the appearance, but we can figure that out more as we go.

@@ -5,6 +5,7 @@ export class View {
     this.offset = [0, 0];
     this.centerOfMass = [0, 0];
     this.timeScale = timeScale;
+    this.audioCtx = new window.AudioContext();
 
     this.resize();
     window.addEventListener('resize', this.resize);
@@ -83,7 +84,32 @@ export class View {
     ];
   }
 
+  frequencyFromVector(v) {
+    // TODO: Figure out a nice-sounding range of frequencies
+    return v;
+  }
+
   render(objects, space, stats) {
+    // TODO: Auditory representation
+    // objects.forEach((obj, i) => {
+    //   if (!obj.sound) {
+    //     obj.sound = new OscillatorNode(this.audioCtx, {
+    //       type: 'sine',
+    //       frequency: this.frequencyFromVector(obj.totalA),
+    //     });
+    //     obj.sound.connect(this.audioCtx.destination);
+    //     // obj.sound.start();
+    //     console.log(obj);
+    //   } else {
+    //     // TODO: Smoothly transition between frequencies
+    //     obj.sound.frequency.setValueAtTime(
+    //       this.frequencyFromVector(obj.totalA),
+    //       this.audioCtx.currentTime
+    //     );
+    //   }
+    // });
+
+    // Re-draw Visuals
     const ctx = this.ctx;
 
     ctx.clearRect(0, 0, this.width, this.height);
@@ -96,6 +122,7 @@ export class View {
     objects.forEach((obj) => {
       obj.draw(this);
     });
+
     if (stats) {
       stats.draw(this, space);
     }

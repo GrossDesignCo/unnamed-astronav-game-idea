@@ -1,20 +1,21 @@
 import Head from 'next/head';
 import { useEffect, useRef } from 'react';
-import { playIntro } from '../engine/intro';
+import { play } from '../engine/play';
+import { saturnAndMoons } from '../data/planets-and-moons';
 
-export default function Home() {
+export default function Saturn() {
   const canvas = useRef();
 
   useEffect(() => {
     if (canvas.current) {
-      playIntro(canvas);
+      play(canvas, saturnAndMoons);
     }
   }, [canvas.current]);
 
   return (
     <div>
       <Head>
-        <title>Intro</title>
+        <title>Saturn and Moons</title>
         <meta name="description" content="A game" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

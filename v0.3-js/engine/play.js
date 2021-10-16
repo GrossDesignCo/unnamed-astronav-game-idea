@@ -1,15 +1,11 @@
 import { View } from '../classes/View';
 import { Space } from '../classes/Space';
 import { Stats } from '../classes/Stats';
-import { earthAndMoon, saturnAndMoons } from '../data/planets-and-moons';
 
-export const playIntro = (canvas) => {
+export const play = (canvas, objects) => {
   const space = new Space({ timeScale: 1 });
   const view = new View({ canvas });
   const stats = new Stats();
-
-  const objects = saturnAndMoons;
-  // const objects = eartshAndMoon;
 
   // Max range here should be within 363,300km and 384,400km
 
@@ -19,21 +15,23 @@ export const playIntro = (canvas) => {
   let totalTime = 0;
 
   const loop = (newTime) => {
-    // Elapsed time between renders (seconds)
-    const dt = Math.max(newTime - time, 1) / 1000;
-    const fakeDT = 0.06;
-    totalTime += dt;
+    if (view.canvas.current) {
+      // Elapsed time between renders (seconds)
+      const dt = Math.max(newTime - time, 1) / 1000;
+      const fakeDT = 0.06;
+      totalTime += dt;
 
-    space.update(fakeDT, objects);
-    objects.forEach((obj) => {
-      obj.update(fakeDT);
-    });
-    stats.update(fakeDT, space);
-    view.update(objects, space);
-    view.render(objects, space, stats);
+      space.update(fakeDT, objects);
+      objects.forEach((obj) => {
+        obj.update(fakeDT);
+      });
+      stats.update(fakeDT, space);
+      view.update(objects, space);
+      view.render(objects, space, stats);
 
-    time = newTime;
-    window.requestAnimationFrame(loop);
+      time = newTime;
+      window.requestAnimationFrame(loop);
+    }
   };
 
   let time = 0;

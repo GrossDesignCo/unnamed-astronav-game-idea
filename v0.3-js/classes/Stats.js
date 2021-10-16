@@ -27,7 +27,7 @@ export class Stats {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.translate(10, 20);
 
-    ctx.font = '12px sans-serif';
+    ctx.font = '12px Menlo, monospace';
     ctx.fillStyle = '#fff';
 
     // ctx.fillText(this.frameRate, 0, 0);

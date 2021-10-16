@@ -2,8 +2,11 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  min-height: 100%;
+  background: #000;
+  color: #fff;
+  font-family: Menlo, monospace;
+  line-height: 1.415;
 }
 
 a {
@@ -20,4 +23,8 @@ canvas {
   height: 100%;
   width: 100%;
   display: block;
+}
+
+.menu {
+  padding: 20px;
 }

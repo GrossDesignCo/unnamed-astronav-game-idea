@@ -67,7 +67,8 @@ const asteroidAtL1 = new Planet({
 /**
  * Earth and moon, a basic intro level
  */
-export const earthAndMoon = [earth, moon, asteroidAtL4, asteroidAtL1];
+// export const earthAndMoon = [earth, moon, asteroidAtL4, asteroidAtL1];
+export const earthAndMoon = [earth, moon];
 
 /**
  * Jovian Moons closed system
@@ -148,7 +149,7 @@ const rhea = new Planet({
   mass: 2.31e21,
   radius: 765,
   rotationPeriod: 4.5175, // tidally locked
-  isFocalPoint: true,
+  // isFocalPoint: true,
 });
 
 const titan = new Planet({
@@ -158,7 +159,7 @@ const titan = new Planet({
   mass: 1.3455e23,
   radius: 2575,
   rotationPeriod: 15.945421, // tidally locked
-  // isFocalPoint: true,
+  isFocalPoint: true,
 });
 
 const hyperion = new Planet({

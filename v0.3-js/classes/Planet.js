@@ -1,3 +1,7 @@
+const totalVector = (v) => {
+  return Math.hypot(v[0], v[1]);
+};
+
 export class Planet {
   constructor({
     name,
@@ -8,6 +12,8 @@ export class Planet {
     rotationPeriod = 0,
     rings = [],
     isFocalPoint = false,
+    t = 0,
+    dt = 0,
   }) {
     this.name = name;
     this.mass = mass;
@@ -16,8 +22,14 @@ export class Planet {
     this.rings = rings;
     this.isFocalPoint = isFocalPoint;
 
+    // Used if predicting a path, total time ahead of now,
+    this.t = t;
+    // And time ahead of previous step
+    this.dt = dt;
+
     // Acceleration [x, y]
-    // this.a = [0, 0];
+    this.a = [0, 0];
+    this.totalA = 1;
     // Velocity [x, y]
     this.v = velocity;
     // Position [x, y]
@@ -27,17 +39,18 @@ export class Planet {
     this.angle = 0;
   }
 
-  // setA(a) {
-  //   this.a = a;
-  // }
+  setA(a) {
+    this.a = a;
+    this.totalA = totalVector(a);
+  }
 
-  // setV(v) {
-  //   this.v = v;
-  // }
+  setV(v) {
+    this.v = v;
+  }
 
-  // setP(p) {
-  //   this.p = p;
-  // }
+  setP(p) {
+    this.p = p;
+  }
 
   update(dt) {
     // Do one full rotation counter-clockwis based on the rotational period
@@ -55,7 +68,7 @@ export class Planet {
     ctx.fillStyle = '#fff2';
     ctx.lineWidth = outline;
     ctx.lineCap = 'round';
-    console.log({ visRadius, outline, labelX });
+    // console.log({ visRadius, outline, labelX });
 
     ctx.beginPath();
     ctx.arc(0, 0, visRadius, 0, Math.PI * 2, true);
@@ -84,7 +97,7 @@ export class Planet {
     });
 
     // Label
-    ctx.font = '12px sans-serif';
+    ctx.font = '12px Menlo, monospace';
     ctx.fillStyle = '#fff';
 
     ctx.fillText(this.name, labelX, 4);
@@ -134,14 +147,25 @@ export class Planet {
     ctx.beginPath();
     ctx.strokeStyle = '#555';
     ctx.lineWidth = 1;
+    ctx.font = '12px Menlo, monospace';
+    ctx.fillStyle = '#555';
 
     ctx.moveTo(0, 0);
+    let markTime = 0;
     this.predictedPath.forEach((obj, i) => {
       // Get the future point relative to the current object origin
       const px = (obj.p[0] - this.p[0]) * view.scale;
       const py = (obj.p[1] - this.p[1]) * view.scale;
 
       ctx.lineTo(px, py);
+
+      // Display a timestamp every 4 days
+      if (markTime > 4) {
+        ctx.fillText(`Day ${obj.t.toFixed(1)}`, px, py);
+        markTime = 0;
+      } else {
+        markTime += obj.dt;
+      }
     });
 
     ctx.stroke();

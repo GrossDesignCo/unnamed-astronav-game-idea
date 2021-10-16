@@ -78,10 +78,15 @@ export class Space {
       v1[0] + (dt / 6) * (a1[0] + 2 * a2[0] + 2 * a3[0] + a4[0]),
       v1[1] + (dt / 6) * (a1[1] + 2 * a2[1] + 2 * a3[1] + a4[1]),
     ];
+    const a = [
+      (dt / 6) * (a1[0] + 2 * a2[0] + 2 * a3[0] + a4[0]),
+      (dt / 6) * (a1[1] + 2 * a2[1] + 2 * a3[1] + a4[1]),
+    ];
 
     return {
-      v,
       p,
+      v,
+      a,
     };
   }
 
@@ -90,10 +95,11 @@ export class Space {
     objects.forEach((obj) => {
       if (!obj.p || !obj.mass || !obj.predictedPath) return;
 
-      const { v, p } = this.computeUpdatedVectors(obj, objects, dt);
+      const { v, p, a } = this.computeUpdatedVectors(obj, objects, dt);
 
-      obj.v = v;
-      obj.p = p;
+      obj.setV(v);
+      obj.setP(p);
+      obj.setA(a);
     });
   }
 
@@ -118,6 +124,8 @@ export class Space {
           pos: p,
           mass: obj.mass,
           name: `${obj.name}-${i}`,
+          t: nextSource.t + dt,
+          dt: dt,
         });
       });
     }
