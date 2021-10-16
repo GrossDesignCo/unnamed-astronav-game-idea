@@ -89,3 +89,9 @@ Stub. Tracking notes for a game idea. AI controller for a simulated rocket
   - have to expand/out-mine each other
   - maybe survive aliens attacks longer than the other
   - destroy all each other's ships/ports
+
+## Deployment & Live Hosting
+
+Now that v0.3 is web-based, it was a lot easier to throw it up on Vercel & get a live url :)
+
+Note: Pushing/merging to the `main` branch will trigger a deployment, so most ugly local work should now happen on the `dev` branch.
