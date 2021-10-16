@@ -10,7 +10,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main class="menu">
+      <main className="menu">
         <h1>Unnamed Astronav Playground</h1>
 
         <p>
