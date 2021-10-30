@@ -15,8 +15,11 @@ export class View {
 
   resize() {
     if (this.canvas.current) {
-      this.canvas.current.width = window.innerWidth;
-      this.canvas.current.height = window.innerHeight;
+      this.canvas.current.width = window.innerWidth * window.devicePixelRatio;
+      this.canvas.current.height = window.innerHeight * window.devicePixelRatio;
+
+      this.ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      this.ctx.font = `${12 * window.devicePixelRatio}px Menlo, monospace`;
     }
   }
 

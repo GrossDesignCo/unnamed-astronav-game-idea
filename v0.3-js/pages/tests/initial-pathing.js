@@ -14,13 +14,15 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Tests</title>
+        <title>Test | Path Prediction</title>
         <meta name="description" content="A game" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <p>Initial Pathing</p>
+        <div className="caption">
+          <p>Path Prediction</p>
+        </div>
         <canvas ref={canvas} id="canvas" width="1496" height="488" />
       </main>
     </div>

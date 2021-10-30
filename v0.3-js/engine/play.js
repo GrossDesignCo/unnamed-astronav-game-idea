@@ -2,7 +2,7 @@ import { View } from '../classes/View';
 import { Space } from '../classes/Space';
 import { Stats } from '../classes/Stats';
 
-export const play = (canvas, objects) => {
+export const play = (canvas, objects, config) => {
   const space = new Space({ timeScale: 1 });
   const view = new View({ canvas });
   const stats = new Stats();
@@ -18,7 +18,7 @@ export const play = (canvas, objects) => {
     if (view.canvas.current) {
       // Elapsed time between renders (seconds)
       const dt = Math.max(newTime - time, 1) / 1000;
-      const fakeDT = 0.06;
+      const fakeDT = config.initialDt;
       totalTime += dt;
 
       space.update(fakeDT, objects);

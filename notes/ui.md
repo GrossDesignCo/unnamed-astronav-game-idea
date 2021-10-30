@@ -72,3 +72,14 @@ Ship paths should be blue? Then maybe green when they connect gracefully with a 
 Also it would be neat to visualize Lagrange points, basically a line through the large and small body, then two equilateral triangles drawn from their two centers
 
 Also for tests, draw two circles around Earth, one for the max distance of the moon and one for the min, to help make sure the moon's orbit is within that shape
+
+## Basic Extras
+
+Buttons
+Icons in the buttons
+
+- activate is just text
+- undo is a close icon with the text, and filled style
+- full screen/exit
+- sound on/off
+- play a mission has the double-arrow pointing left

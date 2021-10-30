@@ -3,13 +3,17 @@ import { useEffect, useRef } from 'react';
 import { play } from '../engine/play';
 import { earthAndMoon } from '../data/planets-and-moons';
 
+const config = {
+  initialDt: 0.01,
+};
+
 export default function Earth() {
   const canvas = useRef();
 
   // TODO: when we start, we want a fresh copy of the objects
   useEffect(() => {
     if (canvas.current) {
-      play(canvas, earthAndMoon);
+      play(canvas, earthAndMoon, config);
     }
   }, [canvas.current]);
 
