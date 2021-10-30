@@ -23,7 +23,7 @@ export class Space {
 
       // When dt is small, G is too low, increase G
       // When dt is large, G is too high, decrease G
-      const f = (Gkmd * target.mass * 0.085) / distSq;
+      const f = (Gkmd * target.mass * 0.086) / distSq;
 
       // Break force into x/y components
       ax += f * (dx / dist);

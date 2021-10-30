@@ -9,6 +9,7 @@ body {
   color: #fff;
   font-family: Menlo, monospace;
   line-height: 1.415;
+  font-size: 12px;
 }
 
 a {
@@ -29,4 +30,11 @@ canvas {
 
 .menu {
   padding: 20px;
+}
+
+.caption {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  padding: 10px 20px;
 }

@@ -4,6 +4,7 @@ const toDay = 86400;
 
 // const temp = new Planet({
 //   name,
+//   description,
 //   pos,
 //   velocity,
 //   mass,
@@ -22,7 +23,7 @@ const earthMass = 5.97237e24; // kg
 const lunaMass = 7.349e22; // kg
 
 // https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
-const earth = new Planet({
+export const earth = new Planet({
   name: 'Earth',
   pos: [0, 0], // km
   velocity: [0, lunarV * (lunaMass / earthMass) * -1], // km/d
@@ -35,7 +36,7 @@ const earth = new Planet({
 });
 
 // https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html
-const moon = new Planet({
+export const moon = new Planet({
   name: 'Moon',
   pos: [378000, 0],
   velocity: [0, lunarV],
@@ -46,8 +47,9 @@ const moon = new Planet({
 });
 
 // Asteroid at roughly a lagrange point?
-const asteroidAtL4 = new Planet({
+export const asteroidAtL4 = new Planet({
   name: 'Asteroid',
+  description: 'E-M L5 (stable)',
   pos: [185000, -350000],
   velocity: [-70000, -45000],
   mass: 1.0e5,
@@ -55,8 +57,9 @@ const asteroidAtL4 = new Planet({
   // isFocalPoint: true,
 });
 
-const asteroidAtL1 = new Planet({
+export const asteroidAtL1 = new Planet({
   name: 'Asteroid',
+  description: 'E-M L1 (unstable)',
   pos: [318420, 0],
   velocity: [0, lunarV * 0.9],
   mass: 1.0e5,
@@ -67,15 +70,15 @@ const asteroidAtL1 = new Planet({
 /**
  * Earth and moon, a basic intro level
  */
-// export const earthAndMoon = [earth, moon, asteroidAtL4, asteroidAtL1];
-export const earthAndMoon = [earth, moon];
+export const earthAndMoon = [earth, moon, asteroidAtL4, asteroidAtL1];
+// export const earthAndMoon = [earth, moon];
 
 /**
  * Jovian Moons closed system
  */
 
 // Saturn!
-const saturn = new Planet({
+export const saturn = new Planet({
   name: 'Saturn',
   pos: [0, 0],
   velocity: [0, 0],
@@ -96,63 +99,63 @@ const saturn = new Planet({
 });
 
 // Major Moons
-const mimas = new Planet({
+export const mimas = new Planet({
   name: 'Mimas',
   pos: [185520, 0],
   velocity: [0, -14.28 * toDay],
   mass: 3.79e19,
   radius: 208,
   rotationPeriod: 0.9424218, // tidally locked
-  // isFocalPoint: true,
+  isFocalPoint: true,
 });
 
-const enceladus = new Planet({
+export const enceladus = new Planet({
   name: 'Enceladus',
   pos: [238020, 0],
   velocity: [0, -12.64 * toDay],
   mass: 1.08e20,
   radius: 257,
   rotationPeriod: 1.370218, // tidally locked
-  // isFocalPoint: true,
+  isFocalPoint: true,
 });
 
-const tethys = new Planet({
+export const tethys = new Planet({
   name: 'Tethys',
   pos: [294660, 0],
   velocity: [0, -11.35 * toDay],
   mass: 6.18e20,
   radius: 538,
   rotationPeriod: 1.887802, // tidally locked
-  // isFocalPoint: true,
+  isFocalPoint: true,
   // Trojans:
   // Telesto
   // Calypso
 });
 
-const dione = new Planet({
+export const dione = new Planet({
   name: 'Dione',
   pos: [377400, 0],
   velocity: [0, -10.03 * toDay],
   mass: 1.1e21,
   radius: 563,
   rotationPeriod: 2.736915, // tidally locked
-  // isFocalPoint: true,
+  isFocalPoint: true,
   // Trojans:
   // Helene
   // Polyydeuces
 });
 
-const rhea = new Planet({
+export const rhea = new Planet({
   name: 'Rhea',
   pos: [527040, 0],
   velocity: [0, -8.48 * toDay],
   mass: 2.31e21,
   radius: 765,
   rotationPeriod: 4.5175, // tidally locked
-  // isFocalPoint: true,
+  isFocalPoint: true,
 });
 
-const titan = new Planet({
+export const titan = new Planet({
   name: 'Titan',
   pos: [1221830, 0],
   velocity: [0, -5.57 * toDay],
@@ -162,7 +165,7 @@ const titan = new Planet({
   isFocalPoint: true,
 });
 
-const hyperion = new Planet({
+export const hyperion = new Planet({
   name: 'Hyperion',
   pos: [1481100, 0],
   velocity: [0, -5.07 * toDay],
@@ -172,7 +175,7 @@ const hyperion = new Planet({
   // isFocalPoint: true,
 });
 
-const iapetus = new Planet({
+export const iapetus = new Planet({
   name: 'Iapetus',
   pos: [2561300, 0],
   velocity: [0, -3.26 * toDay],
@@ -183,7 +186,7 @@ const iapetus = new Planet({
 });
 
 // Shepherd Moons (within the rings)
-const prometheus = new Planet({
+export const prometheus = new Planet({
   name: 'Prometheus',
   pos: [139353, 0],
   velocity: [0, -16.54 * toDay],
@@ -193,7 +196,7 @@ const prometheus = new Planet({
   // isFocalPoint: true,
 });
 
-const daphnis = new Planet({
+export const daphnis = new Planet({
   name: 'Daphnis',
   pos: [136500, 0],
   velocity: [0, -16.71 * toDay],
@@ -203,37 +206,37 @@ const daphnis = new Planet({
   // isFocalPoint: true,
 });
 
-const pan = new Planet({
+export const pan = new Planet({
   name: 'Pan',
   pos: [133583, 0],
   velocity: [0, -16.9 * toDay],
   mass: 5e15,
   radius: 17,
   rotationPeriod: 79.330183, // tidally locked
-  // isFocalPoint: true,
+  isFocalPoint: true,
 });
 
 // https://en.wikipedia.org/wiki/Janus_(moon)#Orbit
 // Janus & Epimetheus's co-orbit is fascinating
-const janus = new Planet({
+export const janus = new Planet({
   name: 'Janus',
   pos: [151472, 0],
   velocity: [0, -15.87 * toDay],
   mass: 1.9e18,
   radius: 102,
   rotationPeriod: 79.330183, // tidally locked
-  // isFocalPoint: true,
+  isFocalPoint: true,
 });
 
 // Starting these on opposite sides, for now
-const epimetheus = new Planet({
+export const epimetheus = new Planet({
   name: 'Epimetheus',
   pos: [-151422, 0],
   velocity: [0, 15.87 * toDay],
   mass: 5.3e17,
   radius: 65,
   rotationPeriod: 79.330183, // tidally locked
-  // isFocalPoint: true,
+  isFocalPoint: true,
 });
 
 export const saturnAndMoons = [

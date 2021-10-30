@@ -3,12 +3,16 @@ import { useEffect, useRef } from 'react';
 import { play } from '../engine/play';
 import { saturnAndMoons } from '../data/planets-and-moons';
 
+const config = {
+  initialDt: 0.001,
+};
+
 export default function Saturn() {
   const canvas = useRef();
 
   useEffect(() => {
     if (canvas.current) {
-      play(canvas, saturnAndMoons);
+      play(canvas, saturnAndMoons, config);
     }
   }, [canvas.current]);
 
