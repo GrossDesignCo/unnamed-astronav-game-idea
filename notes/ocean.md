@@ -23,3 +23,9 @@ Also user can push in some direction
 Opportunity to experiment with procedural generation
 
 Clouds get dark and stormy as the waters become more chaotic
+
+## Day/Night Cycle
+
+Cycle from dawn to dusk
+
+As night falls, little spotlights on the boat come on & shine out at the waves
