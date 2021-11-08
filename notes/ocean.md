@@ -18,3 +18,8 @@ Affected by the waves that are right around it
 
 Also user can push in some direction
 
+## Clouds
+
+Opportunity to experiment with procedural generation
+
+Clouds get dark and stormy as the waters become more chaotic
