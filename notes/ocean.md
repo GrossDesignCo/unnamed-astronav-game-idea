@@ -4,7 +4,9 @@
 
 100x100 (XxY) grid creating a vector field
 
-Or maybe a hexagonal grid?
+Or maybe a hexagonal/triangular grid?
+
+Or maybe free floating particles representing the water
 
 Some start event, or randomly initialize direction and magnitude
 
