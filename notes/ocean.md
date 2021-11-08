@@ -45,3 +45,8 @@ Harbor
 Ocean
 
 - totally open sides, forces coming from mostly one direction, but no point-source
+
+
+## Wind
+
+Maybe a game where the player has to figure out sailing mechanics, like angling the ship and sails relative to the wind?
