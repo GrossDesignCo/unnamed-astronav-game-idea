@@ -50,3 +50,7 @@ Ocean
 ## Wind
 
 Maybe a game where the player has to figure out sailing mechanics, like angling the ship and sails relative to the wind?
+
+# Waves of grain
+
+Each stall of grass is like a vector that gets pushed around by waves of energy or particles flowing past it
