@@ -1,0 +1,29 @@
+# Weeks 8, 9, 10, 11
+
+## Ideas
+
+### Pathing
+
+Compute positions for each given time, then push those into a fifo array of some length, so that we can always have positions up to X seconds in the future and in the past.
+
+That way the user, or the AI, can look ahead, have predicted trajectories, as well as trails, but we're only computing 1 step's worth of positions per step, instead of re-predicti by the whole paths over and over
+
+Maybe then the machine learning can make a distinction between it's smaller, shorter calculations and the world's "true" paths, allowing for error and correcting for it
+
+The ship would have to recalculate it's path based on user input & actions, but at least the other stellar objects wouldn't be affected by it (yet), so they can use the pre-computed world paths
+
+### Loader
+
+Make a neat loading element based on the functions, like "Creating Stars" then planets, asteroids, computing trajectories, initiating navigation...
+
+### Zoom
+
+Basic scroll listener, sets a manual multiplier on the intrinsic view size
+
+In & out, no min max for now.
+
+Either multiplier or some exponential function?
+
+### Make a star pls
+
+In code pen maybe, figure out Stålberg's Townscaper hex to tri to quad grid generator
