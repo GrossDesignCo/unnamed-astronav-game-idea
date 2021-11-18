@@ -1,5 +1,7 @@
 # Ocean Notes
 
+Converted to repo: https://github.com/GrossDesignCo/unnamed-sailing-game-idea
+
 ## Waves
 
 100x100 (XxY) grid creating a vector field
