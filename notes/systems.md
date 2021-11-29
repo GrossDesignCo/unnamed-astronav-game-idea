@@ -30,3 +30,7 @@ Maybe our whole solar system
 - would be tricky to scale in a way that was visually interesting
 - all the planets
 - few hundred asteroids in the asteroid belt (or as many as make sense)
+
+Generate random/procedural systems
+- Use different colored gradients for backgrounds
+- very faint occasional stars to help give a sidereal frame of reference
