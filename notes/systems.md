@@ -34,3 +34,9 @@ Maybe our whole solar system
 Generate random/procedural systems
 - Use different colored gradients for backgrounds
 - very faint occasional stars to help give a sidereal frame of reference
+- strive for beauty
+
+Save/Load systems, history
+- store positions of objects every second
+- create a slider that allows player to go forwards & backwards
+- creates a lighter-weight store for state data
