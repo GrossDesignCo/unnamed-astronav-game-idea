@@ -14,6 +14,9 @@ Radiation Hazard
 - maybe square root of ship distance \* mass of star
 - should be almost nothing when out in the system, but increase to instant death at some critical range, depending on the ship (if we do multiple kinds of ships?)
 
+CME/Solar Flare Hazard
+
+- wave of energy radiating outward in a certain direction
 Math:
 
 Damage (integrity/s) = star mass (kg) / sqrt(distance from ship (km))
