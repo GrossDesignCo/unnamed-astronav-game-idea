@@ -11,25 +11,33 @@ export default function Home() {
       </Head>
 
       <main className="menu">
-        <h1>Unnamed Astronav Playground</h1>
+        <h1>Unnamed Astronav</h1>
 
         <p>
           Welcome & feel free to mess around. <br />
           This project is still _very_ rough around the edges :)
         </p>
 
-        <ul>
+        <ul className="menu-button-list">
           <li>
-            <Link href="/earth">Earth and Moon</Link>
+            <Link href="/earth">
+              <button className="menu-button">Earth and Moon</button>
+            </Link>
           </li>
           <li>
-            <Link href="/saturn">Saturn and Moons</Link>
+            <Link href="/saturn">
+              <button className="menu-button">Saturn and Moons</button>
+            </Link>
           </li>
           <li>
-            <Link href="/tests/render-all-assets">Test Assets</Link>
+            <Link href="/tests/render-all-assets">
+              <button className="menu-button">Test Assets</button>
+            </Link>
           </li>
           <li>
-            <Link href="/tests/initial-pathing">Test Pathing</Link>
+            <Link href="/tests/initial-pathing">
+              <button className="menu-button">Test Pathing</button>
+            </Link>
           </li>
         </ul>
       </main>

@@ -5,11 +5,22 @@ body {
   padding: 0;
   margin: 0;
   min-height: 100%;
-  background: #000;
+  background: #0d141b;
   color: #fff;
   font-family: Menlo, monospace;
   line-height: 1.415;
   font-size: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a,
+button,
+input {
+  font: inherit;
+  font-family: Menlo, monospace;
 }
 
 a {
@@ -17,24 +28,27 @@ a {
   text-decoration: none;
 }
 
-* {
-  box-sizing: border-box;
+h1,
+h2,
+h3 {
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+p {
+  margin-bottom: 20px;
 }
 
 canvas {
-  background: #000;
+  background: #0d141b;
   height: 100%;
   width: 100%;
   display: block;
-}
-
-.menu {
-  padding: 20px;
 }
 
 .caption {
   position: absolute;
   inset-block-start: 0;
   inset-inline-start: 0;
-  padding: 10px 20px;
+  padding: 12px 20px;
 }

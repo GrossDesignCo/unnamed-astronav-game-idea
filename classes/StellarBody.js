@@ -10,6 +10,7 @@ export class StellarBody {
     t = 0,
     dt = 0,
     dangerRadii = [],
+    angle = 0,
   }) {
     this.name = name;
     this.description = description;
@@ -32,7 +33,7 @@ export class StellarBody {
     this.p = pos;
     this.predictedPath = [];
     // Angle relative to x axis
-    this.angle = 0;
+    this.angle = angle;
   }
 
   setA(a) {
@@ -56,9 +57,9 @@ export class StellarBody {
   drawDangerRadii(view) {
     const { ctx } = view;
 
-    ctx.strokeStyle = '#a23d3d';
+    ctx.strokeStyle = '#f40028';
     ctx.lineWidth = 1;
-    ctx.setLineDash([5, 10]);
+    ctx.setLineDash([16, 4]);
 
     this.dangerRadii.forEach(([radius]) => {
       ctx.beginPath();
@@ -78,7 +79,5 @@ export class StellarBody {
     const x = view.width / 2 + this.p[0] * view.scale + view.offset[0];
     const y = view.height / 2 + this.p[1] * view.scale + view.offset[1];
     ctx.translate(x, y);
-
-    this.drawDangerRadii(view);
   }
 }

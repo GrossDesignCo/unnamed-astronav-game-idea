@@ -1,6 +1,7 @@
 import { View } from '../classes/View';
 import { Space } from '../classes/Space';
 import { Planet } from '../classes/Planet';
+import { Ship } from '../classes/Ship';
 import { earth, moon, asteroidAtL4 } from '../data/planets-and-moons';
 
 export const initialPathing = (canvas) => {
@@ -67,6 +68,19 @@ export const renderAllAssets = (canvas) => {
         [58, 68],
         [70, 85],
       ],
+    }),
+    new Ship({
+      name: 'Void',
+      description: 'Default',
+      pos: [-300, 0],
+      angle: -40,
+    }),
+    new Ship({
+      name: 'TCS Heavy',
+      description: 'Description',
+      pos: [-300, 100],
+      type: 'cargo',
+      angle: -160,
     }),
   ];
 

@@ -41,7 +41,7 @@ export class Planet extends StellarBody {
     this.rings.forEach((ring) => {
       const width = (ring[1] - ring[0]) * view.scale;
       const radius = ring[0] * view.scale;
-      ctx.strokeStyle = '#333';
+      ctx.strokeStyle = '#555';
       ctx.lineWidth = (ring[1] - ring[0]) * view.scale;
       ctx.beginPath();
       ctx.arc(0, 0, radius + width / 2, 0, Math.PI * 2, true);
@@ -130,26 +130,9 @@ export class Planet extends StellarBody {
   draw(view) {
     super.draw(view);
 
-    // Draw stable orbit (goal)
-    // ctx.strokeStyle = 'lightblue';
-    // ctx.lineWidth = 1;
-
-    // ctx.beginPath();
-    // ctx.arc(
-    //   Math.abs(this.p[0]) * view.scale * -1,
-    //   0,
-    //   Math.abs(this.p[0]) * view.scale,
-    //   0,
-    //   Math.PI * 2,
-    //   true
-    // );
-    // ctx.closePath();
-
-    // ctx.stroke();
-
-    // this.drawAccel(view);
-    // this.drawVelocity(view);
     this.drawPredictedPath(view);
     this.drawBody(view);
+
+    super.drawDangerRadii(view);
   }
 }

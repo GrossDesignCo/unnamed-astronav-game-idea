@@ -1,0 +1,31 @@
+.menu {
+  padding: 60px;
+}
+
+.menu > :first-child {
+  margin-top: 0;
+}
+
+.menu-button-list {
+  padding: 0;
+}
+
+.menu-button-list li {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 12px;
+}
+
+.menu-button {
+  appearance: none;
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: 0.1s ease;
+}
+
+.menu-button:hover {
+  background-color: #fff6;
+}
