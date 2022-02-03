@@ -102,5 +102,8 @@ Manual
   - multiplayer?!? (Distant future probably)
 - show user fading line for projected path
 
+Gravity
 
+- subtle moving streaks to give indication
+- Topographic lines?
 
