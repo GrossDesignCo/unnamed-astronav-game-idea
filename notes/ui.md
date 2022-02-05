@@ -83,3 +83,27 @@ Icons in the buttons
 - full screen/exit
 - sound on/off
 - play a mission has the double-arrow pointing left
+
+## Control schemes
+
+Automated
+
+- user selects ship
+- user clicks on planet to tell the ship to land there
+- how to tell it to orbit (at what distance) instead?
+- ai balances efficiency, speed, etc
+
+Manual
+
+- user selects ship
+- user (somehow) sets thrust direction, power, duration
+- ship is moving (maybe) while user interacts with it
+  - maybe do it like bad north where the game slows to near-pause when a ship is selected
+  - multiplayer?!? (Distant future probably)
+- show user fading line for projected path
+
+Gravity
+
+- subtle moving streaks to give indication
+- Topographic lines?
+
