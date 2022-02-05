@@ -19,6 +19,7 @@
 
 .menu-button {
   appearance: none;
+  font-weight: 700;
   background-color: transparent;
   color: #fff;
   border: 2px solid #fff;
@@ -28,5 +29,5 @@
 }
 
 .menu-button:hover {
-  background-color: #fff6;
+  background-color: #fff4;
 }

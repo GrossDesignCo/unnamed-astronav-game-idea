@@ -21,7 +21,6 @@ export class Planet extends StellarBody {
     ctx.fillStyle = '#fff2';
     ctx.lineWidth = outline;
     ctx.lineCap = 'round';
-    // console.log({ visRadius, outline, labelX });
 
     ctx.beginPath();
     ctx.arc(0, 0, visRadius, 0, Math.PI * 2, true);
@@ -129,6 +128,9 @@ export class Planet extends StellarBody {
 
   draw(view) {
     super.draw(view);
+    if (this.selected) {
+      super.drawSelection(view);
+    }
 
     this.drawPredictedPath(view);
     this.drawBody(view);

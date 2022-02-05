@@ -31,7 +31,7 @@ export const earth = new Planet({
   // Set the earth's initial V to a counter-balance of the moon's
   radius: 6378.137, // km
   // rotationPeriod: 23.9345 / 24, // days per day :) // FAKE
-  rotationPeriod: 6, // testing
+  rotationPeriod: 1, // testing
   isFocalPoint: true,
 });
 
