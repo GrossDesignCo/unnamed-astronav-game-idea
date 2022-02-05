@@ -13,7 +13,7 @@ export default function Saturn() {
 
   useEffect(() => {
     if (canvas.current) {
-      play(canvas, saturnAndMoons, config);
+      play(canvas.current, saturnAndMoons, config);
     }
   }, [canvas.current]);
 

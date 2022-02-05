@@ -8,7 +8,7 @@ export default function Assets() {
 
   useEffect(() => {
     if (canvas.current) {
-      renderAllAssets(canvas);
+      renderAllAssets(canvas.current);
     }
   }, [canvas.current]);
 

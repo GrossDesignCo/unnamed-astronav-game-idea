@@ -13,6 +13,8 @@ body {
 }
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -36,7 +38,7 @@ h3 {
 }
 
 p {
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 canvas {
@@ -50,5 +52,5 @@ canvas {
   position: absolute;
   inset-block-start: 0;
   inset-inline-start: 0;
-  padding: 12px 20px;
+  padding: 20px 20px;
 }

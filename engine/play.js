@@ -15,7 +15,7 @@ export const play = (canvas, objects, config) => {
   let totalTime = 0;
 
   const loop = (newTime) => {
-    if (view.canvas.current) {
+    if (view.canvas) {
       // Elapsed time between renders (seconds)
       const dt = Math.max(newTime - time, 1) / 1000;
       const fakeDT = config.initialDt;
@@ -37,40 +37,38 @@ export const play = (canvas, objects, config) => {
   let time = 0;
   window.requestAnimationFrame(loop);
 
-  /**
-   * Event Listeners
-   */
-  // const keyMap = {
-  //   68: 'right',
-  //   65: 'left',
-  //   87: 'up',
-  //   83: 'down',
-  // };
-  // const keydown = (e) => {
-  //   var key = keyMap[e.keyCode];
-  //   state.pressedKeys[key] = true;
-  // };
-  // const keyup = (e) => {
-  //   var key = keyMap[e.keyCode];
-  //   state.pressedKeys[key] = false;
-  // };
+  // TODO:
+  // 1. Fgure out why these need to be wrapped in an inline function?
+  // 2. Convert controls map into it's own global that can be rendered on a page
 
-  // window.addEventListener('keydown', keydown, false);
-  // window.addEventListener('keyup', keyup, false);
+  const controlsMap = {
+    ArrowUp: {
+      name: 'Zoom In',
+      action: () => view.zoomIn(),
+    },
+    ArrowDown: {
+      name: 'Zoom Out',
+      action: () => view.zoomOut(),
+    },
+  };
 
-  // window.addEventListener('keyup', (e) => {
-  //   if (e.key === ' ') {
-  //     if (playing) {
-  //       playing = false;
-  //     } else {
-  //       playing = true;
-  //       window.requestAnimationFrame(loop);
-  //     }
-  //   }
+  const metaControlsMap = {
+    f: {
+      name: 'Fullscreen',
+      action: () => view.fullscreen(),
+    },
+  };
 
-  //   if (e.key === 'RightArrow') {
-  //     // Step forward one second
-  //     loop(1000);
-  //   }
-  // });
+  window.addEventListener('keyup', (e) => {
+    if (controlsMap[e.key]) {
+      controlsMap[e.key].action();
+    }
+
+    // Handle metakeys & additional controls
+    if (e.ctrlKey || e.metaKey) {
+      if (metaControlsMap[e.key]) {
+        metaControlsMap[e.key].action();
+      }
+    }
+  });
 };

@@ -2,16 +2,17 @@ import Head from 'next/head';
 import Link from 'next/link';
 
 export default function Home() {
+  const title = 'Unnamed Astronav (Game?)';
   return (
     <div>
       <Head>
-        <title>Unnamed Astronav</title>
+        <title>{title}</title>
         <meta name="description" content="A game" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className="menu">
-        <h1>Unnamed Astronav</h1>
+        <h1>{title}</h1>
 
         <p>
           Welcome & feel free to mess around. <br />

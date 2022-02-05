@@ -25,9 +25,13 @@ export class Stats {
   draw(view, space) {
     const ctx = view.ctx;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.translate(10 * window.devicePixelRatio, 20 * window.devicePixelRatio);
+    ctx.translate(
+      view.width - 20 * window.devicePixelRatio,
+      (20 + 12) * window.devicePixelRatio
+    );
 
     ctx.fillStyle = '#fff';
+    ctx.textAlign = 'right';
 
     // ctx.fillText(this.frameRate, 0, 0);
     // ctx.translate(0, 20);

@@ -14,7 +14,7 @@ export default function Earth() {
   // TODO: when we start, we want a fresh copy of the objects
   useEffect(() => {
     if (canvas.current) {
-      play(canvas, earthAndMoon, config);
+      play(canvas.current, earthAndMoon, config);
     }
   }, [canvas.current]);
 

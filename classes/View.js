@@ -2,35 +2,46 @@ export class View {
   constructor({ canvas, timeScale }) {
     this.canvas = canvas;
     this.scale = 1;
+    this.userZoomLevel = 1;
     this.offset = [0, 0];
     this.centerOfMass = [0, 0];
     this.timeScale = timeScale;
     this.audioCtx = new window.AudioContext();
 
     this.resize();
-    window.addEventListener('resize', this.resize);
-
-    window.addEventListener('keyup', this.fullscreen);
+    window.addEventListener('resize', this.resize.bind(this));
+    window.addEventListener('scroll', this.zoom.bind(this));
   }
 
   resize() {
-    if (this.canvas.current) {
-      this.canvas.current.width = window.innerWidth * window.devicePixelRatio;
-      this.canvas.current.height = window.innerHeight * window.devicePixelRatio;
+    if (this.canvas && this.ctx) {
+      this.canvas.width = window.innerWidth * window.devicePixelRatio;
+      this.canvas.height = window.innerHeight * window.devicePixelRatio;
 
       this.ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
       this.ctx.font = `${12 * window.devicePixelRatio}px Menlo, monospace`;
     }
   }
 
-  fullscreen(e) {
-    if (e.key === 'f' && (e.ctrlKey || e.metaKey)) {
-      this.canvas.requestFullscreen().catch((err) => {
-        console.log(
-          `Error attempting to enable full-screen mode: ${err.message} (${err.name})`
-        );
-      });
-    }
+  // Doesn't work in Safari currently.
+  fullscreen() {
+    const wrapper = document.getElementById('__next');
+    wrapper.requestFullscreen({ navigationUI: 'hide' });
+
+    // TODO: handle exiting from fullscreen
+  }
+
+  zoom(e) {
+    console.log('Zoom!');
+    // TODO: Figure out a scroll-based zoom scheme that supports mice and touch
+  }
+
+  zoomIn() {
+    this.userZoomLevel = this.userZoomLevel * 2;
+  }
+
+  zoomOut() {
+    this.userZoomLevel = this.userZoomLevel * 0.5;
   }
 
   update(objects) {
@@ -78,7 +89,7 @@ export class View {
 
     // Scale the view
     const smallerAxis = this.height < this.width ? this.height : this.width;
-    this.scale = smallerAxis / 2 / maxDist / 1.25;
+    this.scale = (smallerAxis / 2 / maxDist / 1.25) * this.userZoomLevel;
 
     // Offset the camera to put the center of mass in the center of the view
     this.offset = [
@@ -134,14 +145,14 @@ export class View {
   }
 
   get ctx() {
-    return this.canvas.current.getContext('2d');
+    return this.canvas.getContext('2d');
   }
 
   get width() {
-    return this.canvas.current.width;
+    return this.canvas.width;
   }
 
   get height() {
-    return this.canvas.current.height;
+    return this.canvas.height;
   }
 }

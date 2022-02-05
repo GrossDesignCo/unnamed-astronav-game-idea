@@ -8,7 +8,7 @@ export default function Home() {
 
   useEffect(() => {
     if (canvas.current) {
-      initialPathing(canvas);
+      initialPathing(canvas.current);
     }
   }, [canvas.current]);
 
