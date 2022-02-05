@@ -6,11 +6,10 @@ export class View {
     this.offset = [0, 0];
     this.centerOfMass = [0, 0];
     this.timeScale = timeScale;
-    this.audioCtx = new window.AudioContext();
+    this.selectBoxAddMode = false;
+    // this.audioCtx = new window.AudioContext();
 
     this.resize();
-    window.addEventListener('resize', this.resize.bind(this));
-    window.addEventListener('scroll', this.zoom.bind(this));
   }
 
   resize() {
@@ -25,8 +24,8 @@ export class View {
 
   // Doesn't work in Safari currently.
   fullscreen() {
-    const wrapper = document.getElementById('__next');
-    wrapper.requestFullscreen({ navigationUI: 'hide' });
+    document.documentElement.requestFullscreen({ navigationUI: 'hide' });
+    // this.resize(); // doesn't work as expected
 
     // TODO: handle exiting from fullscreen
   }
@@ -96,11 +95,78 @@ export class View {
       centerOfMass[0] * this.scale * -1,
       centerOfMass[1] * this.scale * -1,
     ];
+
+    // Highlight the selected objects
+    if (this.selectBox) {
+      const { x1, y1, x2, y2 } = this.selectBox;
+      const x1g = this.toGameXCoords(x1);
+      const y1g = this.toGameYCoords(y1);
+      const x2g = this.toGameXCoords(x2);
+      const y2g = this.toGameYCoords(y2);
+
+      const left = x1 < x2 ? x1g : x2g;
+      const right = x2 > x1 ? x2g : x1g;
+      const top = y1 < y2 ? y1g : y2g;
+      const bottom = y2 > y1 ? y2g : y1g;
+
+      objects.forEach((obj) => {
+        const withinXBounds = obj.p[0] > left && obj.p[0] < right;
+        const withinYBounds = obj.p[1] > top && obj.p[1] < bottom;
+
+        if (withinXBounds && withinYBounds) {
+          obj.select();
+        } else {
+          if (!this.selectBoxAddMode) obj.deselect();
+        }
+      });
+    }
+  }
+
+  toGameXCoords(x) {
+    return (x - this.width / 2) / this.scale;
+  }
+
+  toGameYCoords(y) {
+    return (y - this.height / 2) / this.scale;
+  }
+
+  toViewXCoords(x) {
+    return this.width / 2 + x * this.scale + this.offset[0];
+  }
+
+  toViewYCoords(y) {
+    return this.height / 2 + y * this.scale + this.offset[1];
   }
 
   frequencyFromVector(v) {
     // TODO: Figure out a nice-sounding range of frequencies
     return v;
+  }
+
+  setSelectBox(x1, y1, x2, y2) {
+    this.selectBox = { x1, y1, x2, y2 };
+  }
+
+  clearSelectBox() {
+    this.selectBox = undefined;
+  }
+
+  drawSelectBox() {
+    if (this.selectBox) {
+      const ctx = this.ctx;
+
+      const { x1, y1, x2, y2 } = this.selectBox;
+      const width = x2 - x1;
+      const height = y2 - y1;
+
+      ctx.strokeStyle = '#fff2';
+      ctx.fillStyle = '#fff1';
+      ctx.beginPath();
+      ctx.rect(x1, y1, width, height);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.fill();
+    }
   }
 
   render(objects, space, stats) {
@@ -128,6 +194,8 @@ export class View {
 
     ctx.clearRect(0, 0, this.width, this.height);
     ctx.save();
+
+    this.drawSelectBox();
 
     const x = this.offset[0] * -1;
     const y = this.offset[1] * -1;

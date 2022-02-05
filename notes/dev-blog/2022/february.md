@@ -81,4 +81,10 @@ It feels so stinkin nice to have some kind of input capability now as well. Prev
 
 Also saving this beaut, my first-ish crack at the most basic visual styles :)
 
+Main Screen:
+
 ![Feb UI v1](./february/feb-ui-v1.png)
+
+RTS-Style Object Selection:
+
+![Selection](./february/feb-ui-selection-v1.gif)

@@ -6,6 +6,7 @@ export const play = (canvas, objects, config) => {
   const space = new Space({ timeScale: 1 });
   const view = new View({ canvas });
   const stats = new Stats();
+  const keysMap = {};
 
   // Max range here should be within 363,300km and 384,400km
 
@@ -41,7 +42,7 @@ export const play = (canvas, objects, config) => {
   // 1. Fgure out why these need to be wrapped in an inline function?
   // 2. Convert controls map into it's own global that can be rendered on a page
 
-  const controlsMap = {
+  keysMap.base = {
     ArrowUp: {
       name: 'Zoom In',
       action: () => view.zoomIn(),
@@ -52,7 +53,7 @@ export const play = (canvas, objects, config) => {
     },
   };
 
-  const metaControlsMap = {
+  keysMap.meta = {
     f: {
       name: 'Fullscreen',
       action: () => view.fullscreen(),
@@ -60,15 +61,53 @@ export const play = (canvas, objects, config) => {
   };
 
   window.addEventListener('keyup', (e) => {
-    if (controlsMap[e.key]) {
-      controlsMap[e.key].action();
+    if (keysMap.base[e.key]) {
+      keysMap.base[e.key].action();
     }
 
     // Handle metakeys & additional controls
     if (e.ctrlKey || e.metaKey) {
-      if (metaControlsMap[e.key]) {
-        metaControlsMap[e.key].action();
+      if (keysMap.meta[e.key]) {
+        keysMap.meta[e.key].action();
       }
     }
   });
+
+  window.addEventListener('resize', view.resize);
+  window.addEventListener('scroll', view.zoom);
+
+  // Object Selection via mouse
+  const handleMouseDown = (eDown) => {
+    const handleMouseMove = (eMove) => {
+      // If user presses the shift key at any time during selection,
+      // add to existing selection instead of selecting entirely new objects
+      if (eMove.shiftKey && !view.selectBoxAddMode) {
+        view.selectBoxAddMode = true;
+      }
+
+      view.setSelectBox(eDown.x, eDown.y, eMove.x, eMove.y);
+    };
+
+    const handleMouseUp = (eUp) => {
+      // If this is a click _not_ a drag
+      if (eDown.x === eUp.x && eDown.y === eUp.y) {
+        handleMouseMove(eUp);
+      } else {
+        view.clearSelectBox();
+        view.selectBoxAddMode = false;
+      }
+
+      console.log('mouseup', eUp);
+
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    // Only track mouse position when necessary
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+  };
+
+  // Draw a box with the mouse (to hopefully select objects)
+  window.addEventListener('mousedown', handleMouseDown);
 };

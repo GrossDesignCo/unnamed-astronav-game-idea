@@ -11,6 +11,7 @@ export class StellarBody {
     dt = 0,
     dangerRadii = [],
     angle = 0,
+    selected = false,
   }) {
     this.name = name;
     this.description = description;
@@ -34,6 +35,7 @@ export class StellarBody {
     this.predictedPath = [];
     // Angle relative to x axis
     this.angle = angle;
+    this.selected = selected;
   }
 
   setA(a) {
@@ -49,9 +51,27 @@ export class StellarBody {
     this.p = p;
   }
 
+  select() {
+    this.selected = true;
+  }
+
+  deselect() {
+    this.selected = false;
+  }
+
   update(dt) {
     // Do one full rotation counter-clockwis based on the rotational period
     this.angle = this.angle - (360 / this.rotationPeriod) * dt;
+  }
+
+  draw(view) {
+    const { ctx } = view;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+    // Center + object position
+    const x = view.toViewXCoords(this.p[0]);
+    const y = view.toViewYCoords(this.p[1]);
+    ctx.translate(x, y);
   }
 
   drawDangerRadii(view) {
@@ -71,13 +91,34 @@ export class StellarBody {
     ctx.setLineDash([]);
   }
 
-  draw(view) {
+  drawSelection(view) {
     const { ctx } = view;
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-    // Center + object position
-    const x = view.width / 2 + this.p[0] * view.scale + view.offset[0];
-    const y = view.height / 2 + this.p[1] * view.scale + view.offset[1];
-    ctx.translate(x, y);
+    ctx.strokeStyle = '#20a6ff';
+
+    // Main box
+    ctx.setLineDash([10, 20, 10, 0]);
+
+    ctx.beginPath();
+    ctx.rect(-20, -20, 40, 40);
+    ctx.closePath();
+
+    ctx.stroke();
+
+    // Blur effect
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#20a6ff99';
+    ctx.filter = 'blur(4px)';
+    ctx.setLineDash([10, 20, 10, 0]);
+
+    ctx.beginPath();
+    ctx.rect(-20, -20, 40, 40);
+    ctx.closePath();
+
+    ctx.stroke();
+
+    // Remove special effects gain
+    ctx.filter = 'blur(0)';
+    ctx.setLineDash([]);
   }
 }

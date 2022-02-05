@@ -54,11 +54,13 @@ export const renderAllAssets = (canvas) => {
       name: 'Moon',
       pos: [200, 0],
       radius: 17,
+      selected: true,
     }),
     new Planet({
       name: 'Tiny Planet',
       pos: [300, 0],
       radius: 1,
+      selected: true,
     }),
     new Planet({
       name: 'Planet + Rings',
@@ -74,6 +76,7 @@ export const renderAllAssets = (canvas) => {
       description: 'Default',
       pos: [-300, 0],
       angle: -40,
+      selected: true,
     }),
     new Ship({
       name: 'TCS Heavy',
