@@ -9,8 +9,8 @@ export const upArrow = (
       d="m.5 4.5 4-4 4 4"
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       transform="translate(6 8)"
     />
   </svg>
@@ -27,8 +27,8 @@ export const downArrow = (
       d="m8.5.5-4 4-4-4"
       fill="none"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       transform="translate(6 8)"
     />
   </svg>
