@@ -40,7 +40,7 @@ export const initialPathing = (canvas) => {
   });
 };
 
-export const renderAllAssets = (canvas) => {
+export const renderPlanetAssets = (canvas) => {
   const view = new View({ canvas });
 
   const objects = [
@@ -71,6 +71,18 @@ export const renderAllAssets = (canvas) => {
         [70, 85],
       ],
     }),
+  ];
+
+  view.drawScale();
+  objects.forEach((obj) => {
+    obj.draw(view);
+  });
+};
+
+export const renderShipAssets = (canvas) => {
+  const view = new View({ canvas });
+
+  const objects = [
     new Ship({
       name: 'Void',
       description: 'Default',
@@ -87,6 +99,7 @@ export const renderAllAssets = (canvas) => {
     }),
   ];
 
+  view.drawScale();
   objects.forEach((obj) => {
     obj.draw(view);
   });

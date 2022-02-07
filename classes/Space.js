@@ -100,6 +100,8 @@ export class Space {
       obj.setV(v);
       obj.setP(p);
       obj.setA(a);
+
+      this.detectCollisions(obj, objects);
     });
   }
 
@@ -129,5 +131,21 @@ export class Space {
         });
       });
     }
+  }
+
+  detectCollisions(source, objects) {
+    objects.forEach((obj) => {
+      const dx = obj.p[0] - source.p[0];
+      const dy = obj.p[1] - source.p[1];
+      const dist = Math.hypot(dx, dy);
+
+      if (obj.radius && source.name !== obj.name && dist < obj.radius * 1.6) {
+        console.log('explode', source);
+
+        if (source.explode) {
+          source.explode();
+        }
+      }
+    });
   }
 }

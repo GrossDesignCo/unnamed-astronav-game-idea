@@ -115,8 +115,10 @@ export class View {
 
         if (withinXBounds && withinYBounds) {
           obj.select();
-        } else {
-          if (!this.selectBoxAddMode) obj.deselect();
+
+          // TODO: Doesn't deselect objects that weren't selected previously but move out of the selection box
+        } else if (!this.selectBoxAddMode) {
+          obj.deselect();
         }
       });
     }
@@ -148,7 +150,7 @@ export class View {
   }
 
   clearSelectBox() {
-    this.selectBox = undefined;
+    this.selectBox = null;
   }
 
   drawSelectBox() {
@@ -167,6 +169,21 @@ export class View {
       ctx.stroke();
       ctx.fill();
     }
+  }
+
+  // Draw scale of 1km, 10km, 100km, 1000km, 1m km, 10m km
+  drawScale() {
+    const ctx = this.ctx;
+
+    console.log({ '1km': 1 * this.scale });
+
+    ctx.strokeStyle = '#fff2';
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.rect(10, this.height - 10, this.width - 20, 1);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
   }
 
   render(objects, space, stats) {

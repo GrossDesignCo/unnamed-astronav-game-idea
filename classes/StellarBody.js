@@ -36,6 +36,7 @@ export class StellarBody {
     // Angle relative to x axis
     this.angle = angle;
     this.selected = selected;
+    this.dead = false;
   }
 
   setA(a) {
@@ -57,6 +58,13 @@ export class StellarBody {
 
   deselect() {
     this.selected = false;
+  }
+
+  explode() {
+    this.a = [0, 0];
+    this.v = [0, 0];
+    this.mass = 0;
+    this.dead = true;
   }
 
   update(dt) {
@@ -91,34 +99,37 @@ export class StellarBody {
     ctx.setLineDash([]);
   }
 
+  // For some reason this method is harsh on performance
   drawSelection(view) {
-    const { ctx } = view;
+    if (this.selected) {
+      const { ctx } = view;
 
-    ctx.strokeStyle = '#20a6ff';
+      ctx.strokeStyle = '#20a6ff';
 
-    // Main box
-    ctx.setLineDash([10, 20, 10, 0]);
+      // Main box
+      ctx.setLineDash([10, 20, 10, 0]);
 
-    ctx.beginPath();
-    ctx.rect(-20, -20, 40, 40);
-    ctx.closePath();
+      ctx.beginPath();
+      ctx.rect(-20, -20, 40, 40);
+      ctx.closePath();
 
-    ctx.stroke();
+      ctx.stroke();
 
-    // Blur effect
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = '#20a6ff99';
-    ctx.filter = 'blur(4px)';
-    ctx.setLineDash([10, 20, 10, 0]);
+      // Blur effect
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#20a6ff99';
+      ctx.filter = 'blur(4px)';
+      ctx.setLineDash([10, 20, 10, 0]);
 
-    ctx.beginPath();
-    ctx.rect(-20, -20, 40, 40);
-    ctx.closePath();
+      ctx.beginPath();
+      ctx.rect(-20, -20, 40, 40);
+      ctx.closePath();
 
-    ctx.stroke();
+      ctx.stroke();
 
-    // Remove special effects gain
-    ctx.filter = 'blur(0)';
-    ctx.setLineDash([]);
+      // Remove special effects gain
+      ctx.filter = 'blur(0)';
+      ctx.setLineDash([]);
+    }
   }
 }

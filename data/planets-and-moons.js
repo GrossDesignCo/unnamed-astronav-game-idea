@@ -1,4 +1,5 @@
 import { Planet } from '../classes/Planet';
+import { Ship } from '../classes/ship';
 
 const toDay = 86400;
 
@@ -50,7 +51,7 @@ export const moon = new Planet({
 export const asteroidAtL4 = new Planet({
   name: 'Asteroid',
   description: 'E-M L5 (stable)',
-  pos: [185000, -350000],
+  pos: [180000, -350000],
   velocity: [-70000, -45000],
   mass: 1.0e5,
   radius: 100,
@@ -67,10 +68,18 @@ export const asteroidAtL1 = new Planet({
   // isFocalPoint: true,
 });
 
+export const ship = new Ship({
+  name: 'SS Testamundo',
+  pos: [-50000, -50000],
+  // km/s to days
+  velocity: [-0.1 * toDay, 0.1 * toDay],
+  mass: 50000,
+});
+
 /**
  * Earth and moon, a basic intro level
  */
-export const earthAndMoon = [earth, moon, asteroidAtL4, asteroidAtL1];
+export const earthAndMoon = [earth, moon, asteroidAtL4, asteroidAtL1, ship];
 // export const earthAndMoon = [earth, moon];
 
 /**

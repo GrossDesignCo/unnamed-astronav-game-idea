@@ -11,51 +11,53 @@ export class Planet extends StellarBody {
   }
 
   drawBody(view) {
-    const { ctx } = view;
-    const visRadius = this.radius * view.scale;
-    const outline = 1.2 + visRadius / 8;
-    const labelX = visRadius + outline + 4;
+    if (!this.dead) {
+      const { ctx } = view;
+      const visRadius = this.radius * view.scale;
+      const outline = 1.2 + visRadius / 8;
+      const labelX = visRadius + outline + 4;
 
-    // Circle for planet body
-    ctx.strokeStyle = '#fff';
-    ctx.fillStyle = '#fff2';
-    ctx.lineWidth = outline;
-    ctx.lineCap = 'round';
+      // Circle for planet body
+      ctx.strokeStyle = '#fff';
+      ctx.fillStyle = '#fff2';
+      ctx.lineWidth = outline;
+      ctx.lineCap = 'round';
 
-    ctx.beginPath();
-    ctx.arc(0, 0, visRadius, 0, Math.PI * 2, true);
-    ctx.closePath();
-
-    ctx.fill();
-    ctx.stroke();
-
-    // Dot for rotation
-    ctx.rotate((this.angle * Math.PI) / 180);
-    ctx.moveTo(visRadius * 0.75, 0);
-    ctx.lineTo(visRadius * 0.75, 0);
-    ctx.stroke();
-    ctx.rotate((-1 * this.angle * Math.PI) / 180);
-
-    // Rings
-    this.rings.forEach((ring) => {
-      const width = (ring[1] - ring[0]) * view.scale;
-      const radius = ring[0] * view.scale;
-      ctx.strokeStyle = '#555';
-      ctx.lineWidth = (ring[1] - ring[0]) * view.scale;
       ctx.beginPath();
-      ctx.arc(0, 0, radius + width / 2, 0, Math.PI * 2, true);
+      ctx.arc(0, 0, visRadius, 0, Math.PI * 2, true);
       ctx.closePath();
-      ctx.stroke();
-    });
 
-    // Label
-    if (this.name) {
-      ctx.fillStyle = '#fff';
-      ctx.fillText(this.name, labelX, 4 * window.devicePixelRatio);
-    }
-    if (this.description) {
-      ctx.fillStyle = '#999';
-      ctx.fillText(this.description, labelX, 24 * window.devicePixelRatio);
+      ctx.fill();
+      ctx.stroke();
+
+      // Dot for rotation
+      ctx.rotate((this.angle * Math.PI) / 180);
+      ctx.moveTo(visRadius * 0.75, 0);
+      ctx.lineTo(visRadius * 0.75, 0);
+      ctx.stroke();
+      ctx.rotate((-1 * this.angle * Math.PI) / 180);
+
+      // Rings
+      this.rings.forEach((ring) => {
+        const width = (ring[1] - ring[0]) * view.scale;
+        const radius = ring[0] * view.scale;
+        ctx.strokeStyle = '#555';
+        ctx.lineWidth = (ring[1] - ring[0]) * view.scale;
+        ctx.beginPath();
+        ctx.arc(0, 0, radius + width / 2, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.stroke();
+      });
+
+      // Label
+      if (this.name) {
+        ctx.fillStyle = '#fff';
+        ctx.fillText(this.name, labelX, 4 * window.devicePixelRatio);
+      }
+      if (this.description) {
+        ctx.fillStyle = '#999';
+        ctx.fillText(this.description, labelX, 24 * window.devicePixelRatio);
+      }
     }
   }
 
@@ -128,9 +130,7 @@ export class Planet extends StellarBody {
 
   draw(view) {
     super.draw(view);
-    if (this.selected) {
-      super.drawSelection(view);
-    }
+    super.drawSelection(view);
 
     this.drawPredictedPath(view);
     this.drawBody(view);
