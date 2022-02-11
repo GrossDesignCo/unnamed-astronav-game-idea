@@ -4,6 +4,8 @@
 
 Maybe pull in a list of place names and randomly combine words, so like "New London", or "Great Win Shang", or "Dubai" maybe.
 
+https://github.com/datasets/world-cities/blob/master/data/world-cities.csv
+
 ## Placements & velocities
 
 Start with a star, then place other stars and planets & asteroids around it
