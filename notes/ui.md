@@ -5,6 +5,10 @@
 Pan (x, y)
 
 Zoom (z)
+- maybe as you zoom in, the time scale slows down
+- Eg. Zoom in on a couple ships before they fight,
+- scales from 1 day/second to 1 hour, then 10 minutes, etc
+- so the user can micro/control the ships
 
 Rotate (?)
 
