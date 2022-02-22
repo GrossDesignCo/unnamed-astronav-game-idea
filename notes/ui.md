@@ -33,6 +33,9 @@ Save
 
 Auto save?
 
+Toggle projected path lines
+- need to either make everything run on a track, or do lite-paths, like one step per day instead of a thousand, so that we could reasonably recalculate every tick.
+
 ## View
 
 Tracks the center of mass of the system (all objects)
