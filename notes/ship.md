@@ -71,3 +71,8 @@ Combat
 
 - projectiles might be cool
 - would need to make them really fast, like rail-gun fast
+
+Momentum
+
+- after a hyperspace jump what happens to the existing momentum?
+- how does the momentum transfer affect the orbital path?
