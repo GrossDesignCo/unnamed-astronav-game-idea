@@ -12,3 +12,6 @@ Lord-willing I'll be able to set aside a little time this month to work on this 
 - directional thrust, apply a given force along the ships y axis (rotated by whatever it's rotation is)
 
 Once those two things are done, that should be all we need before starting to write an ML script that finds a stable orbit!! :)
+
+Also neat, I found a 3d map of Starlink satellite positions:
+https://satellitemap.space/#
