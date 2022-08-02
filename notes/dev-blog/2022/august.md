@@ -10,6 +10,7 @@ Lord-willing I'll be able to set aside a little time this month to work on this 
 - Rotation for ship, give it a configurable "rotation thrust" attribute dictating how fast it can turn itself around. Get it to face a specific planet as it orbits
   - rotational momentum as well, keeps rotating until opposite thrust applied
 - directional thrust, apply a given force along the ships y axis (rotated by whatever it's rotation is)
+- Add a little transparency to predicted paths to make it easier to see where they overlap
 
 Once those two things are done, that should be all we need before starting to write an ML script that finds a stable orbit!! :)
 
