@@ -1,5 +1,5 @@
 import { Planet } from '../classes/Planet';
-import { Ship } from '../classes/ship';
+import { Ship } from '../classes/Ship';
 
 const toDay = 86400;
 
