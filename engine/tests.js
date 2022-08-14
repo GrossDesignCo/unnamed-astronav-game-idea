@@ -97,6 +97,13 @@ export const renderShipAssets = (canvas) => {
       type: 'cargo',
       angle: -160,
     }),
+    new Ship({
+      name: 'Dead Ship',
+      description: 'Crashed',
+      pos: [-300, 200],
+      angle: -30,
+      dead: true
+    }),
   ];
 
   view.drawScale();

@@ -68,18 +68,26 @@ export const asteroidAtL1 = new Planet({
   // isFocalPoint: true,
 });
 
-export const ship = new Ship({
+export const orbitingShip = new Ship({
   name: 'SS Testamundo',
   pos: [-50000, -50000],
   // km/s to days
-  velocity: [-0.1 * toDay, 0.1 * toDay],
+  velocity: [-2 * toDay, 1 * toDay],
   mass: 50000,
+});
+
+export const doomedShip = new Ship({
+  name: 'SS Doomed to Crash',
+  pos: [80000, 80000],
+  // km/s to days
+  velocity: [0, 0],
+  mass: 500,
 });
 
 /**
  * Earth and moon, a basic intro level
  */
-export const earthAndMoon = [earth, moon, asteroidAtL4, asteroidAtL1, ship];
+export const earthAndMoon = [earth, moon, asteroidAtL4, asteroidAtL1, orbitingShip, doomedShip];
 // export const earthAndMoon = [earth, moon];
 
 /**

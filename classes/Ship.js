@@ -73,6 +73,22 @@ export class Ship extends StellarBody {
     ctx.stroke();
     // ctx.scale(1, 1);
 
+    if (this.dead) {
+      ctx.beginPath();
+      ctx.moveTo(10, 10);
+      ctx.lineTo(-10, -10);
+      ctx.moveTo(-10, 10);
+      ctx.lineTo(10, -10);
+      ctx.closePath();
+
+      ctx.strokeStyle = '#f40028';
+      ctx.fillStyle = '#fff';
+      ctx.lineWidth = 3;
+
+      ctx.fill();
+      ctx.stroke();
+    }
+
     // Label
     if (this.name) {
       ctx.fillStyle = '#fff';

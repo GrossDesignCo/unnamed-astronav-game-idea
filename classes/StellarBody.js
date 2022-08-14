@@ -12,6 +12,7 @@ export class StellarBody {
     dangerRadii = [],
     angle = 0,
     selected = false,
+    dead = false,
   }) {
     this.name = name;
     this.description = description;
@@ -36,7 +37,7 @@ export class StellarBody {
     // Angle relative to x axis
     this.angle = angle;
     this.selected = selected;
-    this.dead = false;
+    this.dead = dead;
   }
 
   setA(a) {
@@ -65,6 +66,7 @@ export class StellarBody {
     this.v = [0, 0];
     this.mass = 0;
     this.dead = true;
+    console.log('died')
   }
 
   update(dt) {
