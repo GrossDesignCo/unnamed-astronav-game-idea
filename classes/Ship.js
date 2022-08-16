@@ -16,14 +16,13 @@ export class Ship extends StellarBody {
 
   draw(view) {
     super.draw(view);
+    super.drawSelection(view);
+
     const { ctx } = view;
 
     const labelX = 30;
 
-    ctx.fillStyle = '#fff';
-    ctx.lineJoin = 'round';
-    ctx.lineWidth = 2;
-
+    // ctx.scale(view.scale, view.scale);
     ctx.rotate((this.angle * Math.PI) / 180);
 
     // Basic Arrow shape
@@ -64,9 +63,31 @@ export class Ship extends StellarBody {
       ctx.closePath();
     }
 
-    ctx.fill();
-
     ctx.rotate((-1 * this.angle * Math.PI) / 180);
+
+    ctx.strokeStyle = '#555';
+    ctx.fillStyle = '#fff';
+    ctx.lineWidth = 1;
+
+    ctx.fill();
+    ctx.stroke();
+    // ctx.scale(1, 1);
+
+    if (this.dead) {
+      ctx.beginPath();
+      ctx.moveTo(10, 10);
+      ctx.lineTo(-10, -10);
+      ctx.moveTo(-10, 10);
+      ctx.lineTo(10, -10);
+      ctx.closePath();
+
+      ctx.strokeStyle = '#f40028';
+      ctx.fillStyle = '#fff';
+      ctx.lineWidth = 3;
+
+      ctx.fill();
+      ctx.stroke();
+    }
 
     // Label
     if (this.name) {

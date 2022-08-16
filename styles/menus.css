@@ -25,7 +25,18 @@
   border: 2px solid #fff;
   padding: 12px 20px;
   cursor: pointer;
+  position: relative;
   transition: 0.1s ease;
+}
+
+.menu-button::before {
+  content: '';
+  display: block;
+  position: absolute;
+  inset: -2px;
+  border: 2px solid #fff;
+  opacity: 0.3;
+  filter: blur(8px);
 }
 
 .menu-button:hover {

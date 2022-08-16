@@ -37,8 +37,13 @@ export default function Home() {
             <h2>Tests</h2>
           </li>
           <li>
-            <Link href="/tests/render-all-assets">
-              <button className="menu-button">Test Assets</button>
+            <Link href="/tests/render-planet-assets">
+              <button className="menu-button">Planet Assets</button>
+            </Link>
+          </li>
+          <li>
+            <Link href="/tests/render-ship-assets">
+              <button className="menu-button">Ship Assets</button>
             </Link>
           </li>
           <li>
@@ -52,14 +57,31 @@ export default function Home() {
         <h2>Controls</h2>
         <ul className="menu-button-list">
           <li>
-            <code>{upArrow}</code> / <code>{downArrow}</code>{' '}
-            <span>Zoom in / out</span>
+            <code>{upArrow}</code> / <code>{downArrow}</code> Zoom in / out
           </li>
           <li>
             <code>
               <span className="control">CMD / CTRL + F</span>
             </code>{' '}
-            <span>Fullscreen</span>
+            Fullscreen
+          </li>
+          <li>
+            <code>
+              <span className="control">CLICK + DRAG</span>
+            </code>{' '}
+            Select
+          </li>
+          <li>
+            <code>
+              <span className="control">SHIFT + CLICK + DRAG</span>
+            </code>{' '}
+            Add to selection
+          </li>
+          <li>
+            <code>
+              <span className="control">CLICK</span>
+            </code>{' '}
+            Deselect
           </li>
         </ul>
       </main>

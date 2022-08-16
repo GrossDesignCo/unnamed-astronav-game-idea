@@ -97,8 +97,6 @@ export const play = (canvas, objects, config) => {
         view.selectBoxAddMode = false;
       }
 
-      console.log('mouseup', eUp);
-
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
