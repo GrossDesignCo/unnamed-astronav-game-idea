@@ -18,3 +18,9 @@ Once those two things are done, that should be all we need before starting to wr
 
 Also neat, I found a 3d map of Starlink satellite positions:
 https://satellitemap.space/#
+
+## Actual Progress
+
+I remembered that I had a collision detection branch in progress & decided to finish that out. The rest of this month went towards mental health & re-learning how to take breaks for the 15th time :)
+
+But now there's a couple ships on the Earth-Moon system, one of which crashes directly into the Earth and it's inevitable demise.
