@@ -6,7 +6,7 @@ Lord-willing I'll be able to set aside a little time this month to work on this 
 
 ## Short hit-list of small things to work on
 
-- Frame rate drop on selection. I learned that this is likely cause by the dynamic addition/removal of properties in JavaScript, so it should be pretty easy to pre-define those keys & create get/set methods around them. Incidentally I also learned that statically shaping objects like that is one of the bit performance gotchas in JS :)
+- Frame rate drop on selection. I learned that this is likely cause by the dynamic addition/removal of properties in JavaScript, so it should be pretty easy to pre-define those keys & create get/set methods around them. Incidentally I also learned that statically shaping objects like that is one of the big performance tricks in JS :)
 - Rotation for ship, give it a configurable "rotation thrust" attribute dictating how fast it can turn itself around. Get it to face a specific planet as it orbits
   - rotational momentum as well, keeps rotating until opposite thrust applied
 - directional thrust, apply a given force along the ships y axis (rotated by whatever it's rotation is)
