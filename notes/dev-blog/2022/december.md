@@ -4,7 +4,7 @@ I've started dreaming about orbital mechanics and space battles.
 
 Most recently about two capital ships in one part of the system, and a civilian/converted station in another
 
-The two capital ships have two enemy ships warp in almost right on top of them.
+The two capital ships have two enemy ships warp in nearby but split so that they're surrounding my ships
 
 The two enemy ships are slightly stronger and slightly faster, and immediately start burning in opposite directions to try to separate my two ships
 
