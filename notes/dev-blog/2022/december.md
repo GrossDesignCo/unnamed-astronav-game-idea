@@ -19,3 +19,14 @@ Catching it & destroying it with the surprise missles, my ships are now screamin
 So that's new.
 
 I really want to see this game come to fruition.
+
+## Warping
+
+It would be really interesting if jumps and inertia were decoupled.
+
+Eg. Ship is on one side of the system, enemy on the other. You burn hard to the left perpendicular to the enemy, then warp directly towards them but a bit behind. However your momentum is preserved and now you're in a really advantageous chase position
+
+So much of this games mechanics (at least conceptually) seem to be about trapping opponents in lower momentum states where you can decide whether to catch up to them or get away from them.
+
+Almost exactly like dogfighting in War Thunder, where the higher altitude plane usually has an advantage because it can determine the engagement, but the lower altitude plane has tricks it can use to cause the higher one to overshoot & pull off a surprise win
+
