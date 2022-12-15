@@ -30,3 +30,8 @@ So much of this games mechanics (at least conceptually) seem to be about trappin
 
 Almost exactly like dogfighting in War Thunder, where the higher altitude plane usually has an advantage because it can determine the engagement, but the lower altitude plane has tricks it can use to cause the higher one to overshoot & pull off a surprise win
 
+## Kinetic energy and weapons power
+
+In the dream I didn't think about it, but a screw traveling at orbital speeds can theoretically punch a hole in the ISS.
+
+So the slingshot maneuver to get my ships into a position where they're flying towards the enemy ships at high speed, instead of parallel to or away from them, would increase the power of their kinetic weapons. Relatively speaking the energy of the impacts would be much greater. This could be a way to turn the tides if the enemy is missile/explosive heavy and you're kinetic/ballistic heavy.
