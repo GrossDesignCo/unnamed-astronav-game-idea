@@ -39,3 +39,7 @@ So the slingshot maneuver to get my ships into a position where they're flying t
 ### Animation testing
 
 Need to have a way to run animations in-engine without running a full gameplay
+
+Need to set up a way for the player to pause the physics, and go into a "future-motion" mode where they can set burns. Animations should still be running, but the speed of physics should slow to 0.05 or something, and the user can drag a handle that indicates a burn direction. From the handle should extend an expected path. The expected path will have to use a lower-fidelity path for performance.
+
+Maybe we can mix the turning as a mechanic the ship has to deal with. Because we're operating in the space of days, the time to rotate to a given direction would be negligible.
