@@ -35,3 +35,7 @@ Almost exactly like dogfighting in War Thunder, where the higher altitude plane 
 In the dream I didn't think about it, but a screw traveling at orbital speeds can theoretically punch a hole in the ISS.
 
 So the slingshot maneuver to get my ships into a position where they're flying towards the enemy ships at high speed, instead of parallel to or away from them, would increase the power of their kinetic weapons. Relatively speaking the energy of the impacts would be much greater. This could be a way to turn the tides if the enemy is missile/explosive heavy and you're kinetic/ballistic heavy.
+
+### Animation testing
+
+Need to have a way to run animations in-engine without running a full gameplay
