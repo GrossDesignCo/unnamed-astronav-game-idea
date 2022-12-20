@@ -51,3 +51,18 @@ Maybe we can mix the turning as a mechanic the ship has to deal with. Because we
 Interestingly, after some googling around I really didn't find anything that involved actual orbital mechanics, so this could be a whole new niche that we're carving out if I can figure out the core challenges like scale and timeframes.
 
 The scale is such a challenge because the distances are truly vast, like difficult to comprehend vast. Most games skip that by faking a scale that's more manageable. The time-scales too because a space battle might take 10 minutes, but the orbits involved could take days to execute.
+
+## Possible Scenarios
+
+I'm really liking this idea of a real-time tactical puzzle game, where each level is a little vignette with some kind of interesting orbital mechanic at play.
+
+Each could be as simple as getting from Earth-orbit to Lunar-orbit, or as tricky as the three-on-two capital ship fight, or something weird like having to capture something in a horshoe orbit, but where you have so little fuel it's a challenge just to catch up to it.
+
+Level Ideas:
+
+* Apollo - Basic replica of the moon mission, constraints are basically just fuel. Start landed on earth. Get to orbit around moon. Get back to earth without exploding
+* Mars 1 - Slightly trickier mission, going from Earth > Mars > Earth. Explores the mechanics of mars being on different or same sides of the system at different times, moving slower than earth, the mechanics of slow = fall faster and speed up = get into wider orbit, basic gravity assist maneuver and high/low-energy positions, as well as thinking about positions as orbit vectors rather than fixed points
+* Horshoes - Say an asteroid is in a horshoe orbit with the earth and moon, or sun and jupiter. With constrained fuel (or something) get yourself into a matching orbit so you can capture (hit the same position without exploding) it
+* Two-on-Three (name pending) - Dream situation from above
+
+The idea is to teach orbital mechanics while making it interesting, and as a coder to explore the realistic engineering problems of space, like asteroid mining, combat, basic travel
