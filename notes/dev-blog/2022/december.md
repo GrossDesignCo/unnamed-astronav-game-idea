@@ -45,3 +45,9 @@ Need to have a way to run animations in-engine without running a full gameplay
 Need to set up a way for the player to pause the physics, and go into a "future-motion" mode where they can set burns. Animations should still be running, but the speed of physics should slow to 0.05 or something, and the user can drag a handle that indicates a burn direction. From the handle should extend an expected path. The expected path will have to use a lower-fidelity path for performance.
 
 Maybe we can mix the turning as a mechanic the ship has to deal with. Because we're operating in the space of days, the time to rotate to a given direction would be negligible.
+
+## Competition Scope
+
+Interestingly, after some googling around I really didn't find anything that involved actual orbital mechanics, so this could be a whole new niche that we're carving out if I can figure out the core challenges like scale and timeframes.
+
+The scale is such a challenge because the distances are truly vast, like difficult to comprehend vast. Most games skip that by faking a scale that's more manageable. The time-scales too because a space battle might take 10 minutes, but the orbits involved could take days to execute.
