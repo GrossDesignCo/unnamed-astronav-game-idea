@@ -62,6 +62,7 @@ Level Ideas:
 
 * Apollo - Basic replica of the moon mission, constraints are basically just fuel. Start landed on earth. Get to orbit around moon. Get back to earth without exploding
 * Mars 1 - Slightly trickier mission, going from Earth > Mars > Earth. Explores the mechanics of mars being on different or same sides of the system at different times, moving slower than earth, the mechanics of slow = fall faster and speed up = get into wider orbit, basic gravity assist maneuver and high/low-energy positions, as well as thinking about positions as orbit vectors rather than fixed points
+* Trojan Horse - Start in orbit around Jupiter & use the stable orbits around Jupiter-Sun L4 to catch a particular asteroid in that orbit and bring it back to Jupiter
 * Horshoes - Say an asteroid is in a horshoe orbit with the earth and moon, or sun and jupiter. With constrained fuel (or something) get yourself into a matching orbit so you can capture (hit the same position without exploding) it
 * Two-on-Three (name pending) - Dream situation from above
 
