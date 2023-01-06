@@ -8,3 +8,5 @@ Path forward, goals for a hackathon day:
 - phase 2 depends on introducing thrust to ships
 
 If nothing else, that would give us a functional ship orbit/flight-path playground to mess around with
+
+Lord-willing, this year I won't get sidelined by Jury Duty taking over the hackathon days. Please Lord.
