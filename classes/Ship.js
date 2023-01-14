@@ -12,17 +12,21 @@ export class Ship extends StellarBody {
 
     this.type = type;
     this.description = `${type}${description ? `; ${description}` : ''}`;
+
+    // + is clockwise, -, counter-clockwise? measured in rotations per day
+    this.angularThrust = 0;
   }
 
-  draw(view) {
-    super.draw(view);
-    super.drawSelection(view);
+  update(dt) {
+    this.setAngularV(this.angularV - this.angularThrust);
+    super.update(dt);
+  }
 
+  drawBody(view) {
     const { ctx } = view;
 
     const labelX = 30;
 
-    // ctx.scale(view.scale, view.scale);
     ctx.rotate((this.angle * Math.PI) / 180);
 
     // Basic Arrow shape
@@ -71,8 +75,8 @@ export class Ship extends StellarBody {
 
     ctx.fill();
     ctx.stroke();
-    // ctx.scale(1, 1);
 
+    // Mark an X if dead
     if (this.dead) {
       ctx.beginPath();
       ctx.moveTo(10, 10);
@@ -90,13 +94,63 @@ export class Ship extends StellarBody {
     }
 
     // Label
-    if (this.name) {
-      ctx.fillStyle = '#fff';
-      ctx.fillText(this.name, labelX, 4 * window.devicePixelRatio);
+    if (view.showLabels) {
+      if (this.name) {
+        ctx.fillStyle = '#fff';
+        ctx.fillText(this.name, labelX, 4 * window.devicePixelRatio);
+      }
+      if (this.description) {
+        ctx.fillStyle = '#999';
+        ctx.fillText(this.description, labelX, 24 * window.devicePixelRatio);
+      }
     }
-    if (this.description) {
-      ctx.fillStyle = '#999';
-      ctx.fillText(this.description, labelX, 24 * window.devicePixelRatio);
+  }
+
+  drawPredictedPath(view) {
+    const { ctx } = view;
+
+    ctx.beginPath();
+    ctx.strokeStyle = '#555';
+    ctx.lineWidth = 1;
+    ctx.fillStyle = '#555';
+
+    ctx.moveTo(0, 0);
+    let markTime = 0;
+    this.predictedPath.forEach((obj, i) => {
+      // Get the future point relative to the current object origin
+      const px = (obj.p[0] - this.p[0]) * view.scale;
+      const py = (obj.p[1] - this.p[1]) * view.scale;
+
+      // The line starts with the real planet, which could be moving,
+      // so skip it to preserve just the predicted path points
+      if (i === 0) {
+        ctx.moveTo(px, py);
+      } else {
+        ctx.lineTo(px, py);
+      }
+
+      // Display a timestamp every 4 days
+      if (markTime > 4) {
+        ctx.fillText(`Day ${obj.t.toFixed(0)}`, px, py);
+        markTime = 0;
+      } else {
+        markTime += obj.dt;
+      }
+    });
+
+    ctx.stroke();
+  }
+
+  draw(view) {
+    super.draw(view);
+    super.drawSelection(view);
+    if (view.debug) {
+      super.drawPhysicsDebugInfo(view);
     }
+    if (view.predictPaths) {
+      this.drawPredictedPath(view);
+    }
+
+    this.drawBody(view);
   }
 }

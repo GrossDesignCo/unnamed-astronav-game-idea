@@ -11,45 +11,55 @@ export class Planet extends StellarBody {
   }
 
   drawBody(view) {
-    if (!this.dead) {
-      const { ctx } = view;
-      const visRadius = this.radius * view.scale;
-      const outline = 1.2 + visRadius / 8;
-      const labelX = visRadius + outline + 4;
+    const { ctx } = view;
+    const visRadius = this.radius * view.scale;
+    const outline = 1.2 + visRadius / 8;
+    const labelX = visRadius + outline + 4;
 
-      // Circle for planet body
-      ctx.strokeStyle = '#fff';
-      ctx.fillStyle = '#fff2';
-      ctx.lineWidth = outline;
-      ctx.lineCap = 'round';
+    // Circle for planet body
+    ctx.strokeStyle = '#fff';
+    ctx.fillStyle = '#fff2';
+    ctx.lineWidth = outline;
+    ctx.lineCap = 'round';
 
+    ctx.beginPath();
+    ctx.arc(0, 0, visRadius, 0, Math.PI * 2, true);
+    ctx.closePath();
+
+    ctx.fill();
+    ctx.stroke();
+
+    // Rings
+    this.rings.forEach((ring) => {
+      const width = (ring[1] - ring[0]) * view.scale;
+      const radius = ring[0] * view.scale;
+      ctx.strokeStyle = '#555';
+      ctx.lineWidth = (ring[1] - ring[0]) * view.scale;
       ctx.beginPath();
-      ctx.arc(0, 0, visRadius, 0, Math.PI * 2, true);
+      ctx.arc(0, 0, radius + width / 2, 0, Math.PI * 2, true);
       ctx.closePath();
+      ctx.stroke();
+    });
+
+    // Mark an X if dead
+    if (this.dead) {
+      ctx.beginPath();
+      ctx.moveTo(10, 10);
+      ctx.lineTo(-10, -10);
+      ctx.moveTo(-10, 10);
+      ctx.lineTo(10, -10);
+      ctx.closePath();
+
+      ctx.strokeStyle = '#f40028';
+      ctx.fillStyle = '#fff';
+      ctx.lineWidth = 3;
 
       ctx.fill();
       ctx.stroke();
+    }
 
-      // Dot for rotation
-      ctx.rotate((this.angle * Math.PI) / 180);
-      ctx.moveTo(visRadius * 0.75, 0);
-      ctx.lineTo(visRadius * 0.75, 0);
-      ctx.stroke();
-      ctx.rotate((-1 * this.angle * Math.PI) / 180);
-
-      // Rings
-      this.rings.forEach((ring) => {
-        const width = (ring[1] - ring[0]) * view.scale;
-        const radius = ring[0] * view.scale;
-        ctx.strokeStyle = '#555';
-        ctx.lineWidth = (ring[1] - ring[0]) * view.scale;
-        ctx.beginPath();
-        ctx.arc(0, 0, radius + width / 2, 0, Math.PI * 2, true);
-        ctx.closePath();
-        ctx.stroke();
-      });
-
-      // Label
+    // Label
+    if (view.showLabels) {
       if (this.name) {
         ctx.fillStyle = '#fff';
         ctx.fillText(this.name, labelX, 4 * window.devicePixelRatio);
@@ -114,7 +124,13 @@ export class Planet extends StellarBody {
       const px = (obj.p[0] - this.p[0]) * view.scale;
       const py = (obj.p[1] - this.p[1]) * view.scale;
 
-      ctx.lineTo(px, py);
+      // The line starts with the real planet, which could be moving,
+      // so skip it to preserve just the predicted path points
+      if (i === 0) {
+        ctx.moveTo(px, py);
+      } else {
+        ctx.lineTo(px, py);
+      }
 
       // Display a timestamp every 4 days
       if (markTime > 4) {
@@ -132,9 +148,14 @@ export class Planet extends StellarBody {
     super.draw(view);
     super.drawSelection(view);
 
-    this.drawPredictedPath(view);
+    if (view.predictPaths) {
+      this.drawPredictedPath(view);
+    }
     this.drawBody(view);
 
     super.drawDangerRadii(view);
+    if (view.debug) {
+      super.drawPhysicsDebugInfo(view);
+    }
   }
 }

@@ -5,19 +5,20 @@ export class StellarBody {
     pos = [0, 0],
     mass = 1,
     velocity = [0, 0],
-    rotationPeriod = 0,
+    angularV = 0,
     isFocalPoint = false,
     t = 0,
     dt = 0,
     dangerRadii = [],
     angle = 0,
+    rotationPeriod = 0,
     selected = false,
     dead = false,
   }) {
     this.name = name;
     this.description = description;
     this.mass = mass;
-    this.rotationPeriod = rotationPeriod;
+    this.angularV = angularV || 1 / rotationPeriod;
     this.isFocalPoint = isFocalPoint;
     this.dangerRadii = dangerRadii;
 
@@ -40,6 +41,10 @@ export class StellarBody {
     this.dead = dead;
   }
 
+  resetPredictedPath() {
+    this.predictedPath = [];
+  }
+
   setA(a) {
     this.a = a;
     this.totalA = Math.hypot(...a);
@@ -51,6 +56,10 @@ export class StellarBody {
 
   setP(p) {
     this.p = p;
+  }
+
+  setAngularV(v) {
+    this.angularV = v;
   }
 
   select() {
@@ -66,12 +75,12 @@ export class StellarBody {
     this.v = [0, 0];
     this.mass = 0;
     this.dead = true;
-    console.log('died')
+    this.resetPredictedPath();
   }
 
   update(dt) {
-    // Do one full rotation counter-clockwis based on the rotational period
-    this.angle = this.angle - (360 / this.rotationPeriod) * dt;
+    // Convert revolutions / day into degrees / day
+    this.angle = this.angle - this.angularV * 360 * dt;
   }
 
   draw(view) {
@@ -82,6 +91,22 @@ export class StellarBody {
     const x = view.toViewXCoords(this.p[0]);
     const y = view.toViewYCoords(this.p[1]);
     ctx.translate(x, y);
+  }
+
+  drawPhysicsDebugInfo(view) {
+    const { ctx } = view;
+
+    // Mark for rotation
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'green';
+
+    ctx.rotate((this.angle * Math.PI) / 180);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, -50);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.rotate((-1 * this.angle * Math.PI) / 180);
   }
 
   drawDangerRadii(view) {

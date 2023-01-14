@@ -1,6 +1,7 @@
 import { View } from '../classes/View';
 import { Space } from '../classes/Space';
 import { Planet } from '../classes/Planet';
+import { Star } from '../classes/Star';
 import { Ship } from '../classes/Ship';
 import { earth, moon, asteroidAtL4 } from '../data/planets-and-moons';
 
@@ -71,6 +72,11 @@ export const renderPlanetAssets = (canvas) => {
         [70, 85],
       ],
     }),
+    new Star({
+      name: 'Star',
+      pos: [400, 200],
+      radius: 40,
+    }),
   ];
 
   view.drawScale();
@@ -102,7 +108,7 @@ export const renderShipAssets = (canvas) => {
       description: 'Crashed',
       pos: [-300, 200],
       angle: -30,
-      dead: true
+      dead: true,
     }),
   ];
 

@@ -1,4 +1,4 @@
-import { Planet } from './Planet';
+import { StellarBody } from './StellarBody';
 
 const G = 6.674e-11; // kg/m/s
 const Gkmd = (G * 86400) / 1000; // kg/km/day
@@ -13,7 +13,8 @@ export class Space {
     let ay = 0;
 
     objects.forEach((target) => {
-      if (!target.p || !target.mass || source.name === target.name) return;
+      if (!target || !target.p || !target.mass || source.name === target.name)
+        return;
 
       // Inputs
       const dx = target.p[0] - source.p[0];
@@ -105,10 +106,15 @@ export class Space {
     });
   }
 
-  predictPaths(dt, objects, steps = 30) {
+  predictPaths(dt, objects, steps) {
     for (let i = 0; i < steps; i++) {
       objects.forEach((obj) => {
-        if (!obj.predictedPath) return;
+        if (!obj.predictedPath || obj.dead) return;
+
+        if (i === 0) {
+          // clear out old predicted path
+          obj.resetPredictedPath();
+        }
 
         // Start with current object, then traverse down generated path
         const nextSource = i === 0 ? obj : obj.predictedPath[i - 1];
@@ -121,7 +127,9 @@ export class Space {
           dt
         );
 
-        obj.predictedPath[i] = new Planet({
+        // Create a fake "planet" at each new position to represent each
+        // future step of the sim
+        obj.predictedPath[i] = new StellarBody({
           velocity: v,
           pos: p,
           mass: obj.mass,

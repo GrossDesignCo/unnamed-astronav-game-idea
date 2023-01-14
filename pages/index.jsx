@@ -61,9 +61,53 @@ export default function Home() {
           </li>
           <li>
             <code>
+              <span className="control">SPACEBAR</span>
+            </code>{' '}
+            Play / Pause
+          </li>
+          <li>
+            <code>
               <span className="control">CMD / CTRL + F</span>
             </code>{' '}
-            Fullscreen
+            Fullscreen (chrome only currently)
+          </li>
+          <li>
+            <code>
+              <span className="control">L</span>
+            </code>{' '}
+            Toggle Labels
+          </li>
+          <li>
+            <code>
+              <span className="control">P</span>
+            </code>{' '}
+            Toggle Path Prediction
+          </li>
+          <li>
+            <code>
+              <span className="control">SHIFT</span> +{' '}
+              <span className="control">+</span>
+            </code>{' '}
+            Increase Predicted Path Accuracy (potentially expensive)
+          </li>
+          <li>
+            <code>
+              <span className="control">SHIFT</span> +{' '}
+              <span className="control">-</span>
+            </code>{' '}
+            Decrease Predicted Path Accuracy
+          </li>
+          <li>
+            <code>
+              <span className="control">SHIFT</span> + {upArrow}
+            </code>{' '}
+            Increase Predicted Path Distance
+          </li>
+          <li>
+            <code>
+              <span className="control">SHIFT</span> + {downArrow}
+            </code>{' '}
+            Decrease Predicted Path Distance
           </li>
           <li>
             <code>

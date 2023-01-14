@@ -19,7 +19,7 @@ const toDay = 86400;
  */
 
 // Standard km/s to km/day
-const lunarV = -1.02 * toDay;
+const lunaV = -1.02 * toDay;
 const earthMass = 5.97237e24; // kg
 const lunaMass = 7.349e22; // kg
 
@@ -27,12 +27,11 @@ const lunaMass = 7.349e22; // kg
 export const earth = new Planet({
   name: 'Earth',
   pos: [0, 0], // km
-  velocity: [0, lunarV * (lunaMass / earthMass) * -1], // km/d
+  velocity: [0, lunaV * (lunaMass / earthMass) * -1], // km/d
   mass: earthMass, // kg
   // Set the earth's initial V to a counter-balance of the moon's
   radius: 6378.137, // km
-  // rotationPeriod: 23.9345 / 24, // days per day :) // FAKE
-  rotationPeriod: 1, // testing
+  rotationPeriod: 23.9345 / 24, // revolutions per day
   isFocalPoint: true,
 });
 
@@ -40,10 +39,11 @@ export const earth = new Planet({
 export const moon = new Planet({
   name: 'Moon',
   pos: [378000, 0],
-  velocity: [0, lunarV],
+  velocity: [0, lunaV],
   mass: lunaMass,
   radius: 1738.0,
   rotationPeriod: 27.3, // tidally locked
+  angle: -90, // start facing earth
   isFocalPoint: true,
 });
 
@@ -62,7 +62,7 @@ export const asteroidAtL1 = new Planet({
   name: 'Asteroid',
   description: 'E-M L1 (unstable)',
   pos: [318420, 0],
-  velocity: [0, lunarV * 0.9],
+  velocity: [0, lunaV * 0.9],
   mass: 1.0e5,
   radius: 100,
   // isFocalPoint: true,
@@ -87,7 +87,14 @@ export const doomedShip = new Ship({
 /**
  * Earth and moon, a basic intro level
  */
-export const earthAndMoon = [earth, moon, asteroidAtL4, asteroidAtL1, orbitingShip, doomedShip];
+export const earthAndMoon = [
+  earth,
+  moon,
+  asteroidAtL4,
+  asteroidAtL1,
+  orbitingShip,
+  doomedShip,
+];
 // export const earthAndMoon = [earth, moon];
 
 /**

@@ -1,23 +1,56 @@
-export const star = (ctx, radius) => {
-  // Styles
-  ctx.strokeStyle = '#fff';
-  ctx.fillStyle = '#fff';
-  ctx.lineWidth = 6;
+import { StellarBody } from './StellarBody';
 
-  // Draw
-  ctx.beginPath();
-  ctx.arc(0, 0, radius, 0, Math.PI * 2, true);
-  ctx.closePath();
+export class Star extends StellarBody {
+  constructor(props) {
+    super(props);
 
-  ctx.fill();
-  ctx.stroke();
+    const { radius = 1, rings = [] } = props;
 
-  ctx.setLineDash([8, 4]);
-  ctx.strokeStyle = '#e24a4a';
-  ctx.lineWidth = 1;
+    this.radius = radius;
+    this.rings = rings;
+  }
 
-  ctx.beginPath();
-  ctx.arc(0, 0, radius * 2, 0, Math.PI * 2, true);
-  ctx.closePath();
-  ctx.stroke();
-};
+  drawBody(view) {
+    const { ctx } = view;
+    const visRadius = this.radius * view.scale;
+    const outline = 1.2 + visRadius / 8;
+    const labelX = visRadius + outline + 4;
+
+    // Circle for planet body
+    ctx.strokeStyle = '#fff';
+    ctx.fillStyle = '#fff';
+    ctx.lineWidth = outline;
+    ctx.lineCap = 'round';
+
+    ctx.beginPath();
+    ctx.arc(0, 0, visRadius, 0, Math.PI * 2, true);
+    ctx.closePath();
+
+    ctx.fill();
+    ctx.stroke();
+
+    // Label
+    if (view.showLabels) {
+      if (this.name) {
+        ctx.fillStyle = '#fff';
+        ctx.fillText(this.name, labelX, 4 * window.devicePixelRatio);
+      }
+      if (this.description) {
+        ctx.fillStyle = '#999';
+        ctx.fillText(this.description, labelX, 24 * window.devicePixelRatio);
+      }
+    }
+  }
+
+  draw(view) {
+    super.draw(view);
+    super.drawSelection(view);
+
+    this.drawBody(view);
+
+    super.drawDangerRadii(view);
+    if (view.debug) {
+      super.drawPhysicsDebugInfo(view);
+    }
+  }
+}

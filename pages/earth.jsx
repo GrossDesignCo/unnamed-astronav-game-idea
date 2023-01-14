@@ -5,7 +5,7 @@ import { play } from '../engine/play';
 import { earthAndMoon } from '../data/planets-and-moons';
 
 const config = {
-  initialDt: 0.01,
+  initialDt: 0.001,
 };
 
 export default function Earth() {

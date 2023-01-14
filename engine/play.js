@@ -2,73 +2,144 @@ import { View } from '../classes/View';
 import { Space } from '../classes/Space';
 import { Stats } from '../classes/Stats';
 
+export const getKeyMap = (view) => {
+  // TODO:
+  // 1. Fgure out why these need to be wrapped in an inline function?
+
+  return {
+    base: {
+      ArrowUp: {
+        name: 'Zoom In',
+        action: () => view.zoomIn(),
+      },
+      ArrowDown: {
+        name: 'Zoom Out',
+        action: () => view.zoomOut(),
+      },
+      l: {
+        name: 'Toggle Labels',
+        action: () => view.toggleLabels(),
+      },
+      p: {
+        name: 'Toggle Paths',
+        action: () => view.togglePathPrediction(),
+      },
+      ' ': {
+        name: 'Play/Pause',
+        action: () => view.togglePlayPause(),
+      },
+    },
+    meta: {
+      f: {
+        name: 'Fullscreen',
+        action: () => view.fullscreen(),
+      },
+    },
+    shiftKey: {
+      '+': {
+        name: 'Increase Path Accuracy',
+        notes: 'Can have a significant performance impact',
+        action: () => {
+          view.decreasePathDT();
+
+          console.log({ pathAcc: view.pathDT });
+        },
+      },
+      _: {
+        name: 'Decrease Path Accuracy',
+        action: () => {
+          view.increasePathDT();
+
+          console.log({ pathAcc: view.pathDT });
+        },
+      },
+      ArrowUp: {
+        name: 'Increase Path Distance',
+        notes: 'Can have a significant performance impact',
+        action: () => {
+          view.increasePathDistance();
+          console.log({ pathDist: view.pathDistance });
+        },
+      },
+      ArrowDown: {
+        name: 'Decrease Path Distance',
+        action: () => {
+          view.decreasePathDistance();
+          console.log({ pathDist: view.pathDistance });
+        },
+      },
+    },
+  };
+};
+
 export const play = (canvas, objects, config) => {
   const space = new Space({ timeScale: 1 });
-  const view = new View({ canvas });
+  const view = new View({ canvas, debug: false });
   const stats = new Stats();
-  const keysMap = {};
+  let isPaused = false;
+  let dt = config.initialDt;
+
+  // const togglePlayPause = () => {
+  //   isPaused = !isPaused;
+
+  //   if (!isPaused) {
+  //     window.requestAnimationFrame(loop);
+  //   }
+  // };
 
   // Max range here should be within 363,300km and 384,400km
 
   /**
    * Core Loop
    */
-  let totalTime = 0;
 
   const loop = (newTime) => {
     if (view.canvas) {
       // Elapsed time between renders (seconds)
-      const dt = Math.max(newTime - time, 1) / 1000;
-      const fakeDT = config.initialDt;
-      totalTime += dt;
+      // TODO: If we ever want to support multiplayer, dt will have to be based on machine time elapsed, instead of an arbitary number,
+      // otherwise two machines could get wildly out of sync in terms of game-state
 
-      space.update(fakeDT, objects);
-      objects.forEach((obj) => {
-        obj.update(fakeDT);
-      });
-      stats.update(fakeDT, space);
+      // Stop the physics and running of the engine
+      if (!view.isPaused) {
+        space.update(dt, objects);
+        objects.forEach((obj) => {
+          obj.update(dt);
+        });
+        stats.update(dt, space);
+      }
+
+      if (view.predictPaths) {
+        space.predictPaths(view.pathDT, objects, view.pathDistance);
+      }
+
+      // without stopping rendering so the player can still interact
       view.update(objects, space);
       view.render(objects, space, stats);
 
-      time = newTime;
       window.requestAnimationFrame(loop);
     }
   };
 
-  let time = 0;
   window.requestAnimationFrame(loop);
 
-  // TODO:
-  // 1. Fgure out why these need to be wrapped in an inline function?
-  // 2. Convert controls map into it's own global that can be rendered on a page
-
-  keysMap.base = {
-    ArrowUp: {
-      name: 'Zoom In',
-      action: () => view.zoomIn(),
-    },
-    ArrowDown: {
-      name: 'Zoom Out',
-      action: () => view.zoomOut(),
-    },
-  };
-
-  keysMap.meta = {
-    f: {
-      name: 'Fullscreen',
-      action: () => view.fullscreen(),
-    },
-  };
+  const keyMap = getKeyMap(view);
 
   window.addEventListener('keyup', (e) => {
-    if (keysMap.base[e.key]) {
-      keysMap.base[e.key].action();
-    }
-
-    // Handle metakeys & additional controls
+    // Give meta keys separate sets of actions
     if (e.ctrlKey || e.metaKey) {
-      if (keysMap.meta[e.key]) {
-        keysMap.meta[e.key].action();
+      if (keyMap.meta[e.key]) {
+        e.preventDefault();
+        keyMap.meta[e.key].action();
+      }
+    } else if (e.shiftKey) {
+      if (keyMap.shiftKey[e.key]) {
+        e.preventDefault();
+        keyMap.shiftKey[e.key].action();
+      }
+    } else {
+      if (keyMap.base[e.key]) {
+        e.preventDefault();
+        keyMap.base[e.key].action();
       }
     }
   });

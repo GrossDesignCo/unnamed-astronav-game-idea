@@ -1,5 +1,16 @@
+// higher dt = lower accuracy
+const defaultDT = 0.1;
+const dtMultiplier = 2;
+const maxDT = defaultDT * (dtMultiplier * 4);
+const minDT = defaultDT / (dtMultiplier * 4);
+
+const defaultDist = 100;
+const distMultiplier = 2;
+const maxDist = defaultDist * (distMultiplier * 8);
+const minDist = defaultDist / (distMultiplier * 4);
+
 export class View {
-  constructor({ canvas, timeScale }) {
+  constructor({ canvas, timeScale, isPaused, debug = false }) {
     this.canvas = canvas;
     this.scale = 1;
     this.userZoomLevel = 1;
@@ -7,9 +18,65 @@ export class View {
     this.centerOfMass = [0, 0];
     this.timeScale = timeScale;
     this.selectBoxAddMode = false;
+    this.showLabels = true;
+    this.predictPaths = true;
+    this.debug = debug;
+    this.isPaused = isPaused;
+    this.pathDT = defaultDT; // length of time for eah step (dt)
+    this.pathDistance = defaultDist; // Number of days to plot courses for
     // this.audioCtx = new window.AudioContext();
 
     this.resize();
+  }
+
+  togglePlayPause() {
+    this.isPaused = !this.isPaused;
+
+    if (this.isPaused) {
+      this.predictPaths = true;
+    }
+  }
+
+  togglePathPrediction() {
+    this.predictPaths = !this.predictPaths;
+  }
+
+  decreasePathDT() {
+    if (this.pathDT > minDT) {
+      this.pathDT = this.pathDT / dtMultiplier;
+      this.increasePathDistance();
+    }
+    console.log('decrease dt', {
+      dist: this.pathDistance,
+      dt: this.pathDT,
+      minDT,
+    });
+  }
+
+  increasePathDT() {
+    if (this.pathDT < maxDT) {
+      this.pathDT = this.pathDT * dtMultiplier;
+      this.decreasePathDistance();
+    }
+    console.log('increase dt', {
+      dist: this.pathDistance,
+      dt: this.pathDT,
+      maxDT,
+    });
+  }
+
+  increasePathDistance() {
+    if (this.pathDistance < maxDist) {
+      this.pathDistance = this.pathDistance * distMultiplier;
+    }
+    console.log({ dist: this.pathDistance, dt: this.pathDT, maxDist });
+  }
+
+  decreasePathDistance() {
+    if (this.pathDistance > minDist) {
+      this.pathDistance = this.pathDistance / distMultiplier;
+    }
+    console.log({ dist: this.pathDistance, dt: this.pathDT, minDist });
   }
 
   resize() {
@@ -28,11 +95,6 @@ export class View {
     // this.resize(); // doesn't work as expected
 
     // TODO: handle exiting from fullscreen
-  }
-
-  zoom(e) {
-    console.log('Zoom!');
-    // TODO: Figure out a scroll-based zoom scheme that supports mice and touch
   }
 
   zoomIn() {
@@ -153,6 +215,10 @@ export class View {
     this.selectBox = null;
   }
 
+  toggleLabels() {
+    this.showLabels = !this.showLabels;
+  }
+
   drawSelectBox() {
     if (this.selectBox) {
       const ctx = this.ctx;
@@ -174,8 +240,6 @@ export class View {
   // Draw scale of 1km, 10km, 100km, 1000km, 1m km, 10m km
   drawScale() {
     const ctx = this.ctx;
-
-    console.log({ '1km': 1 * this.scale });
 
     ctx.strokeStyle = '#fff2';
     ctx.fillStyle = '#fff';
