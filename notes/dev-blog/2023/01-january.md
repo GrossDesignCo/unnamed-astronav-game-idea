@@ -39,10 +39,23 @@ Both of these settings have large-ish performance impact, these would be good ca
 
 Also Pausing now turns on path visibility.
 
-## Next Up: Burns
+## Next Up
+
+### Burns
 
 The next step towards getting something actually interactive is giving the player the ability to execute course corrections to a ship.
 
 This means having to create thrust and giving ships the ability to course-correct.
 
 Hopefully that won't be too crazy, but we'll see :)
+
+Practical steps:
+* give user the ability to select individual ships or paths by clicking on (or really, within X pixels of) them.
+* When selected, highlight that object's path. Make sure there's a different highlight for ships (which the user can interact with) and planets.
+* user should be able to click and drag from a certain point on a path to indicate a burn starting there.
+* somehow, user should be able to indicate how long and how intense the burn should be (maybe same thing for our purposes, since we're already measuring the mechanics in days and hours, it's not like they're scheduling down ot the minute).
+* create an animation or indicator of some kind that a ship is thrusting when the game resumes
+
+### A Settings Panel
+
+With the increasing number of knobs and dials to tinker with, it probably makes sense to move a lot of these things that are currently bound to weird meta+key combos to an actual settings page, with inputs and sliders and such.
