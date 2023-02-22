@@ -21,19 +21,11 @@ For the user these won't be quite as useful with some of the chaotic results tha
 
 Added controls:
 
-- p
-
-Toggle path visibility
-
-- SHIFT+
-- SHIFT-
-
-Increase/Decrease Prediction Accuracy
-
-- SHIFT Up
-- SHIFT Down
-
-Increase/Decrease Prediction Distance/Time
+| Key           | Action                                                                |
+| ------------- | --------------------------------------------------------------------- |
+| p             | Toggle path visibility (also toggles pathing, makes it compute heavy) |
+| SHIFT +/-     | Increase/Decrease Prediction Accuracy                                 |
+| SHIFT up/down | Increase/Decrease Prediction Distance/Time                            |
 
 Both of these settings have large-ish performance impact, these would be good candidates to eventually move into a user-settings object where they could be set with a slider or something isntead of keys.
 
