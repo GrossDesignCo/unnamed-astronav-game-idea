@@ -10,3 +10,4 @@ Tactically it works like a game of chicken, wanting to not activate it until you
 
 Also doesn’t stop existing momentum, meaning it can lead to wild swings and slingshots, could lead to woms really wild portal-style orbital physics puzzles
 
+Too many fun ideas for this game. This must be what real game devs feel like all the time.
