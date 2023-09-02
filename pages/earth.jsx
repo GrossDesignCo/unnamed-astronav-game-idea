@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useEffect, useRef } from 'react';
 import { MenuButton } from '../components/menu-button';
 import { play } from '../engine/play';
-import { earthAndMoon } from '../data/planets-and-moons';
+import { systemEarth } from '../data/planets-and-moons';
 
 const config = {
   initialDt: 0.001,
@@ -14,9 +14,9 @@ export default function Earth() {
   // TODO: when we start, we want a fresh copy of the objects
   useEffect(() => {
     if (canvas.current) {
-      play(canvas.current, earthAndMoon, config);
+      return play(canvas.current, systemEarth, config);
     }
-  }, [canvas.current]);
+  }, []);
 
   return (
     <div>

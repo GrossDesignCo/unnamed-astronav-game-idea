@@ -25,7 +25,7 @@ export const initialPathing = (canvas) => {
 
   // 0.06 was roughly stable if we scaled G by dt
   const dt = 0.001;
-  const steps = 90 / dt;
+  const steps = 10 / dt;
 
   space.update(dt, objects);
   space.predictPaths(dt, objects, steps);

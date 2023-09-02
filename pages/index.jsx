@@ -25,6 +25,11 @@ export default function Home() {
           </li>
           <li>
             <Link href="/earth">
+              <button className="menu-button">Earth</button>
+            </Link>
+          </li>
+          <li>
+            <Link href="/earth-and-moon">
               <button className="menu-button">Earth and Moon</button>
             </Link>
           </li>

@@ -2,6 +2,9 @@ export class StellarBody {
   constructor({
     name,
     description,
+    accel = [0, 0],
+    thrust = [0, 0],
+    predictedThrust = [0, 0],
     pos = [0, 0],
     mass = 1,
     velocity = [0, 0],
@@ -28,8 +31,10 @@ export class StellarBody {
     this.dt = dt;
 
     // Acceleration [x, y]
-    this.a = [0, 0];
+    this.a = accel;
     this.totalA = 1;
+    this.predictedThrust = predictedThrust;
+    this.thrust = thrust;
     // Velocity [x, y]
     this.v = velocity;
     // Position [x, y]
@@ -58,6 +63,20 @@ export class StellarBody {
     this.p = p;
   }
 
+  setPredictedThrust(x, y) {
+    this.predictedThrust = [x, y];
+  }
+
+  setThrust(x, y) {
+    this.thrust = [x, y];
+  }
+
+  commitThrust() {
+    this.setThrust(...this.predictedThrust);
+
+    console.log('Commit thrust', this.name, this.predctedThrust, this.thrust);
+  }
+
   setAngularV(v) {
     this.angularV = v;
   }
@@ -68,6 +87,7 @@ export class StellarBody {
 
   deselect() {
     this.selected = false;
+    console.log('deselect', this.name);
   }
 
   explode() {
@@ -88,8 +108,7 @@ export class StellarBody {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
 
     // Center + object position
-    const x = view.toViewXCoords(this.p[0]);
-    const y = view.toViewYCoords(this.p[1]);
+    const [x, y] = view.toViewCoords(this.p);
     ctx.translate(x, y);
   }
 

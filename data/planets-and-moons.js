@@ -62,7 +62,7 @@ export const asteroidAtL1 = new Planet({
   name: 'Asteroid',
   description: 'E-M L1 (unstable)',
   pos: [318420, 0],
-  velocity: [0, lunaV * 0.9],
+  velocity: [0, lunaV * 0.8],
   mass: 1.0e5,
   radius: 100,
   // isFocalPoint: true,
@@ -87,7 +87,7 @@ export const doomedShip = new Ship({
 /**
  * Earth and moon, a basic intro level
  */
-export const earthAndMoon = [
+export const systemEarthAndMoon = [
   earth,
   moon,
   asteroidAtL4,
@@ -95,7 +95,8 @@ export const earthAndMoon = [
   orbitingShip,
   doomedShip,
 ];
-// export const earthAndMoon = [earth, moon];
+
+export const systemEarth = [earth, orbitingShip];
 
 /**
  * Jovian Moons closed system
@@ -263,7 +264,7 @@ export const epimetheus = new Planet({
   isFocalPoint: true,
 });
 
-export const saturnAndMoons = [
+export const systemSaturnAndMoons = [
   saturn,
   mimas,
   enceladus,

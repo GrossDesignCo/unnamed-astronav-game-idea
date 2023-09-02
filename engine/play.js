@@ -2,7 +2,7 @@ import { View } from '../classes/View';
 import { Space } from '../classes/Space';
 import { Stats } from '../classes/Stats';
 
-export const getKeyMap = (view) => {
+export const getKeyMap = (view, objects) => {
   // TODO:
   // 1. Fgure out why these need to be wrapped in an inline function?
 
@@ -42,7 +42,7 @@ export const getKeyMap = (view) => {
         action: () => {
           view.decreasePathDT();
 
-          console.log({ pathAcc: view.pathDT });
+          console.info({ pathAcc: view.pathDT });
         },
       },
       _: {
@@ -50,7 +50,7 @@ export const getKeyMap = (view) => {
         action: () => {
           view.increasePathDT();
 
-          console.log({ pathAcc: view.pathDT });
+          console.info({ pathAcc: view.pathDT });
         },
       },
       ArrowUp: {
@@ -58,14 +58,20 @@ export const getKeyMap = (view) => {
         notes: 'Can have a significant performance impact',
         action: () => {
           view.increasePathDistance();
-          console.log({ pathDist: view.pathDistance });
+          console.info({ pathDist: view.pathDistance });
         },
       },
       ArrowDown: {
         name: 'Decrease Path Distance',
         action: () => {
           view.decreasePathDistance();
-          console.log({ pathDist: view.pathDistance });
+          console.info({ pathDist: view.pathDistance });
+        },
+      },
+      Esc: {
+        name: 'Deselect all',
+        action: () => {
+          view.deselectAll(objects);
         },
       },
     },
@@ -74,9 +80,8 @@ export const getKeyMap = (view) => {
 
 export const play = (canvas, objects, config) => {
   const space = new Space({ timeScale: 1 });
-  const view = new View({ canvas, debug: false });
+  const view = new View({ canvas, debug: false, isPaused: true });
   const stats = new Stats();
-  let isPaused = false;
   let dt = config.initialDt;
 
   // const togglePlayPause = () => {
@@ -122,7 +127,7 @@ export const play = (canvas, objects, config) => {
 
   window.requestAnimationFrame(loop);
 
-  const keyMap = getKeyMap(view);
+  const keyMap = getKeyMap(view, objects);
 
   window.addEventListener('keyup', (e) => {
     // Give meta keys separate sets of actions
@@ -147,25 +152,28 @@ export const play = (canvas, objects, config) => {
   window.addEventListener('resize', view.resize);
   window.addEventListener('scroll', view.zoom);
 
+  const trackMousePos = (e) => {
+    view.setMousePos(e.x, e.y);
+  };
+  window.addEventListener('mousemove', trackMousePos);
+
   // Object Selection via mouse
   const handleMouseDown = (eDown) => {
     const handleMouseMove = (eMove) => {
       // If user presses the shift key at any time during selection,
       // add to existing selection instead of selecting entirely new objects
       if (eMove.shiftKey && !view.selectBoxAddMode) {
-        view.selectBoxAddMode = true;
+        view.setSelectBoxAddMode(true);
       }
 
       view.setSelectBox(eDown.x, eDown.y, eMove.x, eMove.y);
     };
 
     const handleMouseUp = (eUp) => {
-      // If this is a click _not_ a drag
-      if (eDown.x === eUp.x && eDown.y === eUp.y) {
-        handleMouseMove(eUp);
-      } else {
-        view.clearSelectBox();
-        view.selectBoxAddMode = false;
+      view.clearSelectBox();
+      view.setSelectBoxAddMode(false);
+      if (eUp.x === eDown.x && eUp.y === eDown.y) {
+        view.selectPointOnNextUpdate(eDown.x, eDown.y);
       }
 
       window.removeEventListener('mousemove', handleMouseMove);
@@ -179,4 +187,8 @@ export const play = (canvas, objects, config) => {
 
   // Draw a box with the mouse (to hopefully select objects)
   window.addEventListener('mousedown', handleMouseDown);
+
+  return () => {
+    window.removeEventListener('mousedown', handleMouseDown);
+  };
 };

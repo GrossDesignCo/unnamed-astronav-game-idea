@@ -4,27 +4,35 @@ const dtMultiplier = 2;
 const maxDT = defaultDT * (dtMultiplier * 4);
 const minDT = defaultDT / (dtMultiplier * 4);
 
-const defaultDist = 100;
+const defaultDist = 200;
 const distMultiplier = 2;
 const maxDist = defaultDist * (distMultiplier * 8);
 const minDist = defaultDist / (distMultiplier * 4);
 
 export class View {
-  constructor({ canvas, timeScale, isPaused, debug = false }) {
+  constructor({
+    canvas,
+    timeScale,
+    isPaused = false,
+    debug = false,
+    defaultZoomLevel = 1,
+  }) {
     this.canvas = canvas;
     this.scale = 1;
-    this.userZoomLevel = 1;
+    this.userZoomLevel = defaultZoomLevel;
     this.offset = [0, 0];
     this.centerOfMass = [0, 0];
     this.timeScale = timeScale;
     this.selectBoxAddMode = false;
-    this.showLabels = true;
+    this.showLabels = false;
     this.predictPaths = true;
     this.debug = debug;
     this.isPaused = isPaused;
     this.pathDT = defaultDT; // length of time for eah step (dt)
     this.pathDistance = defaultDist; // Number of days to plot courses for
     // this.audioCtx = new window.AudioContext();
+    this.selectedPoint = null;
+    this.mousePos = [0, 0];
 
     this.resize();
   }
@@ -41,12 +49,20 @@ export class View {
     this.predictPaths = !this.predictPaths;
   }
 
+  setMousePos(x, y) {
+    this.mousePos = [x, y];
+  }
+
+  getMousePos() {
+    return this.mousePos;
+  }
+
   decreasePathDT() {
     if (this.pathDT > minDT) {
       this.pathDT = this.pathDT / dtMultiplier;
       this.increasePathDistance();
     }
-    console.log('decrease dt', {
+    console.info('decrease dt', {
       dist: this.pathDistance,
       dt: this.pathDT,
       minDT,
@@ -58,7 +74,7 @@ export class View {
       this.pathDT = this.pathDT * dtMultiplier;
       this.decreasePathDistance();
     }
-    console.log('increase dt', {
+    console.info('increase dt', {
       dist: this.pathDistance,
       dt: this.pathDT,
       maxDT,
@@ -69,14 +85,14 @@ export class View {
     if (this.pathDistance < maxDist) {
       this.pathDistance = this.pathDistance * distMultiplier;
     }
-    console.log({ dist: this.pathDistance, dt: this.pathDT, maxDist });
+    console.info({ dist: this.pathDistance, dt: this.pathDT, maxDist });
   }
 
   decreasePathDistance() {
     if (this.pathDistance > minDist) {
       this.pathDistance = this.pathDistance / distMultiplier;
     }
-    console.log({ dist: this.pathDistance, dt: this.pathDT, minDist });
+    console.info({ dist: this.pathDistance, dt: this.pathDT, minDist });
   }
 
   resize() {
@@ -158,32 +174,55 @@ export class View {
       centerOfMass[1] * this.scale * -1,
     ];
 
-    // Highlight the selected objects
+    // Click to select a single object
+    if (this.selectedPoint) {
+      const [x, y] = this.selectedPoint;
+      const buffer = 10;
+
+      this.selectBox = {
+        x1: x - buffer,
+        x2: x + buffer,
+        y1: y - buffer,
+        y2: y + buffer,
+      };
+    }
+
+    // Drag to select multiple objects
     if (this.selectBox) {
       const { x1, y1, x2, y2 } = this.selectBox;
-      const x1g = this.toGameXCoords(x1);
-      const y1g = this.toGameYCoords(y1);
-      const x2g = this.toGameXCoords(x2);
-      const y2g = this.toGameYCoords(y2);
 
-      const left = x1 < x2 ? x1g : x2g;
-      const right = x2 > x1 ? x2g : x1g;
-      const top = y1 < y2 ? y1g : y2g;
-      const bottom = y2 > y1 ? y2g : y1g;
+      const left = x1 < x2 ? x1 : x2;
+      const right = x2 > x1 ? x2 : x1;
+      const top = y1 < y2 ? y1 : y2;
+      const bottom = y2 > y1 ? y2 : y1;
 
       objects.forEach((obj) => {
-        const withinXBounds = obj.p[0] > left && obj.p[0] < right;
-        const withinYBounds = obj.p[1] > top && obj.p[1] < bottom;
+        const objX = this.toViewXCoords(obj.p[0]) / 2;
+        const objY = this.toViewYCoords(obj.p[1]) / 2;
+        const withinXBounds = objX > left && objX < right;
+        const withinYBounds = objY > top && objY < bottom;
 
         if (withinXBounds && withinYBounds) {
           obj.select();
-
-          // TODO: Doesn't deselect objects that weren't selected previously but move out of the selection box
         } else if (!this.selectBoxAddMode) {
           obj.deselect();
         }
+
+        // Commit thrust maneuvers
+        if (obj.commitThrust) {
+          obj.commitThrust();
+        }
       });
     }
+
+    if (this.selectedPoint) {
+      this.selectBox = null;
+      this.selectedPoint = null;
+    }
+  }
+
+  selectPointOnNextUpdate(x, y) {
+    this.selectedPoint = [x, y];
   }
 
   toGameXCoords(x) {
@@ -194,12 +233,20 @@ export class View {
     return (y - this.height / 2) / this.scale;
   }
 
+  toGameCoords([x, y]) {
+    return [this.toGameXCoords(x), this.toGameYCoords(y)];
+  }
+
   toViewXCoords(x) {
-    return this.width / 2 + x * this.scale + this.offset[0];
+    return x * this.scale + this.offset[0] + this.width / 2;
   }
 
   toViewYCoords(y) {
-    return this.height / 2 + y * this.scale + this.offset[1];
+    return y * this.scale + this.offset[1] + this.height / 2;
+  }
+
+  toViewCoords([x, y]) {
+    return [this.toViewXCoords(x), this.toViewYCoords(y)];
   }
 
   frequencyFromVector(v) {
@@ -213,6 +260,16 @@ export class View {
 
   clearSelectBox() {
     this.selectBox = null;
+  }
+
+  setSelectBoxAddMode(bool) {
+    this.selectBoxAddMode = bool;
+  }
+
+  deselectAll(objects) {
+    objects.forEach((obj) => {
+      obj.deselect();
+    });
   }
 
   toggleLabels() {
@@ -260,7 +317,6 @@ export class View {
     //     });
     //     obj.sound.connect(this.audioCtx.destination);
     //     // obj.sound.start();
-    //     console.log(obj);
     //   } else {
     //     // TODO: Smoothly transition between frequencies
     //     obj.sound.frequency.setValueAtTime(

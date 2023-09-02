@@ -39,6 +39,8 @@ export class Stats {
     ctx.fillText(`Elapsed: ${formatTime(this.timeElapsed)}`, 0, 0);
     // ctx.translate(0, 20);
 
+    // TODO: Pass elapsed time to the object predicted path so that the day labels are more useful
+
     // ctx.fillText(
     //   // `Size: ${space.maxDist.toPrecision(3)}km (${this.expanding})`,
     //   `Size: ${space.maxDist.toPrecision(3)}km`,

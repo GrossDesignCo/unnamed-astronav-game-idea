@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useEffect, useRef } from 'react';
 import { MenuButton } from '../components/menu-button';
 import { play } from '../engine/play';
-import { saturnAndMoons } from '../data/planets-and-moons';
+import { systemSaturnAndMoons } from '../data/planets-and-moons';
 
 const config = {
   initialDt: 0.001,
@@ -13,9 +13,9 @@ export default function Saturn() {
 
   useEffect(() => {
     if (canvas.current) {
-      play(canvas.current, saturnAndMoons, config);
+      return play(canvas.current, systemSaturnAndMoons, config);
     }
-  }, [canvas.current]);
+  }, []);
 
   return (
     <div>

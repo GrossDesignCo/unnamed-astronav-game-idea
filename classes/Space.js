@@ -8,7 +8,8 @@ export class Space {
     this.timeScale = timeScale;
   }
 
-  computeRawGForce(source, objects, dt) {
+  // Raw forces from gravity, thrust
+  computeRawForces(source, objects, dt) {
     let ax = 0;
     let ay = 0;
 
@@ -41,12 +42,12 @@ export class Space {
     // k1
     const p1 = source.p;
     const v1 = source.v;
-    const a1 = this.computeRawGForce(source, objects, dt);
+    const a1 = this.computeRawForces(source, objects, dt);
 
     // k2
     const p2 = [p1[0] + v1[0] * 0.5 * dt, p1[1] + v1[1] * 0.5 * dt];
     const v2 = [v1[0] + a1[0] * 0.5 * dt, v1[1] + a1[1] * 0.5 * dt];
-    const a2 = this.computeRawGForce(
+    const a2 = this.computeRawForces(
       { p: p2, mass: source.mass, name: source.name },
       objects,
       dt * 1.5
@@ -55,7 +56,7 @@ export class Space {
     // k3
     const p3 = [p1[0] + v2[0] * 0.5 * dt, p1[1] + v2[1] * 0.5 * dt];
     const v3 = [v1[0] + a2[0] * 0.5 * dt, v1[1] + a2[1] * 0.5 * dt];
-    const a3 = this.computeRawGForce(
+    const a3 = this.computeRawForces(
       { p: p3, mass: source.mass, name: source.name },
       objects,
       dt * 1.5
@@ -64,7 +65,7 @@ export class Space {
     // k4
     const p4 = [p1[0] + v3[0] * dt, p1[1] + v3[1] * dt];
     const v4 = [v1[0] + a3[0] * dt, v1[1] + a3[1] * dt];
-    const a4 = this.computeRawGForce(
+    const a4 = this.computeRawForces(
       { p: p4, mass: source.mass, name: source.name },
       objects,
       dt * 2
@@ -98,7 +99,19 @@ export class Space {
 
       const { v, p, a } = this.computeUpdatedVectors(obj, objects, dt);
 
-      obj.setV(v);
+      // Account for object's planned maneuvers
+      let modV = v;
+      if (obj.thrust[0] || obj.thrust[1]) {
+        modV[0] = v[0] + obj.thrust[0];
+        modV[1] = v[1] + obj.thrust[1];
+
+        // Assume thrust is applied instantly
+        // TODO: Apply thrust at a comfortable 1G over time to be more realistic
+        obj.setThrust(0, 0);
+        obj.setPredictedThrust(0, 0);
+      }
+
+      obj.setV(modV);
       obj.setP(p);
       obj.setA(a);
 
@@ -127,10 +140,21 @@ export class Space {
           dt
         );
 
-        // Create a fake "planet" at each new position to represent each
+        // Account for object's planned maneuvers
+        let modV = v;
+        if (i === 0 && obj.predictedThrust) {
+          modV[0] = v[0] + obj.predictedThrust[0];
+          modV[1] = v[1] + obj.predictedThrust[1];
+
+          // Assume thrust is applied instantly
+          // TODO: Apply thrust at a comfortable 1G over time to be more realistic
+          // obj.setPredictedThrust(0, 0);
+        }
+
+        // Create a fake body at each new position to represent each
         // future step of the sim
         obj.predictedPath[i] = new StellarBody({
-          velocity: v,
+          velocity: modV,
           pos: p,
           mass: obj.mass,
           name: `${obj.name}-${i}`,
@@ -147,8 +171,9 @@ export class Space {
       const dy = obj.p[1] - source.p[1];
       const dist = Math.hypot(dx, dy);
 
+      // If any object intersects the radius of a planet, it dies.
       if (obj.radius && source.name !== obj.name && dist < obj.radius * 1.6) {
-        console.log('explode', source);
+        console.info('explode', source);
 
         if (source.explode) {
           source.explode();

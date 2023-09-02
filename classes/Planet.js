@@ -59,7 +59,7 @@ export class Planet extends StellarBody {
     }
 
     // Label
-    if (view.showLabels) {
+    if (view.showLabels || this.selected) {
       if (this.name) {
         ctx.fillStyle = '#fff';
         ctx.fillText(this.name, labelX, 4 * window.devicePixelRatio);
@@ -113,9 +113,15 @@ export class Planet extends StellarBody {
     const { ctx } = view;
 
     ctx.beginPath();
-    ctx.strokeStyle = '#555';
-    ctx.lineWidth = 1;
-    ctx.fillStyle = '#555';
+    if (this.selected) {
+      ctx.strokeStyle = '#fff9';
+      ctx.lineWidth = 2;
+      ctx.fillStyle = '#fff9';
+    } else {
+      ctx.strokeStyle = '#5557';
+      ctx.lineWidth = 1;
+      ctx.fillStyle = '#5557';
+    }
 
     ctx.moveTo(0, 0);
     let markTime = 0;
@@ -124,13 +130,14 @@ export class Planet extends StellarBody {
       const px = (obj.p[0] - this.p[0]) * view.scale;
       const py = (obj.p[1] - this.p[1]) * view.scale;
 
-      // The line starts with the real planet, which could be moving,
-      // so skip it to preserve just the predicted path points
-      if (i === 0) {
-        ctx.moveTo(px, py);
-      } else {
-        ctx.lineTo(px, py);
-      }
+      // Drawing 10k+ separate paths is super performance heavy, see if canvas can just draw a gradient
+      // const transparency = (1 - i / this.predictedPath.length).toFixed(2);
+      // const fill = `rgba(200, 200, 200, ${transparency})`;
+      // // const fill = "rgba(200, 200, 200, 0.15)"
+      // if (i % 1000 === 0) console.log({ fill, transparency, length: this.predictedPath.length, i });
+      // ctx.strokeStyle = fill;
+      // ctx.fillStyle = fill;
+      ctx.lineTo(px, py);
 
       // Display a timestamp every 4 days
       if (markTime > 4) {
