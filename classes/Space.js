@@ -143,8 +143,8 @@ export class Space {
         // Account for object's planned maneuvers
         let modV = v;
         if (i === 0 && obj.predictedThrust) {
-          modV[0] = v[0] + obj.predictedThrust[0];
-          modV[1] = v[1] + obj.predictedThrust[1];
+          modV[0] = obj.v[0] + obj.predictedThrust[0];
+          modV[1] = obj.v[1] + obj.predictedThrust[1];
 
           // Assume thrust is applied instantly
           // TODO: Apply thrust at a comfortable 1G over time to be more realistic
@@ -155,7 +155,7 @@ export class Space {
         // future step of the sim
         obj.predictedPath[i] = new StellarBody({
           velocity: modV,
-          pos: p,
+          pos: i === 0 ? obj.p : p,
           mass: obj.mass,
           name: `${obj.name}-${i}`,
           t: nextSource.t + dt,

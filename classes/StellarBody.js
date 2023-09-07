@@ -73,8 +73,6 @@ export class StellarBody {
 
   commitThrust() {
     this.setThrust(...this.predictedThrust);
-
-    console.log('Commit thrust', this.name, this.predctedThrust, this.thrust);
   }
 
   setAngularV(v) {
@@ -87,7 +85,6 @@ export class StellarBody {
 
   deselect() {
     this.selected = false;
-    console.log('deselect', this.name);
   }
 
   explode() {

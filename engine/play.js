@@ -28,6 +28,12 @@ export const getKeyMap = (view, objects) => {
         name: 'Play/Pause',
         action: () => view.togglePlayPause(),
       },
+      Escape: {
+        name: 'Deselect all',
+        action: () => {
+          view.deselectAll(objects);
+        },
+      },
     },
     meta: {
       f: {
@@ -66,12 +72,6 @@ export const getKeyMap = (view, objects) => {
         action: () => {
           view.decreasePathDistance();
           console.info({ pathDist: view.pathDistance });
-        },
-      },
-      Esc: {
-        name: 'Deselect all',
-        action: () => {
-          view.deselectAll(objects);
         },
       },
     },
@@ -155,6 +155,7 @@ export const play = (canvas, objects, config) => {
   const trackMousePos = (e) => {
     view.setMousePos(e.x, e.y);
   };
+  // TODO: For some reason adding this to the cleanup causes pathing to explode.
   window.addEventListener('mousemove', trackMousePos);
 
   // Object Selection via mouse
@@ -188,7 +189,10 @@ export const play = (canvas, objects, config) => {
   // Draw a box with the mouse (to hopefully select objects)
   window.addEventListener('mousedown', handleMouseDown);
 
-  return () => {
-    window.removeEventListener('mousedown', handleMouseDown);
+  return {
+    keyMap,
+    cleanup: () => {
+      window.removeEventListener('mousedown', handleMouseDown);
+    },
   };
 };

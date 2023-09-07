@@ -20,10 +20,6 @@ export class Ship extends StellarBody {
   update(dt) {
     this.setAngularV(this.angularV - this.angularThrust);
     super.update(dt);
-
-    if (this.name === 'SS Testamundo') {
-      console.log(this.name, this.predictedThrust, this.thrust);
-    }
   }
 
   drawBody(view) {

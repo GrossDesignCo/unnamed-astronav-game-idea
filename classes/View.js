@@ -107,10 +107,12 @@ export class View {
 
   // Doesn't work in Safari currently.
   fullscreen() {
-    document.documentElement.requestFullscreen({ navigationUI: 'hide' });
-    // this.resize(); // doesn't work as expected
-
-    // TODO: handle exiting from fullscreen
+    try {
+      const doc = document.body;
+      document.body.requestFullscreen({ navigationUI: 'hide' });
+    } catch (error) {
+      console.warn('Error going to fullscreen', error);
+    }
   }
 
   zoomIn() {
@@ -269,6 +271,7 @@ export class View {
   deselectAll(objects) {
     objects.forEach((obj) => {
       obj.deselect();
+      // TODO: Deselecting all should undo any predicted path changes
     });
   }
 
