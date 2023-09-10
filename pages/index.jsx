@@ -62,17 +62,26 @@ export default function Home() {
         <h2>Controls</h2>
         <ul className="menu-button-list">
           <li>
-            <code>{upArrow}</code> / <code>{downArrow}</code> Zoom in / out
+            <code>
+              <span className="control">UpArrow</span>
+            </code>{' '}
+            /{' '}
+            <code>
+              <span className="control">DownArrow</span>
+            </code>{' '}
+            Zoom in / out
           </li>
           <li>
             <code>
-              <span className="control">SPACEBAR</span>
+              <span className="control">Spacebar</span>
             </code>{' '}
             Play / Pause
           </li>
-          <li>
+          {/* Convert these to user settings */}
+          {/* <li>
             <code>
-              <span className="control">CMD / CTRL + F</span>
+              <span className="control">CMD / CTRL</span>{' '}
+              <span className="control">F</span>
             </code>{' '}
             Fullscreen (chrome only currently)
           </li>
@@ -90,48 +99,32 @@ export default function Home() {
           </li>
           <li>
             <code>
-              <span className="control">SHIFT</span> +{' '}
+              <span className="control">SHIFT</span>{' '}
               <span className="control">+</span>
             </code>{' '}
             Increase Predicted Path Accuracy (potentially expensive)
           </li>
           <li>
             <code>
-              <span className="control">SHIFT</span> +{' '}
+              <span className="control">SHIFT</span>{' '}
               <span className="control">-</span>
             </code>{' '}
             Decrease Predicted Path Accuracy
           </li>
           <li>
             <code>
-              <span className="control">SHIFT</span> + {upArrow}
+              <span className="control">SHIFT</span>
+              <span className="control">UpArrow</span>
             </code>{' '}
             Increase Predicted Path Distance
           </li>
           <li>
             <code>
-              <span className="control">SHIFT</span> + {downArrow}
+              <span className="control">SHIFT</span>
+              <span className="control">DownArrow</span>
             </code>{' '}
             Decrease Predicted Path Distance
-          </li>
-          <li>
-            <code>
-              <span className="control">CLICK + DRAG</span>
-            </code>{' '}
-            Select
-          </li>
-          <li>
-            <code>
-              <span className="control">SHIFT + CLICK + DRAG</span>
-            </code>{' '}
-            Add to selection
-          </li>
-          <li>
-            <code>
-              <span className="control">CLICK</span>
-            </code>{' '}
-            Deselect
-          </li>
+          </li> */}
         </ul>
       </main>
     </div>

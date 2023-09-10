@@ -148,7 +148,7 @@ export class Ship extends StellarBody {
     ctx.stroke();
   }
 
-  drawBurnControl(view) {
+  drawThrustControl(view) {
     const { ctx } = view;
     // Get Mouse position relative to the ship coordinates
     const [gameShipX, gameShipY] = this.p;
@@ -202,16 +202,21 @@ export class Ship extends StellarBody {
   draw(view) {
     super.draw(view);
     super.drawSelection(view);
+
     if (view.debug) {
       super.drawPhysicsDebugInfo(view);
     }
-    if (view.predictPaths) {
-      this.drawPredictedPath(view);
-    }
 
-    if (this.selected) {
-      this.drawBurnControl(view);
+    if (!this.dead) {
+      if (view.predictPaths) {
+        this.drawPredictedPath(view);
+      }
+
+      if (this.selected) {
+        this.drawThrustControl(view);
+      }
+
+      this.drawBody(view);
     }
-    this.drawBody(view);
   }
 }

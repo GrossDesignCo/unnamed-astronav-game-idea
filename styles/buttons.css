@@ -1,0 +1,161 @@
+:root {
+  --angled-cuts: polygon(
+    3px 0,
+    calc(100% - 3px) 0,
+    100% 3px,
+    100% calc(100% - 3px),
+    calc(100% - 3px) 100%,
+    3px 100%,
+    0 calc(100% - 3px),
+    0 3px
+  );
+
+  --angled-cuts-outline: polygon(
+    /* Outer shell */ 3px 0,
+    calc(100% - 3px) 0,
+    100% 3px,
+    100% calc(100% - 3px),
+    calc(100% - 3px) 100%,
+    3px 100%,
+    0 calc(100% - 3px),
+    0 3px,
+    /* Inner ring */ 1px 3px,
+    1px calc(100% - 3.5px),
+    3.5px calc(100% - 1px),
+    calc(100% - 3.5px) calc(100% - 1px),
+    calc(100% - 1px) calc(100% - 3.5px),
+    calc(100% - 1px) 3.5px,
+    calc(100% - 3.5px) 1px,
+    3.5px 1px,
+    1px 3.5px,
+    0 3px
+  );
+}
+
+.menu {
+  padding: 60px;
+}
+
+.menu > :first-child {
+  margin-top: 0;
+}
+
+.menu-button-list {
+  padding: 0;
+  margin: 20px 0;
+}
+
+.menu-button-list li {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 12px;
+}
+
+.menu-button {
+  appearance: none;
+  font-weight: 700;
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 12px 20px;
+  cursor: pointer;
+  position: relative;
+  transition: 0.1s ease;
+}
+
+.menu-button::before {
+  content: '';
+  display: block;
+  position: absolute;
+  inset: -2px;
+  border: 2px solid #fff;
+  opacity: 0.3;
+  filter: blur(8px);
+}
+
+.menu-button:hover {
+  background-color: #fff4;
+}
+
+code {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.control {
+  padding: 0 7px;
+  line-height: 21px;
+  background: #5555;
+  position: relative;
+  clip-path: var(--angled-cuts);
+}
+
+.control::before {
+  content: '';
+  display: block;
+  position: absolute;
+  inset: 0;
+  background-color: #fff9;
+  pointer-events: none;
+  clip-path: var(--angled-cuts-outline);
+}
+
+.control-button-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  position: fixed;
+  inset: 20px;
+  top: auto;
+}
+
+@media (orientation: portrait) {
+  .control-button-group {
+    flex-direction: column;
+    align-items: start;
+  }
+}
+
+.control-button {
+  background: #5555;
+  border: none;
+  color: #fff;
+  padding: 5px;
+  min-height: 28px;
+  clip-path: var(--angled-cuts);
+  user-select: none;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: 0.1s ease;
+  position: relative;
+}
+
+.control-button::before {
+  content: '';
+  display: block;
+  position: absolute;
+  inset: 0;
+  background-color: #fff;
+  pointer-events: none;
+  clip-path: var(--angled-cuts-outline);
+  opacity: 0;
+}
+
+.control-button:hover {
+  background-color: #5559;
+}
+
+.control-button:is(:active, :focus-visible)::before {
+  opacity: 1;
+}
+
+.control-button .key {
+  background-color: #555;
+  padding: 2px 5px;
+  height: 18px;
+  line-height: 14px;
+  margin: -10px 0;
+}

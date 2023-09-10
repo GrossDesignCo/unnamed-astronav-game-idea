@@ -84,18 +84,6 @@ canvas {
   padding: 20px;
 }
 
-code {
-  border: 1px solid;
-  display: inline-flex;
-  align-items: center;
-  vertical-align: middle;
-}
-
-.control {
-  padding: 0 7px;
-  line-height: 21px;
-}
-
 svg {
   line-height: 1;
 }
