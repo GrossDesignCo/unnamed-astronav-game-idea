@@ -61,3 +61,47 @@ Add the ability to plan multiple burns/thrusts over time. Like if the mouse curs
 Add a path history, parallel to the predicted path. That way if someone wants, they could turn on the history, then let the simulation run for a long time, getting these cool geometric visualizations of the paths of the solar system.
 
 It would also be amazing to experiment with procedural generation/procgen, eg. generate systems with N planets/starts/etc and randomized start/end goals.
+
+### A better pathing algorithm
+
+Long-term, the current pathing algo won't work. It's really rigid, only working at certain scales. If you were to plot a course to jupiter it would increase at O^n, increasing potentially massively as the size of the system increases. If you were to plot an orbit really close to the surface of a planet, the margin of error would be too large to consistently come out of it.
+
+It would be better if the length of the step of each path was to some extent determined by the scale of the distance between the path and the objects affecting it, but it's also to do with the relative angle around each object. Like as you get closer to the earth, you could have a single step that skips right past the planet instead of calculating the exact curve.
+
+So maybe it makes senes to check if a path changes the absolute angle between the ship and each planet by more than X degrees, and if so, cut that step in half and recompute. The downside is that we'd have to start with some arbitrary step size, which doesn't help with larger scales, and then we'd have variable delta-time again, which introduces it's own challenges.
+
+Not sure what the best approach here is, but I know _something_ is needed.
+
+## Make an objective
+
+Barring everything else, the real next step is to figure out how a person could go from the game start state to "winning". There's not really enough content for this to be open world, although maybe that could be a variant, like just "free play" or something.
+
+### Perspective
+
+It seems like just achieving orbit around another body could be a challenging enough objective to start out, especially since everything is currently displaying absolute positions, which means that an orbit doesn't look like the classic circle that we all know and love, but like that crazy gear-tooth pattern as the ship slows and speeds on the in-and-out sides of the moon's orbit. This would be even more of an issue if the earth was orbiting around the sun in the Earth-Moon level instead of acting like a fixed point.
+
+To really understand achieving an orbit we'd need to lock the camera's perspective to the moon/destination and treat it's position like a fixed point for all the path prediction.
+
+Maybe this means we need to rotate and scale the coordinates to the Earth-Moon axis so that those two are always in the same position, and the paths wind up circling around them like the classic diagrams of the Apollo missions.
+
+If this were the case, we'd then run into another challenge which is that perspective of real motion & physics is totally lost, because planets are currently just rendered as white circles. We'd need to include a lighting system, which would be awesome anyway, so that the Earth and Moon were lit from some external point, like the Sun, so that when the perspective is locked to the two you'd see the light slowly rotate over the lunar cycle to help give this perception of motion. I'm getting a little motion sick just imagining it, so maybe it's a bad idea, but we need _something_.
+
+### A goal
+
+If the goal is as simple as to achieve a stable orbit, there are several practical challenges to overcome:
+
+In game terms, a stable orbit is really tricky, because it doesn't follow any specific shape. Just determining orbital period is tricky when the ship is flying around and constantly changing what it's orbital path looks like.
+
+Classically, a stable orbit around a single object would be an elipse. Also it could be staying within the space of one of the stable lagrange points, or technically even a horshoe orbit.
+
+The paths we currently get might be an approximation of an elipse when stable, but how can we compare them?
+
+We could define some arbitrary margin of error or safe-zone in which we call the orbit stable, and so long as the path stays within that green circle we call it good enough. That would get us to having "something achievable", even if it's not really representative.
+
+Originally I was thinking about having ships take off and land, but the planets are spinning so fast (or at least could be) relative to absolute space that it would be really difficult to process visually. Going from orbit to orbit is a lot simpler, and if we're thinking about realistic cases, large asteroid mining vessels wouldn't necessarily land anyway, they'd dock with space stations to offload cargo, while crew & supplies used smaller shuttles & such to get up and down.
+
+Maybe the target is a "station" orbiting the Moon/target object, The goal is to match that station's orbit so you could dock with it, which requires getting into a very specificly-shaped orbit around a body. Then we could define the margin-of-error in human-scale units, like even a hundred kilometers to be generous. And then the shape of the orbit becomes a part of the game.
+
+Then we have to conquer the realistic challenge of going from high-energy orbits to low-energy orbits, the challenges with speeding up/slowing down, etc.
+
+However it also introduces additional computation as we have to start comparing the predicted paths every frame of multiple objects (which maybe isn't that bad, after all we're porentially predicting dozens of objects' paths every frame anyway).
