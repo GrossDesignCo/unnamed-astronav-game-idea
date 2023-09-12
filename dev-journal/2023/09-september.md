@@ -74,6 +74,8 @@ Not sure what the best approach here is, but I know _something_ is needed.
 
 ## Make an objective
 
+Sept 5-15th:
+
 Barring everything else, the real next step is to figure out how a person could go from the game start state to "winning". There's not really enough content for this to be open world, although maybe that could be a variant, like just "free play" or something.
 
 ### Perspective
@@ -105,3 +107,22 @@ Maybe the target is a "station" orbiting the Moon/target object, The goal is to 
 Then we have to conquer the realistic challenge of going from high-energy orbits to low-energy orbits, the challenges with speeding up/slowing down, etc.
 
 However it also introduces additional computation as we have to start comparing the predicted paths every frame of multiple objects (which maybe isn't that bad, after all we're porentially predicting dozens of objects' paths every frame anyway).
+
+#### Station Ideas
+
+1. Create a "non-player ship" class
+2. Use that to represent stations
+
+On the starter (Earth + Ship + Station), have the player ship orbiting at a lower/faster orbit than the station, so that the player's goal is simply to ascend to a higher orbit & grasp the basic physics
+
+On the Earth-Moon, have the station orbiting the moon & the player's ship orbiting the earth, making the player navigate ascending, but also switching between zones of influence & getting from the orbit of one body to another
+
+On the Saturn, have the station orbiting somewhere close to the rings & the player maybe in a wide orbit out by Titan or something, making them now descend without getting caught in all the messy gravity wells :)
+
+Other levels could include a station at a lagrange point, doing some kind of station-keeping, etc.
+
+Once getting "close" to the target's speed and position (how close? no idea) then end the mission with a victory screen.
+
+Boom, first gameplay loop :)
+
+From there we could expand to include ai-controlled non-player ships that the player has to catch. Or introduce any of the various limitation mechanics for the player to work against like not running out of fuel, or a simple time-limit.
