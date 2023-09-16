@@ -59,6 +59,11 @@ h6 {
   margin-bottom: 20px;
 }
 
+.system-name {
+  font-size: inherit;
+  margin: 10px 0;
+}
+
 * + :is(h1, h2, h3, h4, h5, h6),
 li + li > :is(h1, h2, h3, h4, h5, h6):first-child,
 * + :is(ul, ol) li > :is(h1, h2, h3, h4, h5, h6):first-child {

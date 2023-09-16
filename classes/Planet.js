@@ -14,6 +14,8 @@ export class Planet extends StellarBody {
     const { ctx } = view;
     const visRadius = this.radius * view.scale;
     const outline = 1.2 + visRadius / 8;
+    // Offset the radius by half the outline width since to get accurate surface positions
+    const adjustedRadius = Math.max(visRadius - outline / 2, 0.5);
     const labelX = visRadius + outline + 4;
 
     // Circle for planet body
@@ -23,7 +25,7 @@ export class Planet extends StellarBody {
     ctx.lineCap = 'round';
 
     ctx.beginPath();
-    ctx.arc(0, 0, visRadius, 0, Math.PI * 2, true);
+    ctx.arc(0, 0, adjustedRadius, 0, Math.PI * 2, true);
     ctx.closePath();
 
     ctx.fill();

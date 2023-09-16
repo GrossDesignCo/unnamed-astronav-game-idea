@@ -126,3 +126,27 @@ Once getting "close" to the target's speed and position (how close? no idea) the
 Boom, first gameplay loop :)
 
 From there we could expand to include ai-controlled non-player ships that the player has to catch. Or introduce any of the various limitation mechanics for the player to work against like not running out of fuel, or a simple time-limit.
+
+### Ship Names
+
+I don't know why it didn't occur to me earlier, but if the player is going to be controlling a ship, they should at least get to name it. "SS Testamundo" shall soon be `{playerShipName}` with a setting / min-character creation screen where the player just gets to name their ship & maybe determine what type it is :)
+
+### A little progress.
+
+Sept 15th:
+
+![station orbiting moon](./09-september/station-orbit-moon.png)
+
+After adding stations and cleaning up the Earth and Earth/Moon levels it's clear that the pathing and controls are a lot worse than I thought they were.
+
+Shortly after this was taken my ship crashed straight into the moon.
+
+The orbits we can calculate accurately are all at 1-200 times the ranges that the actual orbits of the ISS and Apollo missions use for the Earth and Moon respectively.
+
+Also challenging is still just communicating what's going on to the player. The scale makes it really tricky to understand how far from the moon you are, what the main source of gravity is with respect to the ship, how fast you're going, all of it.
+
+I was however able to get the ship to roughly match the orbit of a station around the earth by itself.
+
+Also a big issue is that if I remove the earth and moon as focal points, thrust control goes haywire. Most likely it's because I'm mapping the center of the viewport to the center of the simulation, so the coordinates don't match up at all if those two center points don't align.
+
+More to do. I'm leaving Saturn be for tonight. :)

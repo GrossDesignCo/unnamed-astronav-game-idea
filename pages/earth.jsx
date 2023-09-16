@@ -1,40 +1,52 @@
-import Head from 'next/head';
-import { useEffect, useRef } from 'react';
-import { MenuButton } from '../components/menu-button';
-import { play } from '../engine/play';
-import { systemEarth } from '../data/planets-and-moons';
+import { Planet } from '../classes/Planet';
+import { Ship } from '../classes/Ship';
+import { Station } from '../classes/Station';
+import { GameUIWrapper } from '../components/game-ui-wrapper';
+import {
+  destination,
+  earth,
+  playerShip,
+  secondsPerDay,
+} from '../data/constants';
 
 const config = {
   initialDt: 0.001,
 };
 
+const system = [
+  // Earth
+  new Planet({
+    ...earth,
+    isFocalPoint: true,
+  }),
+  // Player Ship
+  new Ship({
+    ...playerShip,
+    // Low-ish orbit at 100x ISS-altitude
+    // TODO: Improve the physics and pathing so we can work at these extreme low/high orbits
+    pos: [earth.radius + 408 * 100, 0],
+    // km/s to days
+    velocity: [0, -3 * secondsPerDay],
+    isFocalPoint: true,
+  }),
+  // Destination
+  new Station({
+    ...destination,
+    // Higher orbit at 200x ISS-altitude
+    pos: [-1 * (earth.radius + 408 * 200), 0],
+    // km/s to days
+    velocity: [0, 2.1 * secondsPerDay],
+    isFocalPoint: true,
+  }),
+];
+
 export default function Earth() {
-  const canvas = useRef();
-
-  // TODO: when we start, we want a fresh copy of the objects
-  useEffect(() => {
-    if (canvas.current) {
-      return play(canvas.current, systemEarth, config);
-    }
-  }, []);
-
   return (
-    <div>
-      <Head>
-        <title>Earth & Moon</title>
-        <meta name="description" content="A game" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        <div className="caption">
-          <p>Earth & Moon</p>
-
-          <MenuButton href="/">Main</MenuButton>
-        </div>
-
-        <canvas ref={canvas} id="canvas" width="1496" height="488" />
-      </main>
-    </div>
+    <GameUIWrapper
+      config={config}
+      system={system}
+      title="Earth"
+      description="Raise your orbit up to the station"
+    />
   );
 }
