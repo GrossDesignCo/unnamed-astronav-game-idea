@@ -150,3 +150,11 @@ I was however able to get the ship to roughly match the orbit of a station aroun
 Also a big issue is that if I remove the earth and moon as focal points, thrust control goes haywire. Most likely it's because I'm mapping the center of the viewport to the center of the simulation, so the coordinates don't match up at all if those two center points don't align.
 
 More to do. I'm leaving Saturn be for tonight. :)
+
+### Idea for indicating gravity wells
+
+It should be easy enough to compute the relative pull of any two objects, like the earth and moon, then draw a circle around the smaller one where the radius is the tipping point where the moon's gravity pull is stronger than the earth's.
+
+I'm not sure how the math works out to compute it without testing coordinates between the two, but I'm sure it's some relationship of mass and distance that should be pretty easy to calculate when I have the brainpower. It's basically calculating Earth-Moon L1 & drawing a circle from that.
+
+The real catch is that it wouldn't be a real circle, it would be the additive result of all the force vectors on objects in the system.

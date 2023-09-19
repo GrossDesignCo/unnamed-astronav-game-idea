@@ -10,7 +10,7 @@ export default function Assets() {
     if (canvas.current) {
       renderShipAssets(canvas.current);
     }
-  }, [canvas.current]);
+  }, [canvas]);
 
   return (
     <div>
