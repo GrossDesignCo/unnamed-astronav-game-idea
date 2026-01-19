@@ -16,6 +16,7 @@ export class View {
     isPaused = false,
     debug = false,
     defaultZoomLevel = 1,
+    showLabels = false,
   }) {
     this.canvas = canvas;
     this.scale = 1;
@@ -24,7 +25,7 @@ export class View {
     this.centerOfMass = [0, 0];
     this.timeScale = timeScale;
     this.selectBoxAddMode = false;
-    this.showLabels = false;
+    this.showLabels = showLabels;
     this.predictPaths = true;
     this.debug = debug;
     this.isPaused = isPaused;

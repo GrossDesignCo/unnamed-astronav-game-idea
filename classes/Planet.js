@@ -1,13 +1,57 @@
 import { StellarBody } from './StellarBody';
 
+const baseColors = [
+  // blue
+  '#009cff',
+  // green
+  '#00ff8c',
+  // orange
+  '#ff9639',
+  // yellow
+  '#ffda8a',
+];
+
+const generateStyle = (radius) => {
+  const polarIceRadius = Math.floor(Math.random() * radius);
+
+  const polarEdgePoints = [];
+  let angle = 0;
+  let i = 0;
+  while (angle < 360) {
+    // Pick a point around the edge offset from the radius a little
+    // Each point needs an angle, and a +/- distance from the radius
+    angle = angle + Math.random() * 0.5 * 2 * Math.PI;
+    // +/- between half and a quarter the polarIceRadius
+    const dist = Math.min(
+      polarIceRadius + (polarIceRadius / 2) * (Math.random() - 0.5),
+      radius * 0.9,
+    );
+    const x = dist * Math.cos(angle);
+    const y = dist * Math.sin(angle);
+    polarEdgePoints[i] = { angle, dist, x, y };
+    i++;
+  }
+  console.log({ radius, polarIceRadius, polarEdgePoints });
+
+  return {
+    baseColor: baseColors.random(),
+    polarIceRadius,
+    polarEdgePoints,
+  };
+};
+
 export class Planet extends StellarBody {
   constructor(props) {
     super(props);
 
-    const { radius = 1, rings = [] } = props;
+    const { radius = 1, rings = [], protoypeStyle, style } = props;
 
     this.radius = radius;
     this.rings = rings;
+    this.protoypeStyle = protoypeStyle;
+
+    // Randomly generate a planet if no style provided :)
+    this.style = style ?? generateStyle(radius);
   }
 
   drawBody(view) {
@@ -43,22 +87,90 @@ export class Planet extends StellarBody {
       ctx.stroke();
     });
 
-    // Mark an X if dead
-    if (this.dead) {
-      ctx.beginPath();
-      ctx.moveTo(10, 10);
-      ctx.lineTo(-10, -10);
-      ctx.moveTo(-10, 10);
-      ctx.lineTo(10, -10);
-      ctx.closePath();
-
-      ctx.strokeStyle = '#f40028';
-      ctx.fillStyle = '#fff';
-      ctx.lineWidth = 3;
-
-      ctx.fill();
-      ctx.stroke();
+    // Label
+    if (view.showLabels || this.selected) {
+      if (this.name) {
+        ctx.fillStyle = '#fff';
+        ctx.fillText(this.name, labelX, 4 * window.devicePixelRatio);
+      }
+      if (this.description) {
+        ctx.fillStyle = '#999';
+        ctx.fillText(this.description, labelX, 24 * window.devicePixelRatio);
+      }
     }
+  }
+
+  drawBodyPrototype(view) {
+    const { ctx } = view;
+    const radius = Math.floor(this.radius * view.scale);
+    const poleRadius = Math.floor(this.style.polarIceRadius * view.scale);
+    // Always draw at least _something_, even if it's a tiny star-like dot
+    const edgeRadius = Math.max(radius, 0.5);
+
+    // Circle for planet body
+    ctx.fillStyle = this.style.baseColor;
+
+    ctx.beginPath();
+    ctx.arc(0, 0, edgeRadius, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.fill();
+
+    // Edge Highlight
+    ctx.strokeStyle = `rgba(255,255,255,0.75)`;
+    ctx.lineWidth = radius * 0.025;
+
+    ctx.beginPath();
+    ctx.arc(0, 0, edgeRadius - ctx.lineWidth / 2, 0, Math.PI * 2, true);
+    ctx.closePath();
+
+    ctx.stroke();
+
+    // Jagged region for polar ice cap
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 1;
+    ctx.lineCap = 'round';
+    ctx.fillStyle = '#fefefe';
+
+    ctx.beginPath();
+    ctx.arc(0, 0, this.style.polarIceRadius * view.scale, 0, Math.PI * 2, true);
+    ctx.closePath();
+
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(
+      this.style.polarEdgePoints[0].x,
+      this.style.polarEdgePoints[0].y,
+    );
+    this.style.polarEdgePoints.forEach((point) => {
+      ctx.lineTo(point.x, point.y);
+    });
+    ctx.closePath();
+
+    ctx.fill();
+  }
+
+  drawRings(view) {
+    const { ctx } = view;
+    // Rings
+    this.rings.forEach((ring) => {
+      const width = (ring[1] - ring[0]) * view.scale;
+      const radius = ring[0] * view.scale;
+
+      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.lineWidth = (ring[1] - ring[0]) * view.scale;
+
+      ctx.beginPath();
+      ctx.arc(0, 0, radius + width / 2, 0, Math.PI * 2, true);
+      ctx.closePath();
+      ctx.stroke();
+    });
+  }
+
+  drawLabel(view) {
+    const { ctx } = view;
+    const visRadius = this.radius * view.scale;
+    const labelX = visRadius * 1.25;
 
     // Label
     if (view.showLabels || this.selected) {
@@ -160,7 +272,13 @@ export class Planet extends StellarBody {
     if (view.predictPaths) {
       this.drawPredictedPath(view);
     }
-    this.drawBody(view);
+    if (this.protoypeStyle) {
+      this.drawBodyPrototype(view);
+      this.drawRings(view);
+      this.drawLabel(view);
+    } else {
+      this.drawBody(view);
+    }
 
     super.drawDangerRadii(view);
     if (view.debug) {

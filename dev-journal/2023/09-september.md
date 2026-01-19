@@ -158,3 +158,19 @@ It should be easy enough to compute the relative pull of any two objects, like t
 I'm not sure how the math works out to compute it without testing coordinates between the two, but I'm sure it's some relationship of mass and distance that should be pretty easy to calculate when I have the brainpower. It's basically calculating Earth-Moon L1 & drawing a circle from that.
 
 The real catch is that it wouldn't be a real circle, it would be the additive result of all the force vectors on objects in the system.
+
+## Planet Generator
+
+Sept 18th:
+
+Another late-night side-quest, I really want to create some kind of low-poly dynamic planet generator function that makes planets:
+
+1. Look more distinct when zoomed way in
+2. Clearly indicate rotation without making the player motion-sick
+3. Better represent both real planets and fun random/procedurally-generated ones
+
+So far just the base layers, the star will eventually serve a lighting layer:
+
+![blue](./09-september/blue.png)
+![green](./09-september/green.png)
+![yellow](./09-september/yellow.png)
